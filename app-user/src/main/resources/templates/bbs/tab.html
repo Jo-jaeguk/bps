@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="p07">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+        <div id="header" class="">
+            <div class="header-button">
+                <a class="button-back"><img src="assets/img/icon-arrow_left.svg" alt=""></a>
+            </div>
+        </div>
+
+        <!-- 바디 -->
+        <div id="body" class="home">
+            <div class="inner-20">
+                <!-- 탭 아이템 -->
+                <div class="tab-wrapper">
+                    <!-- 탭 컨테이너 -->
+                    <div class="tab-container">
+                        <!-- 탭1 -->
+                        <div class="tab tab01 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량 데미지 위치를 <br>터치해주세요!</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-40">
+                                <div id="mk-1" class="marking-container">
+                                    <div class="car-view">
+                                        <img class="touch-area" src="assets/img/img-car@3x.png" alt="">
+                                    </div>
+                                    <div class="select-marker">
+                                        <div data-option="mi-01" class="marking-item mi-01 toggle-select active">교환</div>
+                                        <div data-option="mi-02" class="marking-item mi-02 toggle-select">판금/용접</div>
+                                        <div data-option="mi-03" class="marking-item mi-03 toggle-select">부식</div>
+                                        <div data-option="mi-04" class="marking-item mi-04 toggle-select">흠집</div>
+                                        <div data-option="mi-05" class="marking-item mi-05 toggle-select">요철</div>
+                                        <div data-option="mi-06" class="marking-item mi-06 toggle-select">손상</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭2 -->
+                        <div class="tab tab02 active"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량 데미지 위치를 <br>터치해주세요!</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-40">
+                                <div id="mk-2" class="marking-container">
+                                    <div class="car-view">
+                                        <img class="touch-area" src="assets/img/img-suv@3x.png" alt="">
+                                    </div>
+                                    <div class="select-marker">
+                                        <div data-option="mi-01" class="marking-item mi-01 toggle-select active">교환</div>
+                                        <div data-option="mi-02" class="marking-item mi-02 toggle-select">판금/용접</div>
+                                        <div data-option="mi-03" class="marking-item mi-03 toggle-select">부식</div>
+                                        <div data-option="mi-04" class="marking-item mi-04 toggle-select">흠집</div>
+                                        <div data-option="mi-05" class="marking-item mi-05 toggle-select">요철</div>
+                                        <div data-option="mi-06" class="marking-item mi-06 toggle-select">손상</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭3 -->
+                        <div class="tab tab03 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량 데미지 위치를 <br>터치해주세요!</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-40">
+                                <div id="mk-3" class="marking-container">
+                                    <div class="car-view">
+                                        <img class="touch-area" src="assets/img/img-ban@3x.png" alt="">
+                                    </div>
+                                    <div class="select-marker">
+                                        <div data-option="mi-01" class="marking-item mi-01 toggle-select active">교환</div>
+                                        <div data-option="mi-02" class="marking-item mi-02 toggle-select">판금/용접</div>
+                                        <div data-option="mi-03" class="marking-item mi-03 toggle-select">부식</div>
+                                        <div data-option="mi-04" class="marking-item mi-04 toggle-select">흠집</div>
+                                        <div data-option="mi-05" class="marking-item mi-05 toggle-select">요철</div>
+                                        <div data-option="mi-06" class="marking-item mi-06 toggle-select">손상</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 탭4 -->
+                        <div class="tab tab04 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량 사진을 <br>등록해주세요.</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-25">
+                                <div class="required-field">
+                                    <div class="field-title fz14 color-primary">필수사진</div>
+                                    <div class="image-container mt-10">
+                                        <div class="image-item">
+                                            <div class="item-img"><img src="./assets/img/img-sample1.png" alt=""></div>
+                                            <p class="fz14 mt-5">계기판</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add">
+                                            <div class="item-img"></div>
+                                            <p class="fz14 mt-5">전면</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add">
+                                            <div class="item-img"></div>
+                                            <p class="fz14 mt-5">후면</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add">
+                                            <div class="item-img"></div>
+                                            <p class="fz14 mt-5">옆(운전석)</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add">
+                                            <div class="item-img"></div>
+                                            <p class="fz14 mt-5">옆(보조석)</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="additional-field mt-40"> <!-- 숨김 처리 class "hidden" -->
+                                    <div class="field-title fz14 color-primary">추가사진</div>
+                                    <div class="image-container mt-10">
+                                        <div class="image-item">
+                                            <div class="item-img"><img src="./assets/img/img-sample2.png" alt=""></div>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item">
+                                            <div class="item-img"><img src="./assets/img/img-sample2.png" alt=""></div>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item">
+                                            <div class="item-img"><img src="./assets/img/img-sample2.png" alt=""></div>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item">
+                                            <div class="item-img"><img src="./assets/img/img-sample2.png" alt=""></div>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add">
+                                            <div class="item-img"></div>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 탭5 -->
+                        <div class="tab tab05 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">필요한 서류 모두 <br>확인하셨나요?</div>
+                                <div class="fz14 fw400 color-primary mt-10">차량등록증, 매도용인감증명서 등</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 탭6 -->
+                        <div class="tab tab06 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량내부 오염으로 <br>내부 클리닝이 필요한가요?</div>
+                                <div class="fz14 fw400 color-primary mt-10">흡연, 오물 등</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 탭7 -->
+                        <div class="tab tab07 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">버튼들을 모두 <br>정상적으로 작동하나요?</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 탭8 -->
+                        <div class="tab tab08 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">실린더 헤드 개스킷 <br>누유가 확인 되었나요?</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 탭9 -->
+                        <div class="tab tab09 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">프론트 케이스 <br>누유가 확인 되었나요?</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 탭10 -->
+                        <div class="tab tab10 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">로커암 개스킷 <br>누유가 확인 되었나요?</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭11 -->
+                        <div class="tab tab11 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">기타 엔진, 변속기에서 <br>누유가 확인 되었나요?</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭12 -->
+                        <div class="tab tab12 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">백판넬 교환을 <br>확인 또는 필요한가요?</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭13 -->
+                        <div class="tab tab13 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">앞삼박 교환을 <br>확인 또는 필요한가요?</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭14 -->
+                        <div class="tab tab14 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">필러 교환을 <br>확인 또는 필요한가요?</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 프로그레스 -->
+        <div id="progress-bar" class="p4"> <!-- 프로그레스 진행률에 따라 class "p0 ~ p10" 부여 -->
+            <img class="progress-0" src="assets/img/progress-0.svg" alt="">
+            <img class="progress-1" src="assets/img/progress-1.svg" alt="">
+            <img class="progress-2" src="assets/img/progress-2.svg" alt="">
+            <img class="progress-3" src="assets/img/progress-3.svg" alt="">
+            <img class="progress-4" src="assets/img/progress-4.svg" alt="">
+            <img class="progress-5" src="assets/img/progress-5.svg" alt="">
+            <img class="progress-6" src="assets/img/progress-6.svg" alt="">
+            <img class="progress-7" src="assets/img/progress-7.svg" alt="">
+            <img class="progress-8" src="assets/img/progress-8.svg" alt="">
+            <img class="progress-9" src="assets/img/progress-9.svg" alt="">
+            <img class="progress-10" src="assets/img/progress-10.svg" alt="">
+        </div>
+        <!-- 탭 버튼 -->
+        <div class="button-tab-next"><img src="assets/img/button_next.svg" alt=""></div>
+    </div>
+</div>
+
+<script>
+    // *******************************************************************************************
+    // tab 이동시에 selected_marking_item 값 초기화해주세요.
+    // *******************************************************************************************
+
+    let selected_marking_item = 'mi-01';
+    
+    $(function(){
+        $('.marking-item').on('click', function(e){
+            selected_marking_item = e.target.dataset.option;
+
+        });
+    });
+    
+    document.addEventListener('click', function(e){
+        let container = e.target.closest('.marking-container');
+        let cont_id = container.getAttribute('id')
+        console.log(container);
+
+        if (e.target.classList.contains('touch-area')){
+            // let body = document.querySelector('body');
+            let body = container;
+            let marker = document.createElement('span');
+            marker.classList.add('marker_' + selected_marking_item);
+    
+            let x = e.clientX;
+            let y = e.clientY;
+            
+            marker.style.left = x + 'px';
+            marker.style.top = y + 'px';
+    
+            body.appendChild(marker);
+        }
+    });
+</script>

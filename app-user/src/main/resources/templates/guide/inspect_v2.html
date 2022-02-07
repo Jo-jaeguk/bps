@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--
+<head>
+    <th:block th:insert="~{layout/common :: head}"></th:block>
+</head>
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="format-detection" content="telephone=no">
+    <title>BPS</title>
+
+    <!-- JQuery -->
+    <script th:src="@{/assets/js/jquery-3.3.1.min.js}" src=""></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <!-- Reference -->
+    <link rel="stylesheet" th:href="@{/assets/css/reset.css}" href="">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}" href="">
+    <link rel="stylesheet" th:href="@{/assets/css/custom.css}" href="">
+    <script th:src="@{/assets/js/custom.js}" src=""></script>
+    <script th:src="@{/common/js/common.js}" src=""></script>
+</head>
+
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<script>
+    function back() {
+        window.history.back();
+    }
+    function loading() {
+        $('#body').addClass('loading-bg');
+        $('#loading').addClass('active');
+    }
+    function loadingClose() {
+        $('#body').removeClass('loading-bg');
+        $('#loading').removeClass('active');
+    }
+</script>
+
+<div class="wrap" id="p07">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+
+        <div id="loading"><div class="round spinner"></div></div>
+
+        <div id="header" class="">
+            <div class="header-button">
+                <a onclick="javascript:goToBack(); return false;" class="button-back"><img th:src="@{/assets/img/icon-arrow_left.svg}" src="" alt=""></a>
+            </div>
+        </div>
+
+        <!-- 바디 -->
+        <div id="body" class="home">
+            <div class="inner-20">
+                <!-- 탭 아이템 -->
+                <div class="tab-wrapper">
+                    <!-- 탭 컨테이너 -->
+                    <div class="tab-container">
+                        <input id="guideId" type="hidden" name="guideId" th:value="${guideId}">
+                        <input id="car_number_yn" type="hidden" th:value="${car_number_yn}">
+                        <input id="inspected_yn" type="hidden" th:value="${item.inspectedYn.name()}">
+                        <input id="top_img_url" type="hidden" th:value="${item.inspectTopImgUrl}">
+                        <input id="side_img_url" type="hidden" th:value="${item.inspectSideImgUrl}">
+                        <input id="bottom_img_url" type="hidden" th:value="${item.inspectBottomImgUrl}">
+                        <div th:classappend="${car_number_yn == 'N' ? 'active' : ''}" class="tab tab00"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량 번호를 <br>입력해주세요.</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="form-insert">
+                                    <div class="item-input">
+                                        <input id="car_number" th:value="${item.carNumber}" class="border-none fz28" type="text" placeholder="차량 번호를 입력해주세요..">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:classappend="${car_number_yn == 'Y' ? 'active' : ''}" class="tab  tab01"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="guide_item-container" style="padding-bottom: 30px;">
+                                    <div class="guide_item-list">
+                                        <div class="item has-sub">
+                                            <div class="item-header">
+                                                <div class="num-code">
+                                                    <div class="qn">Quote No(QN#)</div>
+                                                    <div th:text="${item.serial}" class="sn">BC20210500002</div>
+                                                </div>
+                                                <div class="status"></div>
+                                            </div>
+                                            <div class="item-body"> <!-- 하위 항목 펼칠 경우 class "opened" -->
+                                                <div class="ib-main toggle-parent">
+                                                    <div th:text="${item.carNumber}" class="car-number">123가 1234</div>
+                                                    <div th:text="${item.carMadedYear + ' ' + item.carModel + ' ' + item.carModelDetail}" class="car-model"></div>
+                                                </div>
+                                                <div class="ib-sub">
+                                                    <div class="is-item">
+                                                        <div class="isi-tit">브랜드 / 세부모델 / 등급</div>
+                                                        <div class="isi-data">
+                                                            <span th:text="${item.carManufacturer}" class="id-data">기아</span>
+                                                            <span th:text="${item.carModel + ' ' + item.carModelDetail}" class="id-data">더 뉴 그랜져(19년~현재)</span>
+                                                            <span th:text="${item.carClassName + ' ' + item.carTrim}" class="id-data">프레스티지</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="is-item">
+                                                        <div class="isi-tit">연식 / 색상 / 연료 / 배기량 / 미션</div>
+                                                        <div class="isi-data">
+                                                            <span th:text="${item.carMadedYear +'.'+item.carMadedMonth}" class="id-data">2020.5</span>
+                                                            <span th:text="${item.carColor}" class="id-data">검정</span>
+                                                            <span th:text="${item.fuelType.description}" class="id-data">가솔린</span>
+                                                            <span th:text="${item.carDisplacement}" class="id-data">2400cc</span>
+                                                            <span th:text="${item.motorType.description}" class="id-data">오토</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="is-item">
+                                                        <div class="isi-tit">주행거리 / 사고유무</div>
+                                                        <div class="isi-data">
+                                                            <span th:text="${#numbers.formatInteger(item.mileage , 0 , 'COMMA')}"  class="id-data"></span>
+                                                            <span th:text="${item.accident.description}" class="id-data">단순교환</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="is-item">
+                                                        <div class="isi-tit">주요 옵션</div>
+                                                        <div class="isi-data">
+                                                            <span th:each="item, stat: ${guide_option_list}" th:text="${item.option}" class="id-data"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="is-item">
+                                                        <div class="isi-tit">고객명 / 고객 연락처</div>
+                                                        <div class="isi-data">
+                                                            <span th:text="${item.customerName}" class="id-data"></span>
+                                                            <span th:text="${item.customerContact}" class="id-data">010-0000-0000</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="guide_item-management">
+                                        <div class="gim-title">고객 담당자 / 연락처</div>
+                                        <div class="gim-manager">
+                                            <span th:text="${item.memberName}" class="gm-name">홍길동 상무</span>
+                                            <span th:text="${item.memberPhone}" class="gm-tel">010-0000-0000</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 실주행거리/차량 옵션 체크 -->
+                                <div class="form-insert">
+                                    <div class="item-input mb-0">
+                                        <div class="input-bold">실주행거리</div>
+                                    </div>
+                                    <div class="item-input">
+                                        <input th:value="${item.realMileage}" id="real_mileage" class="border-none fz28 fw600" type="number" placeholder="입력해주세요.">
+                                        <span class="input-unit">KM</span>
+                                    </div>
+                                    <div class="item-input mt-30">
+                                        <div class="input-bold">차량 옵션 체크</div>
+                                        <div id="car_option_div"class="select_item-list">
+                                            <div th:each="item, stat: ${options}" th:attr="data-option-id=${item.id}"
+                                                 th:classappend="${item.choosedYn != null and item.choosedYn.name() == 'Y' ? 'active' : ''}"
+                                                 class="item toggle-target">
+                                                <div th:text="${item.option}" class="item-desc">옵션1</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab tab02"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    차량 종류를<br>
+                                    선택해주세요!
+                                </div>
+                            </div>
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div id="car_type_div" class="select_item-list">
+                                    <div th:classappend="${item.carType == null or item.carType.name() == 'SMALL' ? 'active' : ''}"
+                                            class="item toggle-select" data-car-type="SMALL">
+                                        <div class="item-desc">소형</div>
+                                    </div>
+                                    <div th:classappend="${item.carType != null and item.carType.name() == 'MID' ? 'active' : ''}"
+                                            class="item toggle-select" data-car-type="MID">
+                                        <div class="item-desc">중형</div>
+                                    </div>
+                                    <div th:classappend="${item.carType != null and item.carType.name() == 'BIG' ? 'active' : ''}"
+                                            class="item toggle-select" data-car-type="BIG">
+                                        <div class="item-desc">대형</div>
+                                    </div>
+                                    <div th:classappend="${item.carType != null and item.carType.name() == 'RV' ? 'active' : ''}"
+                                            class="item toggle-select" data-car-type="RV">
+                                        <div class="item-desc">RV</div>
+                                    </div>
+                                    <div th:classappend="${item.carType != null and item.carType.name() == 'FOREIGN' ? 'active' : ''}"
+                                            class="item toggle-select" data-car-type="FOREIGN">
+                                        <div class="item-desc">수입</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab tab03"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    차량 데미지 위치를 터치해주세요!
+                                </div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div id="damage-tab-content" class="tab-content mt-15">
+                                <div class="inner-tab-wrapper">
+                                    <div class="inner-tab-header">
+                                        <button class="ith-tit active" data-tab-button="tab-01">승용</button>
+                                        <button class="ith-tit" data-tab-button="tab-02">승합</button>
+                                        <button class="ith-tit" data-tab-button="tab-03">화물</button>
+                                    </div>
+                                    <div class="select-damage-type">
+                                        <div class="sdt-header">
+                                            <div class="shl"><span class="part-name">데미지체크 재설정.</span></div>
+                                            <div class="shr">
+                                                <img class="sh-default" src="./assets/img/icon-arrow_down.svg" alt="">
+                                                <img class="sh-active" src="./assets/img/icon-arrow_up.svg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="sdt-body">
+                                            <div class="sb-list">
+                                                <div class="sb-item" id="damage-check-A"><span class="damage-icon-a">a</span><span class="damage-tit">기교환</span></div>
+                                                <div class="sb-item" id="damage-check-B"><span class="damage-icon-b">b</span><span class="damage-tit">기판금</span></div>
+                                                <div class="sb-item" id="damage-check-C"><span class="damage-icon-c">c</span><span class="damage-tit">기도색</span></div>
+                                                <div class="sb-item" id="damage-check-D"><span class="damage-icon-d">d</span><span class="damage-tit">교환요망</span></div>
+                                                <div class="sb-item" id="damage-check-E"><span class="damage-icon-e">e</span><span class="damage-tit">판금요망</span></div>
+                                                <div class="sb-item" id="damage-check-F"><span class="damage-icon-f">f</span><span class="damage-tit">도색요망</span></div>
+                                                <div class="sb-item" id="damage-check-G"><span class="damage-icon-g">g</span><span class="damage-tit">기타</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inner-tab-container">
+                                        <div class="inner-tab active" data-tab-index="tab-01">
+                                            <div class="damage-check-section">
+                                                <div class="dcs-image">
+                                                    <div class="di-body">
+                                                        <div id="img_car_1" class="db-img image-touch-area active" data-img-index="img-01">
+                                                            <!--
+                                                            style="width: 217px; height: 310px; background: url('/assets/img/img-car_top@2x.png') center center no-repeat;
+                                                            -->
+                                                            <div class="imgbox"
+                                                                 style="width: 217px; height: 310px; background: url('/assets/img/img-car_top@2x.png') center center no-repeat;
+
+                                                                 background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: -4%; left: 46%;">1</span>
+                                                                    <span class="el" style="top: 4%; left: 46%;">2</span>
+                                                                    <span class="el" style="top: 8%; left: 24%;">3</span>
+                                                                    <span class="el" style="top: 8%; left: 67%;">21</span>
+                                                                    <span class="el" style="top: 14%; left: 46%;">8</span>
+                                                                    <span class="el" style="top: 34%; left: 14%;">11</span>
+                                                                    <span class="el" style="top: 30%; left: 46%;">12</span>
+                                                                    <span class="el" style="top: 34%; left: 78%;">26</span>
+                                                                    <span class="el" style="top: 51%; left: 46%;">14</span>
+                                                                    <span class="el" style="top: 63%; left: 46%;">44</span>
+                                                                    <span class="el" style="top: 77%; left: 46%;">17</span>
+                                                                    <span class="el" style="top: 87%; left: 26%;">19</span>
+                                                                    <span class="el" style="top: 88%; left: 46%;">18</span>
+                                                                    <span class="el" style="top: 87%; left: 65%;">32</span>
+                                                                    <span class="el" style="top: 98%; left: 46%;">20</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="img_car_2" class="db-img image-touch-area" data-img-index="img-02">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('/assets/img/img-car@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: 3%; left: 12%;">4</span>
+                                                                    <span class="el" style="top: 11%; left: -7%;">6</span>
+                                                                    <span class="el" style="top: 16%; left: 6%;">5</span>
+                                                                    <span class="el" style="top: 22%; left: 18%;">7</span>
+                                                                    <span class="el" style="top: 37%; left: -2%;">9</span>
+                                                                    <span class="el" style="top: 38%; left: 13%;">10</span>
+                                                                    <span class="el" style="top: 33%; left: 37%;">41</span>
+                                                                    <span class="el" style="top: 51%; left: 33%;">42</span>
+                                                                    <span class="el" style="top: 59%; left: 13%;">13</span>
+                                                                    <span class="el" style="top: 71%; left: -7%;">16</span>
+                                                                    <span class="el" style="top: 75%; left: 5%;">15</span>
+                                                                    <span class="el" style="top: 72%; left: 35%;">43</span>
+                                                                    <span class="el" style="top: 85%; left: 17%;">46</span>
+                                                                    <span class="el" style="top: 3%; left: 71%;">22</span>
+                                                                    <span class="el" style="top: 11%; left: 99%;">25</span>
+                                                                    <span class="el" style="top: 15%; left: 86%;">24</span>
+                                                                    <span class="el" style="top: 18%; left: 63%;">23</span>
+                                                                    <span class="el" style="top: 38%; left: 51%;">46</span>
+                                                                    <span class="el" style="top: 38%; left: 77%;">27</span>
+                                                                    <span class="el" style="top: 37%; left: 93%;">28</span>
+                                                                    <span class="el" style="top: 51%; left: 57%;">47</span>
+                                                                    <span class="el" style="top: 59%; left: 77%;">29</span>
+                                                                    <span class="el" style="top: 75%; left: 53%;">48</span>
+                                                                    <span class="el" style="top: 75%; left: 86%;">30</span>
+                                                                    <span class="el" style="top: 71%; left: 98%;">31</span>
+                                                                    <span class="el" style="top: 85%; left: 74%;">49</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="img_car_3" class="db-img image-touch-area" data-img-index="img-03">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('/assets/img/img-car_bot@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: 0%; left: 60%;">50</span>
+                                                                    <span class="el" style="top: 8%; left: 34%;">51</span>
+                                                                    <span class="el" style="top: 18%; left: 25%;">52</span>
+                                                                    <span class="el" style="top: 28%; left: 25%;">53</span>
+                                                                    <span class="el" style="top: 21%; left: 37%;">54</span>
+                                                                    <span class="el" style="top: 21%; left: 56%;">55</span>
+                                                                    <span class="el" style="top: 18%; left: 67%;">56</span>
+                                                                    <span class="el" style="top: 28%; left: 68%;">57</span>
+                                                                    <span class="el" style="top: 34%; left: 46%;">58</span>
+                                                                    <span class="el" style="top: 42%; left: 46%;">59</span>
+                                                                    <span class="el" style="top: 59%; left: 46%;">60</span>
+                                                                    <span class="el" style="top: 73%; left: 46%;">61</span>
+                                                                    <span class="el" style="top: 80%; left: 25%;">62</span>
+                                                                    <span class="el" style="top: 81%; left: 36%;">63</span>
+                                                                    <span class="el" style="top: 82%; left: 46%;">64</span>
+                                                                    <span class="el" style="top: 81%; left: 56%;">65</span>
+                                                                    <span class="el" style="top: 80%; left: 68%;">66</span>
+                                                                    <span class="el" style="top: 91%; left: 46%;">67</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="di-header">
+                                                        <button class="dh-tit active" data-img-button="img-01">윗면</button>
+                                                        <button class="dh-tit" data-img-button="img-02">측면</button>
+                                                        <button class="dh-tit" data-img-button="img-03">아랫면</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="inner-tab" data-tab-index="tab-02">
+                                            <div class="damage-check-section">
+                                                <div class="dcs-image">
+                                                    <div class="di-body">
+                                                        <div id="img_van_1" class="db-img image-touch-area active" data-img-index="img-01">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('/assets/img/img-van_top@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: -4%; left: 46%;">1</span>
+                                                                    <span class="el" style="top: 3%; left: 46%;">2</span>
+                                                                    <span class="el" style="top: 6%; left: 27%;">3</span>
+                                                                    <span class="el" style="top: 13%; left: 46%;">8</span>
+                                                                    <span class="el" style="top: 6%; left: 65%;">21</span>
+                                                                    <span class="el" style="top: 24%; left: 46%;">12</span>
+                                                                    <span class="el" style="top: 27%; left: 14%;">11</span>
+                                                                    <span class="el" style="top: 27%; left: 79%;">26</span>
+                                                                    <span class="el" style="top: 50%; left: 46%;">14</span>
+                                                                    <span class="el" style="top: 89%; left: 46%;">18</span>
+                                                                    <span class="el" style="top: 88%; left: 25%;">19</span>
+                                                                    <span class="el" style="top: 88%; left: 66%;">32</span>
+                                                                    <span class="el" style="top: 97%; left: 46%;">20</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="img_van_2" class="db-img image-touch-area" data-img-index="img-02">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('/assets/img/img-van@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: 8%; left: 16%;">4</span>
+                                                                    <span class="el" style="top: 14%; left: -2%;">6</span>
+                                                                    <span class="el" style="top: 20%; left: 8%;">5</span>
+                                                                    <span class="el" style="top: 24%; left: 21%;">7</span>
+                                                                    <span class="el" style="top: 38%; left: 3%;">9</span>
+                                                                    <span class="el" style="top: 39%; left: 17%;">10</span>
+                                                                    <span class="el" style="top: 33%; left: 35%;">41</span>
+                                                                    <span class="el" style="top: 51%; left: 35%;">42</span>
+                                                                    <span class="el" style="top: 54%; left: 17%;">13</span>
+                                                                    <span class="el" style="top: 66%; left: -2%;">16</span>
+                                                                    <span class="el" style="top: 72%; left: 7%;">15</span>
+                                                                    <span class="el" style="top: 69%; left: 36%;">43</span>
+                                                                    <span class="el" style="top: 81%; left: 20%;">46</span>
+                                                                    <span class="el" style="top: 8%; left: 68%;">22</span>
+                                                                    <span class="el" style="top: 14%; left: 95%;">25</span>
+                                                                    <span class="el" style="top: 20%; left: 85%;">24</span>
+                                                                    <span class="el" style="top: 22%; left: 61%;">23</span>
+                                                                    <span class="el" style="top: 40%; left: 52%;">46</span>
+                                                                    <span class="el" style="top: 39%; left: 75%;">27</span>
+                                                                    <span class="el" style="top: 35%; left: 88%;">28</span>
+                                                                    <span class="el" style="top: 51%; left: 56%;">47</span>
+                                                                    <span class="el" style="top: 54%; left: 75%;">29</span>
+                                                                    <span class="el" style="top: 69%; left: 55%;">48</span>
+                                                                    <span class="el" style="top: 66%; left: 93%;">31</span>
+                                                                    <span class="el" style="top: 72%; left: 84%;">30</span>
+                                                                    <span class="el" style="top: 81%; left: 71%;">49</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="img_van_3" class="db-img image-touch-area" data-img-index="img-03">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('/assets/img/img-van_bot@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: 0%; left: 60%;">50</span>
+                                                                    <span class="el" style="top: 8%; left: 34%;">51</span>
+                                                                    <span class="el" style="top: 18%; left: 25%;">52</span>
+                                                                    <span class="el" style="top: 28%; left: 25%;">53</span>
+                                                                    <span class="el" style="top: 21%; left: 37%;">54</span>
+                                                                    <span class="el" style="top: 21%; left: 56%;">55</span>
+                                                                    <span class="el" style="top: 18%; left: 67%;">56</span>
+                                                                    <span class="el" style="top: 28%; left: 68%;">57</span>
+                                                                    <span class="el" style="top: 36%; left: 46%;">58</span>
+                                                                    <span class="el" style="top: 44%; left: 46%;">59</span>
+                                                                    <span class="el" style="top: 59%; left: 46%;">60</span>
+                                                                    <span class="el" style="top: 75%; left: 46%;">61</span>
+                                                                    <span class="el" style="top: 83%; left: 25%;">62</span>
+                                                                    <span class="el" style="top: 84%; left: 36%;">63</span>
+                                                                    <span class="el" style="top: 85%; left: 46%;">64</span>
+                                                                    <span class="el" style="top: 84%; left: 56%;">65</span>
+                                                                    <span class="el" style="top: 83%; left: 68%;">66</span>
+                                                                    <span class="el" style="top: 94%; left: 46%;">67</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="di-header">
+                                                        <button class="dh-tit active" data-img-button="img-01">윗면</button>
+                                                        <button class="dh-tit" data-img-button="img-02">측면</button>
+                                                        <button class="dh-tit" data-img-button="img-03">아랫면</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="inner-tab" data-tab-index="tab-03">
+                                            <div class="damage-check-section">
+                                                <div class="dcs-image">
+                                                    <div class="di-body">
+                                                        <div id="img_truck_1" class="db-img image-touch-area active" data-img-index="img-01">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('/assets/img/img-truck_top@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: -1%; left: 46%;">1</span>
+                                                                    <span class="el" style="top: 5%; left: 31%;">3</span>
+                                                                    <span class="el" style="top: 5%; left: 60%;">21</span>
+                                                                    <span class="el" style="top: 8%; left: 46%;">69</span>
+                                                                    <span class="el" style="top: 15%; left: 46%;">23</span>
+                                                                    <span class="el" style="top: 28%; left: 46%;">44</span>
+                                                                    <span class="el" style="top: 62%; left: 46%;">68</span>
+                                                                    <span class="el" style="top: 87%; left: 46%;">75</span>
+                                                                    <span class="el" style="top: 92%; left: 31%;">8</span>
+                                                                    <span class="el" style="top: 92%; left: 62%;">32</span>
+                                                                    <span class="el" style="top: 96%; left: 46%;">70</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="img_truck_2" class="db-img image-touch-area" data-img-index="img-02">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('/assets/img/img-truck@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: 9%; left: 17%;">7</span>
+                                                                    <span class="el" style="top: 16%; left: 8%;">19</span>
+                                                                    <span class="el" style="top: 17%; left: 20%;">10</span>
+                                                                    <span class="el" style="top: 14%; left: 31%;">11</span>
+                                                                    <span class="el" style="top: 19%; left: 41%;">41</span>
+                                                                    <span class="el" style="top: 26%; left: 35%;">42</span>
+                                                                    <span class="el" style="top: 28%; left: 22%;">13</span>
+                                                                    <span class="el" style="top: 34%; left: 35%;">43</span>
+                                                                    <span class="el" style="top: 36%; left: 21%;">27</span>
+                                                                    <span class="el" style="top: 65%; left: 18%;">73</span>
+                                                                    <span class="el" style="top: 65%; left: 34%;">71</span>
+                                                                    <span class="el" style="top: 9%; left: 73%;">12</span>
+                                                                    <span class="el" style="top: 16%; left: 61%;">46</span>
+                                                                    <span class="el" style="top: 19%; left: 52%;">26</span>
+                                                                    <span class="el" style="top: 17%; left: 72%;">45</span>
+                                                                    <span class="el" style="top: 17%; left: 84%;">20</span>
+                                                                    <span class="el" style="top: 26%; left: 56%;">47</span>
+                                                                    <span class="el" style="top: 28%; left: 68%;">29</span>
+                                                                    <span class="el" style="top: 34%; left: 56%;">48</span>
+                                                                    <span class="el" style="top: 36%; left: 70%;">49</span>
+                                                                    <span class="el" style="top: 65%; left: 57%;">72</span>
+                                                                    <span class="el" style="top: 65%; left: 72%;">74</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="img_truck_3" class="db-img image-touch-area" data-img-index="img-03">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('/assets/img/img-truck_bot@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: 5%; left: 46%;">34</span>
+                                                                    <span class="el" style="top: 13%; left: 27%;">35</span>
+                                                                    <span class="el" style="top: 13%; left: 64%;">36</span>
+                                                                    <span class="el" style="top: 13%; left: 46%;">37</span>
+                                                                    <span class="el" style="top: 38%; left: 46%;">40</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="di-header">
+                                                        <button class="dh-tit active" data-img-button="img-01">윗면</button>
+                                                        <button class="dh-tit" data-img-button="img-02">측면</button>
+                                                        <button class="dh-tit" data-img-button="img-03">아랫면</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="tab tab03 second"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    차량 데미지 위치를 터치해주세요!
+                                </div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div id="damage-tab-content" class="tab-content mt-15">
+                                <div class="inner-tab-wrapper">
+                                    <div class="inner-tab-header">
+
+                                    </div>
+                                    <div id="re_damage_check" class="select-damage-type">
+                                        <div class="sdt-header">
+                                            <div class="shl"><span class="part-name">데미지 체크 재설정</span></div>
+                                            <div class="shr">
+                                                <img class="sh-default" src="./assets/img/icon-arrow_down.svg" alt="">
+                                                <img class="sh-active" src="./assets/img/icon-arrow_up.svg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="sdt-body">
+                                            <div class="sb-list">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inner-tab-container">
+                                        <div class="inner-tab active" data-tab-index="tab-01">
+                                            <div class="damage-check-section">
+                                                <div class="dcs-image">
+                                                    <div class="di-body">
+                                                        <div id="img_car_1" class="db-img image-touch-area active" data-img-index="img-01">
+                                                            <!--
+                                                            style="width: 217px; height: 310px; background: url('/assets/img/img-car_top@2x.png') center center no-repeat;
+                                                            -->
+                                                            <div id="top-image"
+                                                                 class="imgbox"
+                                                                 style="width: 217px; height: 310px; background: url('/assets/img/img-car_top.png') center center no-repeat;
+                                                                 background-size: contain;">
+                                                                <img id="top-image-tag" src=""
+                                                                     style="width: 217px; height: 310px;" />
+                                                            </div>
+                                                        </div>
+                                                        <div id="img_car_2" class="db-img image-touch-area" data-img-index="img-02">
+                                                            <div id="side-image"
+                                                                    class="imgbox" style="width: 217px; height: 310px; background: url('/assets/img/img-car_side.png') center center no-repeat; background-size: contain;">
+                                                                <img id="side-image-tag" src="" style="width: 217px; height: 310px;">
+                                                            </div>
+                                                        </div>
+                                                        <div id="img_car_3" class="db-img image-touch-area" data-img-index="img-03">
+                                                            <div id="bottom-image"
+                                                                    class="imgbox" style="width: 217px; height: 310px; background: url('/assets/img/img-car_under.png') center center no-repeat; background-size: contain;">
+                                                                <img id="bottom-image-tag" src="" style="width: 217px; height: 310px;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="di-header">
+                                                        <button class="dh-tit active" data-img-button="img-01">윗면</button>
+                                                        <button class="dh-tit" data-img-button="img-02">측면</button>
+                                                        <button class="dh-tit" data-img-button="img-03">아랫면</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="tab tab04"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    차량 체크리스트를<br>
+                                    작성해주세요!
+                                </div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div id="check_list_div"class="select_item-list">
+                                    <div th:each="item, stat:${check_list}"
+                                         th:classappend="${item.choosedYn != null and item.choosedYn.name() == 'Y' ? 'active' : ''}"
+                                         th:attr="data-check-id=${item.id},data-check-price=${item.price}" class="item toggle-target">
+                                        <div th:text="${item.question}" class="item-desc">차량 내부 크리닝 필요</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab tab05"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    타이어 마모 개수를<br>
+                                    선택해주세요.
+                                </div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div id="tire_div"class="select_item-list">
+                                    <div data-tire-count="0" data-tire-type="EA_0" data-tire-price="0"
+                                         th:classappend="${item.tireWearType == null or item.tireWearType.name() == 'EA_0' ? 'active' : ''}"
+                                         class="item toggle-select">
+                                        <div class="item-desc">0 EA</div>
+                                    </div>
+                                    <div data-tire-count="1" data-tire-type="EA_1" data-tire-price="100000"
+                                         th:classappend="${item.tireWearType != null and item.tireWearType.name() == 'EA_1' ? 'active' : ''}"
+                                         class="item toggle-select">
+                                        <div class="item-desc">1 EA</div>
+                                    </div>
+                                    <div data-tire-count="2" data-tire-type="EA_2" data-tire-price="200000"
+                                         th:classappend="${item.tireWearType != null and item.tireWearType.name() == 'EA_2' ? 'active' : ''}"
+                                         class="item toggle-select">
+                                        <div class="item-desc">2 EA</div>
+                                    </div>
+                                    <div data-tire-count="3" data-tire-type="EA_3" data-tire-price="300000"
+                                         th:classappend="${item.tireWearType != null and item.tireWearType.name() == 'EA_3' ? 'active' : ''}"
+                                         class="item toggle-select">
+                                        <div class="item-desc">3 EA</div>
+                                    </div>
+                                    <div data-tire-count="4" data-tire-type="EA_4" data-tire-price="400000"
+                                         th:classappend="${item.tireWearType != null and item.tireWearType.name() == 'EA_4' ? 'active' : ''}"
+                                         class="item toggle-select">
+                                        <div class="item-desc">4 EA</div>
+                                    </div>
+                                    <div data-tire-count="-1" data-tire-type="OTHER" data-tire-price="0"
+                                         th:classappend="${item.tireWearType != null and item.tireWearType.name() == 'OTHER' ? 'active' : ''}"
+                                         class="item toggle-select">
+                                        <div class="item-desc">기타</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab tab06"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    타이어마모 / 기타 사유를<br>
+                                    입력해주세요.
+                                </div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="form-insert">
+                                    <div class="item-input mb-0">
+                                        <div class="input-bold">타이어 기타 금액</div>
+                                    </div>
+                                    <div class="item-input">
+                                        <input id="tire_price" th:value="${item.tireWearPrice}" class="border-none fz28 fw600" type="number" placeholder="금액을 입력해주세요.">
+                                        <span class="input-unit">원</span>
+                                    </div>
+                                    <div class="item-input mt-45">
+                                        <div class="input-bold">기타 사유</div>
+                                        <input id="tire_reason" th:value="${item.tireWearReason}" class="" type="text" placeholder="기타 사유를 입력해주세요.">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="tab tab07"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량 사진을 <br>등록해주세요.</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-25">
+                                <div class="required-field">
+                                    <div class="field-title fz14 color-primary">필수사진</div>
+                                    <div class="image-container mt-10">
+
+                                        <div class="image-item" >
+                                            <div class="item-img">
+                                                <th:block th:if="${not #strings.isEmpty(gauge_img_url)}">
+
+                                                </th:block>
+                                                <img th:src="${gauge_img_url}" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">계기판</p>
+                                            <!--
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                            -->
+                                        </div>
+                                        <div class="image-item " > <!-- 이미지 추가 버튼 노출시 class "btn-file_add" -->
+                                            <div class="item-img">
+                                                <th:block th:if="${not #strings.isEmpty(front_img_url)}">
+
+                                                </th:block>
+                                                <img th:src="${front_img_url}" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">전면</p>
+                                            <!--
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                            -->
+                                        </div>
+                                        <div class="image-item " >
+                                            <div class="item-img">
+                                                <th:block th:if="${not #strings.isEmpty(back_img_url)}">
+
+                                                </th:block>
+                                                <img th:src="${back_img_url}" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">후면</p>
+                                            <!--
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                            -->
+                                        </div>
+                                        <div class="image-item " >
+                                            <div class="item-img">
+                                                <th:block th:if="${not #strings.isEmpty(left_img_url)}">
+
+                                                </th:block>
+                                                <img th:src="${left_img_url}" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">옆(운전석)</p>
+
+                                        </div>
+                                        <div class="image-item " >
+                                            <div class="item-img">
+                                                <th:block th:if="${not #strings.isEmpty(right_img_url)}">
+
+                                                </th:block>
+                                                <img th:src="${right_img_url}" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">옆(보조석)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="additional-field mt-40"> <!-- 숨김 처리 class "hidden" -->
+                                    <div class="field-title fz14 color-primary">추가사진</div>
+                                    <form method="post" enctype="multipart/form-data" id="fileUpload">
+                                        <div id="img-div-parent" class="image-container mt-10">
+                                            <div id="img-div-1" class="image-item btn-file_add">
+                                                <div class="item-img">
+                                                    <img id="img-1" alt="">
+                                                    <input id="image-1" name="image_1" class="input-file" type="file">
+                                                </div>
+                                                <div id="delete-img-1" class="delete-img">
+                                                    <img th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg}" src="./" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="tab tab08"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    평가사님의 감가금액을<br>
+                                    입력해 주세요!
+                                </div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="pc-info">
+                                    <div class="info-header">
+                                        <div class="pih-desc">BuyingCar 매입가<br> Guideline</div>
+                                        <!--
+                                        <div class="pih-price"><span th:text="${#numbers.formatInteger(item.sendPrice , 0 , 'COMMA')}"></span> 원</div>
+                                        -->
+                                        <div class="pih-price"><span th:text="${item.sendPriceTemp}"></span> 만원</div>
+                                    </div>
+                                </div>
+
+                                <div class="cd-info mt-10">
+                                    <div class="info-header">
+                                        <div class="cih-desc">점검 감가액</div>
+                                        <div class="cih-price"><input id="minus_total_price" style="width: 70%;" type="text" class="disabled" value="0"> 만원</div> <!-- 입력 불가 class "disabled" -->
+                                    </div>
+                                    <div class="info-list">
+                                        <div class="list-header">
+                                            <div class="lhd">
+                                                <div class="td">구분</div>
+                                                <div class="td">판수(개)</div>
+                                                <div class="td">금액합계(원)</div>
+                                            </div>
+                                        </div>
+                                        <div id="minus_div" class="list-body">
+                                            <div class="lhd">
+                                                <div class="td">체크리스트</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div> <!-- 입력 불가 class "disabled" -->
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div> <!-- 입력 불가 class "disabled" -->
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">기교환</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">기판금</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">기도색</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">교환요망</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">판금요망</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">도색요망</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">기타</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">타이어마모</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-insert mt-20">
+                                    <div class="item-input mb-0">
+                                        <div class="input-bold">평가사 감가 금액</div>
+                                    </div>
+                                    <div class="item-input">
+                                        <th:block th:if="${item.evaluatorMinusPriceMil != null}">
+                                            <input id="evaluator_minus_price" th:value="${item.evaluatorMinusPriceMil}" class="border-none fz28 fw600" type="number" placeholder="입력해주세요.">
+                                        </th:block>
+                                        <th:block th:if="${item.evaluatorMinusPriceMil == null}">
+                                            <input id="evaluator_minus_price" value="" class="border-none fz28 fw600" type="number" placeholder="입력해주세요.">
+                                        </th:block>
+                                        <span class="input-unit">만원</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab tab09"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    평가사 평가사유를<br>
+                                    입력해주세요.
+                                </div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="form-insert">
+                                    <div class="item-input mt-45">
+                                        <input id="evaluator_reason" th:value="${item.evaluatorMinusReason}" class="border-none" type="text" placeholder="평가 사유를 직접 입력해 주세요.">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div onclick="javascript:goToNext(); return false;" class="button-tab-next"><img th:src="@{/assets/img/button_next.svg}" src="" alt=""></div>
+        
+    </div>
+    <a id="target" style="display: none"></a>
+
+        <div id="modal_noti" class="popup popup-join-success ">
+            <div class="popup-inner">
+                <div class="popup-header">
+                    <div class="popup-title">가이드</div>
+                </div>
+                <div class="popup-body">
+                    <div class="form-insert">
+                        <div class="item-input">
+                            <div class="input-text">차량점검표</div>
+                        </div>
+                        <div class="item-input">
+                            <div id="modal_body" class="input-text"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-footer">
+                    <a onclick="javascript:closeModal();" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="modal_normal" class="popup popup-join-success ">
+            <div class="popup-inner">
+                <div class="popup-header">
+                    <div class="popup-title">가이드</div>
+                </div>
+                <div class="popup-body">
+                    <div class="form-insert">
+                        <div class="item-input">
+                            <div class="input-text">차량점검표</div>
+                        </div>
+                        <div class="item-input">
+                            <div id="modal_normal_body" class="input-text"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-footer">
+                    <a onclick="javascript:closeNormalModal();" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+                </div>
+            </div>
+        </div>
+
+
+
+</div>
+
+
+<script>
+
+    function showModal() {
+        $('#overlay').addClass('active');
+        $('#modal_noti').addClass('active');
+    }
+    function closeModal() {
+        $('#overlay').removeClass('active');
+        $('#modal_noti').removeClass('active');
+        Common.goPage("/user/guide");
+    }
+    function showNormalModal(body) {
+        $('#modal_normal_body').text(body);
+        $('#overlay').addClass('active');
+        $('#modal_normal').addClass('active');
+    }
+    function closeNormalModal() {
+        $('#overlay').removeClass('active');
+        $('#modal_normal').removeClass('active');
+    }
+
+
+    // 선택된 마커
+    var selected_marking_item = 'marker-1';
+    var car_marker_count = [0, 0, 0, 0, 0, 0, 0];
+    var van_marker_count = [0, 0, 0, 0, 0, 0, 0];
+    var truck_marker_count = [0, 0, 0, 0, 0, 0, 0];
+    // 마커 카운트
+    var parent_idx = 0;
+    var marker_idx = 0;
+    var delete_target_idx = 0;
+
+    let isRetryDamageCheck = false;
+
+
+    let vh_part = {
+        1: '1. 앞범퍼',
+        2: '2. 프론트 라디에이터서포트',
+        3: '3. 전조등(좌)',
+        4: '4. 안개등(좌)',
+        5: '5. 앞휠(좌)',
+        6: '6. 앞타이어(좌)',
+        7: '7. 프론트 휀더(좌)',
+        8: '8. 보닛',
+        9: '9. (운)사이드실',
+        10: '10. 프론트도어(좌)',
+        11: '11. 사이드미러(좌)',
+        12: '12. 앞유리',
+        13: '13. 리어도어(좌)',
+        14: '14. 선루프',
+        15: '15. 뒤휠(좌)',
+        16: '16. 뒤타이어(좌)',
+        17: '17. 뒷유리',
+        18: '18. 트렁크',
+        19: '19. 리어컴비램프(좌)',
+        20: '20. 뒤범퍼',
+        21: '21. 전조등(우)',
+        22: '22. 안개등(우)',
+        23: '23. 프론트 휀더(우)',
+        24: '24. 앞휠(우)',
+        25: '25. 앞타이어(우)',
+        26: '26. 사이드미러(우)',
+        27: '27. 프론트도어(우)',
+        28: '28. (조)사이드실',
+        29: '29. 리어도어(우)',
+        30: '30. 뒤휠(우)',
+        31: '31. 뒤타이어(우)',
+        32: '32. 리어컴비램프(우)',
+        41: '41. (운)A필러',
+        42: '42. (운)B필러',
+        43: '43. (운)C필러',
+        44: '44. 루프',
+        45: '45. 리어휀더(좌)',
+        46: '46. (조)A필러',
+        47: '47. (조)B필러',
+        48: '48. (조)C필러',
+        49: '49. 리어휀더(좌)',
+        50: '50. 앞패널',
+        51: '51. 앞크로스맴버',
+        52: '52. 앞인사이드패널(좌)',
+        53: '53. 앞휠하우스(좌)',
+        54: '54. 앞사이드맴버(좌)',
+        55: '55. 앞사이드맴버(우)',
+        56: '56. 앞인사이드패널(우)',
+        57: '57. 앞휠하우스(우)',
+        58: '58. 뒷크로스맴버',
+        59: '59. 대쉬보드(카울패널)',
+        60: '60. 플로어패널',
+        61: '61. 리어패키지트레이',
+        62: '62. 뒤휠하우스(좌)',
+        63: '63. 뒤사이드맴버(좌)',
+        64: '64. 트렁크플로어패널',
+        65: '65. 뒤사이드맴버(우)',
+        66: '66. 뒤휠하우스(우)',
+        67: '67. 뒤패널',
+        68: '68. 적재함바닥',
+        69: '69. 스텝(좌)',
+        70: '70. 스텝(우)',
+        71: '71. 적재함(좌) [탑차]',
+        72: '72. 적재함(우) [탑차]',
+        73: '73. 적재함도어(좌)',
+        74: '74. 적재함도어(우)',
+        75: '75. 적재함도어(후)'
+    };
+
+    let vh_part_enum = {
+        1: 'AP_BUMPER',
+        2: 'FRONT_RADIATOR_SUPPORT',
+        3: 'JUNJO_DEUNG',
+        4: 'ANGYE_DEUNG',
+        5: 'AP_WHEEL_LEFT',
+        6: 'AP_TIRE_LEFT',
+        7: 'FRONT_FENDER',
+        8: 'BONNET',
+        9: 'UN_SIDE_SIL',
+        10: 'FRONT_DOOR_LEFT',
+        11: 'SIDE_MIRROR_LEFT',
+        12: 'AP_MIRROR',
+        13: 'REAR_DOOR_LEFT',
+        14: 'SUN_ROOF',
+        15: 'BACK_WHEEL_LEFT',
+        16: 'BACK_TIRE_LEFT',
+        17: 'BACK_MIRROR',
+        18: 'TRUNK',
+        19: 'REAR_COMBEE_LAMP_LEFT',
+        20: 'BACK_BUMPER',
+        21: 'HEAD_LIGHT_RIGHT',
+        22: 'FORG_LIGHT_RIGHT',
+        23: 'FRONT_FENDER_RIGHT',
+        24: 'AP_WHEEL_RIGHT',
+        25: 'AP_TIRE_RIGHT',
+        26: 'SIDE_MIRROR_RIGHT',
+        27: 'FRONT_DOOR_RIGHT',
+        28: 'JO_SIDE_SIL',
+        29: 'REAR_DOOR_RIGHT',
+        30: 'BACK_WHEEL_RIGHT',
+        31: 'BACK_TIRE_RIGHT',
+        32: 'REAR_COMBEE_LAMP_RIGHT',
+        41: 'UN_A_FILLER',
+        42: 'UN_B_FILLER',
+        43: 'UN_C_FILLER',
+        44: 'ROOF',
+        45: 'REAR_FENDER_LEFT',
+        46: 'JO_A_FILLER',
+        47: 'JO_B_FILLER',
+        48: 'JO_C_FILLER',
+        49: 'REAR_FENDER_RIGHT',
+        50: 'AP_PANNEL',
+        51: 'AP_CROSS_MEMBER',
+        52: 'AP_INSIDE_PANNEL_LEFT',
+        53: 'AP_WHEEL_HOUSE_LEFT',
+        54: 'AP_SIDE_MEMBER_LEFT',
+        55: 'AP_SIDE_MEMBER_RIGHT',
+        56: 'AP_SIDE_PANNEL_RIGHT',
+        57: 'AP_WHEEL_HOUSE_RIGHT',
+        58: 'BACK_CROSS_MEMBER',
+        59: 'DASHBOARD',
+        60: 'FLOOR_PANNEL',
+        61: 'REAR_PACKAGE_TRAY',
+        62: 'BACK_WHEEL_HOUSE_LEFT',
+        63: 'BACK_SIDE_MEMBER_LEFT',
+        64: 'TRUNK_FLOOR_PANNEL',
+        65: 'BACK_SIDE_MEMBER_RIGHT',
+        66: 'BACK_WHEEL_HOUSE_RIGHT',
+        67: 'BACK_PANNEL',
+        68: 'JUK_JAE_HAM_BADAK',
+        69: 'STEP_LEFT',
+        70: 'STEP_RIGHT',
+        71: 'JUK_JAE_HAM_LEFT',
+        72: 'JUK_JAE_HAM_RIGHT',
+        73: 'JUK_JAE_HAM_DOOR_LEFT',
+        74: 'JUK_JAE_HAM_DOOR_RIGHT',
+        75: 'JUK_JAE_HAM_DOOR_BACK'
+    };
+
+    let selected_el = null;
+
+    let damageLocationEnum = ``;
+    let damageType = ``;
+
+    let guideId = "";
+    let currentStep = 1;
+    let inspectObj = {};
+    let imgCnt = 0;
+    let imageList = [];
+
+    let imgFile_1;
+    let imgFile_2;
+    let imgFile_3;
+    let imgFile_4;
+    let imgFile_5;
+
+    let isMarked = false;
+    let imageLocation = 'img-01';
+    let imageCarType = 'tab-01';
+
+    function captureImage(carType, damageLocation, e) {
+        console.log('isMarked : ' + isMarked + " , imageLocation : " + imageLocation);
+        if(isMarked) {
+            let target = 'img_car_1';
+            loading();
+            if(imageCarType == 'tab-01') {
+                // 승용차
+                if(imageLocation == 'img-01') {
+                    target = 'img_car_1';
+                } else if(imageLocation == 'img-02') {
+                    target = 'img_car_2';
+                } else {
+                    target = 'img_car_3';
+                }
+            } else if(imageCarType == 'tab-02') {
+                // 승합차
+                if(imageLocation == 'img-01') {
+                    target = 'img_van_1';
+                } else if(imageLocation == 'img-02') {
+                    target = 'img_van_2';
+                } else {
+                    target = 'img_van_3';
+                }
+            } else {
+                // 화물차
+                if(imageLocation == 'img-01') {
+                    target = 'img_truck_1';
+                } else if(imageLocation == 'img-02') {
+                    target = 'img_truck_2';
+                } else {
+                    target = 'img_truck_3';
+                }
+            }
+            console.log('target : ' + target);
+            let damageLocationType = ``;
+            if(imageLocation == 'img-01') {
+                damageLocationType = 'TOP';
+            } else if(imageLocation == 'img-02') {
+                damageLocationType = 'SIDE';
+            } else {
+                damageLocationType = 'BOTTOM';
+            }
+            Service.captureInspectImg(damageLocationType, $('#' + target), function (upload) {
+                loadingClose();
+                if(carType == true) {
+                    changeCarTypeTab(e);
+                } else if(damageLocation == true) {
+                    changeDamageLocationTab(e);
+                } else {
+
+                }
+            });
+        }
+        isMarked = false;
+    }
+
+    function changeCarTypeTab(e) {
+        let tabBtn = e.currentTarget;
+        let tab_idx = $(tabBtn).data('tabButton');
+        let tabCont = $('[data-tab-index="' + tab_idx + '"]');
+
+        $('.ith-tit').removeClass('active');
+        $('.inner-tab').removeClass('active');
+        $(tabBtn).addClass('active');
+        $(tabCont).addClass('active');
+
+        // 이미지 탭 헤더 초기화
+        $('.dh-tit').removeClass('active');
+        $('.dh-tit:first-child').addClass('active');
+        $('.db-img').removeClass('active');
+        $('.db-img:first-child').addClass('active');
+        console.log(tab_idx);
+        imageCarType = tab_idx;
+        isMarked = false;
+    }
+
+    function changeDamageLocationTab(e) {
+        let imgBtn = e.currentTarget;
+        let img_idx = $(imgBtn).data('imgButton');
+        let imgCont = $('[data-img-index="' + img_idx + '"]');
+
+        $('.dh-tit').removeClass('active');
+        $('.db-img').removeClass('active');
+        $(imgBtn).addClass('active');
+        $(imgCont).addClass('active');
+
+        console.log(img_idx);
+        imageLocation = img_idx;
+        isMarked = false;
+    }
+
+    $(function(){
+
+        $('#re_damage_check').click(function () {
+            let result = confirm('데미지 체크 설정을 초기화 하시겠습니까?');
+            if(result) {
+                let guideId = $('#guideId').val();
+                Service.resetDamageCheck(guideId, function () {
+                    $('.tab03').addClass('active');
+                    $('.tab03.second').removeClass('active');
+                    isRetryDamageCheck = true;
+                    inspectObj.damageList = [];
+                });
+            }
+            //console.log('damage check retry');
+        });
+
+        // 차량 데미지 체크 섹션 탭 기능
+        $('.ith-tit').on('click', (e)=>{
+
+            console.log('마킹여부 : ' + isMarked);
+            console.log('차량 : ' + imageCarType);
+            console.log('차량 : ' + imageLocation);
+            if(isMarked) {
+                captureImage(true, false, e);
+            } else {
+                changeCarTypeTab(e);
+            }
+        });
+
+        // 차량 윗면/측면/아랫면 이미지 스위칭
+        $('.dh-tit').on('click', (e)=>{
+            console.log('마킹여부 : ' + isMarked);
+            console.log('차량 : ' + imageCarType);
+            console.log('차량 : ' + imageLocation);
+            if(isMarked) {
+                captureImage(false, true, e);
+            } else {
+                changeDamageLocationTab(e);
+            }
+        });
+
+        // 차량 이미지 번호 선택시 SELECTBOX OPEN
+        $('.el').on('click', (e)=>{
+            isMarked = false;
+            selected_el = e.target;
+            let idx = $(e.currentTarget).html();
+            damageLocationEnum = vh_part_enum[idx];
+            console.log(idx + ' ' + inspectObj.carType + ' ' + damageLocationEnum);
+            if($(e.currentTarget).hasClass('marking-a') ||
+                $(e.currentTarget).hasClass('marking-b') ||
+                $(e.currentTarget).hasClass('marking-c') ||
+                $(e.currentTarget).hasClass('marking-d') ||
+                $(e.currentTarget).hasClass('marking-e') ||
+                $(e.currentTarget).hasClass('marking-f') ||
+                $(e.currentTarget).hasClass('marking-g'))
+            {
+                $(e.currentTarget).removeClass('marking-a');
+                $(e.currentTarget).removeClass('marking-b');
+                $(e.currentTarget).removeClass('marking-c');
+                $(e.currentTarget).removeClass('marking-d');
+                $(e.currentTarget).removeClass('marking-e');
+                $(e.currentTarget).removeClass('marking-f');
+                $(e.currentTarget).removeClass('marking-g');
+
+                let tempList = [];
+                inspectObj.damageList.forEach(function (item, index) {
+                   if(item.carType == inspectObj.carType) {
+                       if(item.damageLocationEnum != damageLocationEnum) {
+                           tempList.push(item);
+                       }
+                   }
+                });
+                inspectObj.damageList = tempList;
+                return;
+            }
+            console.log(inspectObj);
+
+            $('.select-damage-type').addClass('active');
+            $('.part-name').html(vh_part[idx]);
+        });
+
+        // 차량 데미지 체크 SELECTBOX OPEN 상태 / ICON UP 버튼 클릭시
+        $('.sh-active').on('click', (e)=>{
+
+            selected_el = null;
+
+            $('.select-damage-type').removeClass('active');
+            $('.part-name').html('데미지체크 재설정.');
+        })
+
+        // SELECTBOX ITEM 선택
+        $('.sb-item').on('click', (e)=>{
+            let targetId = e.currentTarget.id;
+            let marker = targetId.split('-')[2];
+
+            switch(marker)
+            {
+                case "A": $(selected_el).addClass('marking-a'); damageType = 'GI_GYOHWAN'; break;
+                case "B": $(selected_el).addClass('marking-b'); damageType = 'GI_PANGUM'; break;
+                case "C": $(selected_el).addClass('marking-c'); damageType = 'GI_DOSAEK'; break;
+                case "D": $(selected_el).addClass('marking-d'); damageType = 'NEED_GYOHWAN'; break;
+                case "E": $(selected_el).addClass('marking-e'); damageType = 'NEED_PANGUM'; break;
+                case "F": $(selected_el).addClass('marking-f'); damageType = 'NEED_DOSAEK'; break;
+                case "G": $(selected_el).addClass('marking-g'); damageType = 'OTHER'; break;
+            }
+            isMarked = true;
+
+            let obj = {};
+            obj.carType = inspectObj.carType;
+            obj.damageType = damageType;
+            obj.damageLocationEnum = damageLocationEnum;
+            if(!inspectObj.damageList) {
+                inspectObj.damageList = [];
+            }
+            inspectObj.damageList.push(obj);
+
+            $('.select-damage-type').removeClass('active');
+            $('.part-name').html('데미지체크 재설정.');
+        });
+
+
+
+        $(document).on("change",".input-file", handleImgFileSelect);
+        //$('.input-file').on('change', handleImgFileSelect);
+        $(document).on("click",".delete-img", function () {
+            let targetId = $(this).attr('id');
+            console.log(targetId);
+            if(targetId == 'delete-img-1') {
+                $('#img-1').attr('src', '');
+                $('#image-1').val('');
+                imgFile_1 = "";
+                imgCnt--;
+            } else if(targetId == 'delete-img-2') {
+                $('#img-2').attr('src', '');
+                $('#image-2').val('');
+                imgFile_2 = "";
+                imgCnt--;
+            } else if(targetId == 'delete-img-3') {
+                $('#img-3').attr('src', '');
+                $('#image-3').val('');
+                imgFile_3 = "";
+                imgCnt--;
+            } else if(targetId == 'delete-img-4') {
+                $('#img-4').attr('src', '');
+                $('#image-4').val('');
+                imgFile_4 = "";
+                imgCnt--;
+            } else {
+                $('#img-5').attr('src', '');
+                $('#image-5').val('');
+                imgFile_5 = "";
+                imgCnt--;
+            }
+            handleImgFile();
+        });
+    });
+
+    function handleImgFile() {
+        imageList = [];
+        if(imgFile_1 && imgFile_1[0].name) {
+            let obj = {};
+            obj.src =  $('#img-1').attr('src');
+            if(obj.src) {
+                imageList.push(obj);
+            }
+        }
+        if(imgFile_2 && imgFile_2[0].name) {
+            let obj = {};
+            obj.src =  $('#img-2').attr('src');
+            if(obj.src) {
+                imageList.push(obj);
+            }
+        }
+        if(imgFile_3 && imgFile_3[0].name) {
+            let obj = {};
+            obj.src =  $('#img-3').attr('src');
+            if(obj.src) {
+                imageList.push(obj);
+            }
+        }
+        if(imgFile_4 && imgFile_4[0].name) {
+            let obj = {};
+            obj.src =  $('#img-4').attr('src');
+            if(obj.src) {
+                imageList.push(obj);
+            }
+        }
+        if(imgFile_5 && imgFile_5[0].name) {
+            let obj = {};
+            obj.src =  $('#img-5').attr('src');
+            if(obj.src) {
+                imageList.push(obj);
+            }
+        }
+        $('#img-div-parent').empty();
+        console.log('size : ' + imageList.length);
+        let cnt = 1;
+        imageList.forEach(function (item) {
+
+            let innerHtml = ``;
+            innerHtml += `<div id="img-div-${cnt}" class="image-item">`;
+            innerHtml += `<div class="item-img">`;
+            innerHtml += `<img id="img-${cnt}" src="${item.src}" alt="">`;
+            innerHtml += `<input id="image-${cnt}" value="${item.value}" name="image_${cnt}" class="input-file" type="file">`;
+            innerHtml += `</div>`;
+            innerHtml += `<div id="delete-img-${cnt}" class="delete-img">`;
+            innerHtml += `<img src="https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg">`;
+            innerHtml += `</div>`;
+            innerHtml += `</div>`;
+            $('#img-div-parent').append(innerHtml);
+            cnt++;
+        });
+        if(cnt <= 5) {
+            let lastHtml = ``;
+            lastHtml += `<div id="img-div-${cnt}" class="image-item btn-file_add">`;
+            lastHtml += `<div class="item-img">`;
+            lastHtml += `<img id="img-${cnt}" alt="">`;
+            lastHtml += `<input id="image-${cnt}" name="image_${cnt}" class="input-file" type="file">`;
+            lastHtml += `</div>`;
+            lastHtml += `<div id="delete-img-${cnt}" class="delete-img">`;
+            lastHtml += `<img src="https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg">`;
+            lastHtml += `</div>`;
+            lastHtml += `</div>`;
+            $('#img-div-parent').append(lastHtml);
+        }
+    }
+
+    function handleImgFileSelect(e) {
+        console.log(e.target.id);
+        let targetId = e.target.id;
+        let files = e.target.files;
+        let filesArr = Array.prototype.slice.call(files);
+
+        filesArr.forEach(function (f) {
+            if(!f.type.match("image.*")) {
+                showNormalModal('이미지 파일만 등록 가능합니다.');
+                return;
+            }
+            sel_file = f;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                //
+                console.log('handleImgFileSelect targetId : ' + targetId);
+                if(targetId == 'image-1') {
+                    //$('#img-1').parent().parent().removeClass('btn-file_add');
+                    $('#img-1').attr('src', e.target.result);
+                    //handleImgFile();
+                    imgFile_1 = $('#image-1')[0].files;
+                    imgCnt++;
+                } else if(targetId == 'image-2') {
+                    //$('#img-2').parent().parent().removeClass('btn-file_add');
+                    $('#img-2').attr('src', e.target.result);
+                    imgFile_2 = $('#image-2')[0].files;
+                    //handleImgFile();
+                    imgCnt++;
+                } else if(targetId == 'image-3') {
+                    //$('#img-3').parent().parent().removeClass('btn-file_add');
+                    $('#img-3').attr('src', e.target.result);
+                    imgFile_3 = $('#image-3')[0].files;
+                    //handleImgFile();
+                    imgCnt++;
+                } else if(targetId == 'image-4') {
+                    //$('#img-4').parent().parent().removeClass('btn-file_add');
+                    $('#img-4').attr('src', e.target.result);
+                    imgFile_4 = $('#image-4')[0].files;
+                    //handleImgFile();
+                    imgCnt++;
+                } else {
+                    //$('#img-5').parent().parent().removeClass('btn-file_add');
+                    $('#img-5').attr('src', e.target.result);
+                    imgFile_5 = $('#image-5')[0].files;
+                    //handleImgFile();
+                    imgCnt++;
+                }
+                handleImgFile();
+            }
+            reader.readAsDataURL(f);
+        });
+
+    }
+
+    function saveAdditionalImages(_func) {
+
+        let form = $('#fileUpload')[0];
+        let data = new FormData();
+
+        data.append("guideId" , $('#guideId').val());
+        if(imgFile_1) {
+            data.append("image_1" , imgFile_1[0]);
+        }
+        if(imgFile_2) {
+            data.append("image_2" , imgFile_2[0]);
+        }
+        if(imgFile_3) {
+            data.append("image_3" , imgFile_3[0]);
+        }
+        if(imgFile_4) {
+            data.append("image_4" , imgFile_4[0]);
+        }
+        if(imgFile_5) {
+            data.append("image_5" , imgFile_5[0]);
+        }
+        console.log(data);
+
+        loading();
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/api/user/v1/guide/additional/car_image",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+                loadingClose();
+                _func();
+            },
+            error: function (e) {
+                loadingClose();
+                console.log("ERROR : ", e);
+                alert("이미지 등록 실패하였습니다. 다시 시도하여 주세요.");
+            }
+        });
+    }
+
+    function nextStep() {
+        $('.tab0' + currentStep).removeClass('active');
+        if(currentStep == 5) {
+            if(inspectObj.tireWearType != "OTHER") {
+                currentStep += 2;
+            } else {
+                currentStep += 1;
+            }
+        } else if(currentStep == 2) {
+
+            let inspectedYn = $('#inspected_yn').val();
+            if(inspectedYn == 'Y') {
+                $('.tab03.second').addClass('active');
+
+                let topUrl = $('#top_img_url').val();
+                let sideUrl = $('#side_img_url').val();
+                let bottomUrl = $('#bottom_img_url').val();
+                if(topUrl) {
+                    $('#top-image-tag').attr('src', topUrl);
+                } else {
+                    $('#top-image-tag').attr('src', '/assets/img/img-car_top.png');
+                }
+
+                if(sideUrl) {
+                    $('#side-image-tag').attr('src', sideUrl);
+                } else {
+                    $('#side-image-tag').attr('src', '/assets/img/img-car_side.png');
+                }
+
+                if(bottomUrl) {
+                    $('#bottom-image-tag').attr('src', bottomUrl);
+                } else {
+                    $('#bottom-image-tag').attr('src', '/assets/img/img-car_under.png');
+                }
+
+
+                if(isRetryDamageCheck) {
+                    $('.tab03').addClass('active');
+                    $('.tab03.second').removeClass('active');
+                } else {
+                    $('.tab03').removeClass('active');
+                    $('.tab03.second').addClass('active');
+                }
+
+            } else {
+                $('.tab03').addClass('active');
+                $('.tab03.second').removeClass('active');
+            }
+
+
+            currentStep += 1;
+            return;
+
+            /*
+            $('#top-image').css({"background":"url("+topUrl+")"});
+            $('#side-image').css({"background":"url("+sideUrl+")"});
+            $('#bottom-image').css({"background":"url("+bottomUrl+")"});
+            */
+
+        } else {
+            currentStep += 1;
+        }
+        $('.tab0' + currentStep).addClass('active');
+    }
+
+    function backStep() {
+        $('.tab0' + currentStep).removeClass('active');
+        if(currentStep == 7) {
+            currentStep -= 2;
+        } else if(currentStep == 1) {
+            let carNumberYn = $('#car_number_yn').val();
+            if(carNumberYn == 'N') {
+                currentStep -= 1;
+            } else {
+                back();
+            }
+        } else if(currentStep == 4) {
+          if(isRetryDamageCheck) {
+              $('.tab03').addClass('active');
+              $('.tab03.second').removeClass('active');
+          } else {
+              $('.tab03').removeClass('active');
+              $('.tab03.second').addClass('active');
+          }
+            currentStep -= 1;
+            return;
+        } else {
+            currentStep -= 1;
+        }
+        $('.tab0' + currentStep).addClass('active');
+    }
+
+    function goToNext() {
+        if(currentStep == 1) {
+            let carNumberYn = $('#car_number_yn').val();
+            if(carNumberYn == 'N') {
+                let carNumber = $('#car_number').val();
+                if(!carNumber) {
+                    showNormalModal('차량번호를 입력하세요.');
+                    return;
+                }
+                inspectObj.carNumber = carNumber;
+                currentStep = 0;
+                $('#car_number_yn').val('Y');
+            } else {
+                if(!$('#real_mileage').val()) {
+                    showNormalModal('실주행거리를 입력해주세요');
+                    return;
+                }
+                inspectObj.mileage = $('#real_mileage').val();
+                inspectObj.carOptionIdList = [];
+                let carOptionList = [];
+                $('#car_option_div').children().each(function () {
+                    if($(this).hasClass('active')) {
+                        carOptionList.push($(this).attr('data-option-id'));
+                    }
+                });
+                inspectObj.carOptionIdList = carOptionList;
+            }
+
+        } else if(currentStep == 2) {
+            inspectObj.carType = "";
+            $('#car_type_div').children().each(function (item, index) {
+                if($(this).hasClass('active')) {
+                    inspectObj.carType = $(this).attr('data-car-type');
+                    //inspectObj.carTypes.push($(this).attr('data-car-type'));
+                }
+            });
+        } else if(currentStep == 3) {
+            captureImage(false, false);
+        } else if(currentStep == 4) {
+            inspectObj.checkListIds = [];
+            inspectObj.checkListMinusPrice = 0;
+            $('#check_list_div').children().each(function (item, index) {
+                if($(this).hasClass('active')) {
+                    inspectObj.checkListIds.push($(this).attr('data-check-id'));
+                    inspectObj.checkListMinusPrice += Number($(this).attr('data-check-price'));
+                }
+            });
+        } else if(currentStep == 5) {
+            inspectObj.tireWearType = "";
+            let count = 0;
+            $('#tire_div').children().each(function (item, index) {
+                if($(this).hasClass('active')) {
+                    inspectObj.tireWearType = $(this).attr('data-tire-type');
+                    inspectObj.tireWearPrice = $(this).attr('data-tire-price');
+                }
+            });
+            if(inspectObj.tireWearType == 'OTHER') {
+                inspectObj.tireWearPrice = $('#tire_price').val();
+                inspectObj.tireWearReason = $('#tire_reason').val();
+            }
+
+        } else if(currentStep == 6) {
+            let tirePrice = $('#tire_price').val();
+            let tireReason = $('#tire_reason').val();
+            if(!tirePrice || !tireReason) {
+                showNormalModal('금액과 사유를 입력해주세요');
+                return;
+            }
+            inspectObj.tireWearPrice = tirePrice;
+            inspectObj.tireWearReason = tireReason;
+        } else if(currentStep == 7) {
+            saveAdditionalImages(function () {
+                Service.getInspectMinusPrice(function (data) {
+                    console.log("response");
+                    console.log(data);
+                    inspectObj.minus = data;
+
+                    $('#minus_div').empty();
+
+                    let minusTotalPrice = 0;
+
+                    let checkListCnt = data.checkList.length;
+                    let checkListTotalPrice = 0;
+                    data.checkList.forEach(function (item) {
+                        checkListTotalPrice += item.price;
+                    });
+
+                    minusTotalPrice += checkListTotalPrice;
+
+                    let html = ``;
+                    html += `<div class="lhd">`;
+                    html += `<div class="td">체크리스트</div>`;
+                    html += `<div class="td"><input type="text" class="disabled" value="${checkListCnt}"></div>`;
+                    html += `<div class="td"><input style="width: 70%;" type="text" class="disabled" value="${checkListTotalPrice / 10000}"> 만원</div>`;
+                    html += `</div>`;
+                    $('#minus_div').append(html);
+
+                    let giGyoHwanCnt = 0;
+                    let giPangumCnt = 0;
+                    let giDosaekCnt = 0;
+                    let needGyoHwanCnt = 0;
+                    let needPangumCnt = 0;
+                    let needDosaekCnt = 0;
+                    let otherCnt = 0;
+                    let giGyoHwanTotalPrice = 0;
+                    let giPangumTotalPrice = 0;
+                    let giDosaekTotalPrice = 0;
+                    let needGyoHwanTotalPrice = 0;
+                    let needPangumTotalPrice = 0;
+                    let needDosaekTotalPrice = 0;
+                    let otherTotalPrice = 0;
+                    
+                    data.damageList.forEach(function (item) {
+                       if(item.damageType == 'GI_GYOHWAN') {
+                           giGyoHwanCnt++;
+                           giGyoHwanTotalPrice += item.price;
+                       } else if(item.damageType == 'GI_PANGUM') {
+                            giPangumCnt++;
+                            giPangumTotalPrice += item.price;
+                       } else if(item.damageType == 'GI_DOSAEK') {
+                           giDosaekCnt++;
+                           giDosaekTotalPrice += item.price;
+                       } else if(item.damageType == 'NEED_GYOHWAN') {
+                           needGyoHwanCnt++;
+                           needGyoHwanTotalPrice += item.price;
+                       } else if(item.damageType == 'NEED_PANGUM') {
+                           needPangumCnt++;
+                           needPangumTotalPrice += item.price;
+                       } else if(item.damageType == 'NEED_DOSAEK') {
+                           needDosaekCnt++;
+                           needDosaekTotalPrice += item.price;
+                       } else if(item.damageType == 'OTHER') {
+                           otherCnt++;
+                           otherTotalPrice += item.price;
+                       }
+                    });
+                    html = ``;
+                    console.log('giGyoHwanTotalPrice : ' + giGyoHwanTotalPrice);
+                    if(giGyoHwanCnt > 0) {
+                        html += `<div class="lhd">`;
+                        html += `<div class="td">기교환</div>`;
+                        html += `<div class="td"><input type="text" class="disabled" value="${giGyoHwanCnt}"></div>`;
+                        //html += `<div class="td"><input type="text" class="disabled" value="${Common.comma(giGyoHwanTotalPrice)}"> 원</div>`;
+                        html += `<div class="td"><input type="text" style="width: 70%;" class="disabled" value="${giGyoHwanTotalPrice / 10000}"> 만원</div>`;
+                        html += `</div>`;
+                    }
+                    minusTotalPrice += giGyoHwanTotalPrice;
+
+                    if(giPangumCnt > 0) {
+                        html += `<div class="lhd">`;
+                        html += `<div class="td">기판금</div>`;
+                        html += `<div class="td"><input type="text" class="disabled" value="${giPangumCnt}"></div>`;
+                        //html += `<div class="td"><input type="text" class="disabled" value="${Common.comma(giPangumTotalPrice)}"> 원</div>`;
+                        html += `<div class="td"><input type="text" style="width: 70%;" class="disabled" value="${giPangumTotalPrice / 10000}"> 만원</div>`;
+                        html += `</div>`;
+                    }
+                    minusTotalPrice += giPangumTotalPrice;
+
+                    if(giDosaekCnt > 0) {
+                        html += `<div class="lhd">`;
+                        html += `<div class="td">기도색</div>`;
+                        html += `<div class="td"><input type="text" class="disabled" value="${giDosaekCnt}"></div>`;
+                        //html += `<div class="td"><input type="text" class="disabled" value="${Common.comma(giDosaekTotalPrice)}"> 원</div>`;
+                        html += `<div class="td"><input type="text" style="width: 70%;" class="disabled" value="${giDosaekTotalPrice / 10000}"> 만원</div>`;
+                        html += `</div>`;
+                    }
+                    minusTotalPrice += giDosaekTotalPrice;
+
+                    if(needGyoHwanCnt > 0) {
+                        html += `<div class="lhd">`;
+                        html += `<div class="td">교환요망</div>`;
+                        html += `<div class="td"><input type="text" class="disabled" value="${needGyoHwanCnt}"></div>`;
+                        //html += `<div class="td"><input type="text" class="disabled" value="${Common.comma(needGyoHwanTotalPrice)}"> 원</div>`;
+                        html += `<div class="td"><input type="text" style="width: 70%;" class="disabled" value="${needGyoHwanTotalPrice / 10000}"> 만원</div>`;
+                        html += `</div>`;
+                    }
+                    minusTotalPrice += needGyoHwanTotalPrice;
+
+                    if(needDosaekCnt > 0) {
+                        html += `<div class="lhd">`;
+                        html += `<div class="td">도색요망</div>`;
+                        html += `<div class="td"><input type="text" class="disabled" value="${needDosaekCnt}"></div>`;
+                        //html += `<div class="td"><input type="text" class="disabled" value="${Common.comma(needDosaekTotalPrice)}"> 원</div>`;
+                        html += `<div class="td"><input type="text" style="width: 70%;" class="disabled" value="${needDosaekTotalPrice / 10000}"> 만원</div>`;
+                        html += `</div>`;
+                    }
+                    minusTotalPrice += needDosaekTotalPrice;
+
+                    if(needPangumCnt > 0) {
+                        html += `<div class="lhd">`;
+                        html += `<div class="td">판금요망</div>`;
+                        html += `<div class="td"><input type="text" class="disabled" value="${needPangumCnt}"></div>`;
+                        //html += `<div class="td"><input type="text" class="disabled" value="${Common.comma(needPangumTotalPrice)}"> 원</div>`;
+                        html += `<div class="td"><input type="text" style="width: 70%;" class="disabled" value="${needPangumTotalPrice / 10000}"> 만원</div>`;
+                        html += `</div>`;
+                    }
+                    minusTotalPrice += needPangumTotalPrice;
+
+                    if(otherCnt > 0) {
+                        html += `<div class="lhd">`;
+                        html += `<div class="td">기타</div>`;
+                        html += `<div class="td"><input type="text" class="disabled" value="${otherCnt}"></div>`;
+                        //html += `<div class="td"><input type="text" class="disabled" value="${Common.comma(otherTotalPrice)}"> 원</div>`;
+                        html += `<div class="td"><input type="text" style="width: 70%;" class="disabled" value="${otherTotalPrice / 10000}"> 만원</div>`;
+                        html += `</div>`;
+                    }
+                    minusTotalPrice += otherTotalPrice;
+                    $('#minus_div').append(html);
+
+                    html = ``;
+                    if(data.tireWearType == 'OTHER') {
+                        html += `<div class="lhd">`;
+                        html += `<div class="td">타이어마모</div>`;
+                        html += `<div class="td"><input type="text" class="disabled" value="기타"></div>`;
+                        //html += `<div class="td"><input type="text" class="disabled" value="${Common.comma(data.tireWearPrice)}"> 원</div>`;
+                        html += `<div class="td"><input type="text" style="width: 70%;" class="disabled" value="${data.tireWearPrice / 10000}"> 만원</div>`;
+                        html += `</div>`;
+                        $('#minus_div').append(html);
+                    } else if(data.tireWearType != 'EA_0') {
+                        html += `<div class="lhd">`;
+                        html += `<div class="td">타이어마모</div>`;
+                        html += `<div class="td"><input type="text" class="disabled" value="${data.tireWearCount}"></div>`;
+                        //html += `<div class="td"><input type="text" class="disabled" value="${Common.comma(data.tireWearPrice)}"> 원</div>`;
+                        html += `<div class="td"><input type="text" style="width: 70%;" class="disabled" value="${data.tireWearPrice / 10000}"> 만원</div>`;
+                        html += `</div>`;
+                        $('#minus_div').append(html);
+                    }
+
+                    minusTotalPrice += data.tireWearPrice;
+
+                    html += ``;
+                    html += ``;
+                    html += ``;
+
+                    let evaluatorMinusPrice = $('#evaluator_minus_price').val();
+
+                    if(minusTotalPrice > 0) {
+                        let tempPrice = minusTotalPrice / 10000;
+                        let tempPrice1 = minusTotalPrice % 10000;
+                        console.log(tempPrice);
+                        console.log(tempPrice1);
+                        $('#minus_total_price').val(tempPrice);
+                        if(!evaluatorMinusPrice || evaluatorMinusPrice == 0) {
+                            $('#evaluator_minus_price').val(tempPrice);
+                        }
+                    } else {
+                        $('#minus_total_price').val("0");
+                        //$('#evaluator_minus_price').val(0);
+                    }
+
+                });
+            });
+        } else if(currentStep == 8) {
+            let evaluatorMinusPrice = $('#evaluator_minus_price').val();
+            if(!evaluatorMinusPrice) {
+                evaluatorMinusPrice = 0
+            }
+            evaluatorMinusPrice = evaluatorMinusPrice * 10000;
+            inspectObj.evaluatorMinusPrice = evaluatorMinusPrice;
+        } else if(currentStep == 9) {
+            let evaluatorMinusReason = $('#evaluator_reason').val();
+            inspectObj.evaluatorMinusReason = evaluatorMinusReason;
+
+            let result = confirm('차량점검표를 제출 하시겠습니까?');
+            if(result) {
+                console.log('yes');
+                Service.saveInspect(function () {
+                    $('#modal_body').text('차량점검표 작성이 완료되었습니다.');
+                    showModal();
+                });
+            } else {
+                return;
+            }
+        }
+        console.log(inspectObj);
+        nextStep();
+    }
+
+    function goToBack() {
+        console.log(currentStep);
+        if(currentStep <= 0) {
+            back();
+            return;
+        } else {
+            backStep();
+        }
+    }
+
+    document.addEventListener('click', function(e){
+        let container = e.target.closest('.marking-container');
+
+        if (e.target.classList.contains('touch-area')){
+            let body = container;
+            let marker = document.createElement('span');
+            marker.classList.add('marker_' + selected_marking_item);
+
+            let x = e.clientX;
+            let y = e.clientY;
+
+            marker.style.left = x + 'px';
+            marker.style.top = y + 'px';
+
+            body.appendChild(marker);
+        } else if(e.target.classList.contains('button-back')) {
+            goToBack();
+        }
+    });
+    function downloadURI(uri, name){
+        var link = document.createElement("a")
+        link.download = name;
+        link.href = uri;
+        document.body.appendChild(link);
+        link.click();
+    }
+    function saveAs(uri, filename) {
+// 캡쳐된 파일을 이미지 파일로 내보낸다.
+        var link = document.createElement('a');
+        if (typeof link.download === 'string') {
+            link.href = uri;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            window.open(uri);
+        }
+    }
+
+    // 마커 초기화
+    function resetMarker(){
+        selected_marking_item = 'marker-1';
+        $('.marking-item').removeClass('active');
+        $('.marking-item:first-child').addClass('active');
+    }
+
+    // 마킹 카운트
+    function markerCount(parent_idx, marker_idx, calc){ /* 차 종류, 마킹 번호, 계산 구분(1 : + / 0 : -) */
+        inspectObj.carMarkerCount = [];
+        inspectObj.vanMarkerCount = [];
+        inspectObj.truckMarkerCount = [];
+
+        switch(parent_idx)
+        {
+            case 'tab-01' :{
+                calc == 0 ? car_marker_count[marker_idx - 1]-- : car_marker_count[marker_idx - 1]++;
+                console.log('승용차 데미지 카운트 ' + car_marker_count);
+                inspectObj.carMarkerCount = car_marker_count;
+                break;
+            }
+            case 'tab-02' :{
+                calc == 0 ? van_marker_count[marker_idx - 1]-- : van_marker_count[marker_idx - 1]++;
+                console.log('승합차 데미지 카운트 ' + van_marker_count);
+                inspectObj.vanMarkerCount = van_marker_count;
+                break;
+            }
+            case 'tab-03' :{
+                calc == 0 ? truck_marker_count[marker_idx - 1]-- : truck_marker_count[marker_idx - 1]++;
+                console.log('화물차 데미지 카운트 ' + truck_marker_count);
+                inspectObj.truckMarkerCount = truck_marker_count;
+                break;
+            }
+        }
+    }
+
+    let Service = {
+        captureInspectImg: function (type, target, _func) {
+            let guideId = $('#guideId').val();
+            if (target != null && target.length > 0) {
+                var t = target[0];
+                console.log('image target : ' + t);
+                html2canvas(t).then(function(canvas) {
+                    //let MyImage = canvas.toDataURL();
+                    //downloadURI(MyImage, "test.png");
+                    var myImg = canvas.toDataURL("image/png");
+                    myImg = myImg.replace("data:image/png;base64,", "");
+                    console.log('myImg : ' + myImg);
+                    $.ajax({
+                        type : "POST",
+                        data : {
+                            "imgSrc" : myImg
+                        },
+                        dataType : "text",
+                        url : `/api/user/v1/guide/${guideId}/car_inspect/image/${type}`,
+                        success : function(data) {
+                            console.log(data);
+                            _func(data);
+                        },
+                        error : function(a, b, c) {
+                            alert("error");
+                        }
+                    });
+                });
+            }
+        },
+
+        saveInspect : function (_func) {
+            inspectObj.guideId = $('#guideId').val();
+            var url = `/api/user/v1/guide/${inspectObj.guideId}/car_inspect`;
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(inspectObj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        getInspectMinusPrice : function (_func) {
+            inspectObj.guideId = $('#guideId').val();
+            var url = "/api/user/v1/guide/minus_price";
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(inspectObj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        resetDamageCheck: function (guideId, _func) {
+            var url = `/api/user/v1/guide/${guideId}/reset_damage`;
+            var ajaxParam = {
+                "url": url,
+                "type": "DELETE",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    _func(data.data);
+                }
+                return;
+            });
+        }
+    };
+
+</script>

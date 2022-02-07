@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:insert="~{layout/common :: head}"></th:block>
+</head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+<th:block th:insert="~{layout/common :: script}"></th:block>
+
+<div class="wrap" id="p07">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+        <div id="header" class="">
+            <div class="header-button">
+                <!--
+                <a onclick="javascript:back(); return false;" class="button-back"><img th:src="@{/assets/img/icon-arrow_left.svg}" src="" alt=""></a>
+                -->
+            </div>
+        </div>
+
+        <!-- 바디 -->
+        <div id="body" class="guide">
+            <div class="inner">
+                <!-- 앱 타이틀 -->
+                <div class="app-title">
+                    <div class="fz30 fw600 color-black">
+                        <span class="em"><span class="em-text">가이드</span><span class="em-underline"></span></span>를 <br>선택해주세요!
+                    </div>
+                </div>
+
+                <!-- 앱 내용 -->
+                <div class="app-content">
+                    <div class="guide_item-container">
+                        <div class="guide_item-header">
+                            <a th:classappend="${link == 'ALL' ? 'active' : ''}" th:href="@{/user/guide}" class="gih-title">전체</a>
+                            <a th:classappend="${link == 'ING' ? 'active' : ''}" th:href="@{/user/guide?guideStatus_ing=ING}" class="gih-title">진행중</a>
+                            <a th:classappend="${link == 'FINISH' ? 'active' : ''}"th:href="@{/user/guide?guideStatus=FINISH}" class="gih-title">완료</a>
+                            <a th:classappend="${link == 'SELL' ? 'active' : ''}"th:href="@{/user/guide?guideStatus=SELL}" class="gih-title">매각</a>
+                        </div>
+                        <div class="guide_item-list">
+                            <th:block th:each="item, stat : ${content}">
+
+
+                                <th:block th:if="${item.sendYn != null and item.sendYn.name() == 'Y'}">
+                                    <a th:href="@{/user/guide/{id}(id=${item.id})}">
+                                        <div th:name="${item.id}" class="item status3">
+                                            <div class="item-header">
+                                                <div class="num-code">
+                                                    <div  class="qn">Quote No(QN#)</div>
+                                                    <div th:text="${item.serial}" class="sn">BC20210500002</div>
+                                                </div>
+                                                <div class="status"></div>
+                                            </div>
+                                            <div class="item-body">
+                                                <div class="ib-main">
+                                                    <div th:text="${item.carNumber}" class="car-number">123가 1234</div>
+                                                    <div th:text="${item.carMadedYear + ' ' + item.carModel + ' ' + item.carTrim }" class="car-model">2020 제네시스 EQ 리무진</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </th:block>
+                                <th:block th:if="${item.sendYn == null or item.sendYn.name() == 'N'}">
+                                    <th:block th:if="${item.guideStatus.name() != 'SELL'}">
+                                        <a th:href="@{/user/guide/{id}(id=${item.id})}">
+                                            <div th:name="${item.id}" class="item status1"> <!-- 진행중인 아이템 class "status1" -->
+                                                <div class="item-header">
+                                                    <div class="num-code">
+                                                        <div  class="qn">Quote No(QN#)</div>
+                                                        <div th:text="${item.serial}" class="sn">BC20210500002</div>
+                                                    </div>
+                                                    <div class="status"></div>
+                                                </div>
+                                                <div class="item-body">
+                                                    <div class="ib-main">
+                                                        <div th:text="${item.carNumber}" class="car-number">123가 1234</div>
+                                                        <div th:text="${item.carMadedYear + ' ' + item.carModel + ' ' + item.carTrim }" class="car-model">2020 제네시스 EQ 리무진</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </th:block>
+
+                                    <th:block th:if="${item.guideStatus.name() == 'SELL'}">
+                                        <a th:href="@{/user/guide/{id}(id=${item.id})}">
+                                            <div th:name="${item.id}" class="item status2">
+                                                <div class="item-header">
+                                                    <div class="num-code">
+                                                        <div  class="qn">Quote No(QN#)</div>
+                                                        <div th:text="${item.serial}" class="sn">BC20210500002</div>
+                                                    </div>
+                                                    <div class="status"></div>
+                                                </div>
+                                                <div class="item-body">
+                                                    <div class="ib-main">
+                                                        <div th:text="${item.carNumber}" class="car-number">123가 1234</div>
+                                                        <div th:text="${item.carMadedYear + ' ' + item.carModel + ' ' + item.carTrim }" class="car-model">2020 제네시스 EQ 리무진</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </th:block>
+
+                                </th:block>
+
+                            </th:block>
+                        </div>
+                        <input type="hidden" id="page" th:value="${page.page}">
+                        <input type="hidden" id="size" th:value="${page.size}">
+                        <input type="hidden" id="sort" th:value="${page.sort}">
+                        <input type="hidden" id="direction" th:value="${page.direction}">
+                        <input type="hidden" id="search" th:value="${search}">
+                        <!-- 더보기 버튼 -->
+                        <div th:if="${page.isLast == false}" class="more-button mt-40">
+                            <a th:href="@{/user/guide(page=${page.page +1}, size=${page.size})}"
+                                    class="button bg-color-primary"><span class="color-white">더보기</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <th:block th:insert="~{layout/common :: footer}"></th:block>
+    </div>
+</div>
+
+
+<script>
+    let countryType = "";
+    let carManufacturerId = "";
+    let carNumber = "";
+    let carModelId = "";
+    let carClassId = "";
+    let year = "";
+    let month = "";
+
+    function goToNext() {
+        countryType = $('#countryType').val();
+        carManufacturerId = $('#carManufacturerId').val();
+        carNumber = $('#carNumber').val();
+        carModelId = $('#carModelId').val();
+        carClassId = $('#carClassId').val();
+        year = $('#year').val();
+        month = $('#month').val();
+        let accident = "";
+
+        $('.select_item-list').children().each(function (item , index) {
+            if($(this).hasClass('active')) {
+                accident = $(this).attr('name');
+            }
+        });
+        if(!accident){
+            alert('사고여부를 선택해주세요');
+            return;
+        }
+
+
+        let url = `/user/guide/car_fuel?countryType=${countryType}&carManufacturerId=${carManufacturerId}`;
+        url += `&carNumber=${carNumber}`;
+        url += `&carModelId=${carModelId}`;
+        url += `&carClassId=${carClassId}`;
+        url += `&year=${year}`;
+        url += `&month=${month}`;
+        url += `&accident=${accident}`;
+        Common.goPage(url);
+    }
+
+
+    $(function(){
+        $('.guide_item-list .item').click(function () {
+           let guideId = $(this).attr('name');
+           console.log(guideId);
+        });
+    });
+
+    let Service = {
+        createNotice : function () {
+            let obj = {};
+            obj.title = $('#title').val();
+            obj.body = $('#summernote').val();
+            var url = "/api/admin/v1/notice";
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    alert(data.message);
+                    closeLayer();
+                    $('.modal-registry_post').removeClass('active');
+                    Common.reloadPage();
+                }
+                return;
+            });
+        }
+
+    }
+
+
+</script>

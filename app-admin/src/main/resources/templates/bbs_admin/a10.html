@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Xeicon -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+        <!-- Library : Slick/Swiper -->
+        <link rel="stylesheet" href="assets/css/slick.css">
+        <link rel="stylesheet" href="assets/css/slick-theme.css">
+        <link rel="stylesheet" href="assets/css/swiper.css">
+        <script src="assets/js/slick.js"></script>
+        <script src="assets/js/swiper.js"></script>
+        <!-- Library : WOW -->
+        <link rel="stylesheet" href="assets/css/animate.css"/>
+        <link rel="stylesheet" href="assets/css/animate.min.css"/>
+        <script src="assets/js/wow.min.js"></script>
+        <!-- Library : nice-select -->
+        <link rel="stylesheet" href="assets/css/nice-select.css"/>
+        <script src="assets/js/jquery.nice-select.js"></script>
+        <!-- Library : C3 chart -->
+        <link rel="stylesheet" href="assets/css/c3.css">
+        <script src="assets/js/c3.min.js"></script>
+        <script src="assets/js/d3-5.8.2.min.js"></script>
+        <!-- Library : jQuery UI(datepicker) -->
+        <link rel="stylesheet" href="assets/datepicker/jquery-ui.min.css">
+        <script src="assets/datepicker/jquery-ui.min.js"></script>
+        <script src="assets/datepicker/datepicker-ko.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a10">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <div id="navbar"></div>
+    
+        <!-- 메인 -->
+        <div id="main">
+            <!-- 헤더 -->
+            <div id="header"></div>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                            <span class="ct-text">차량 점검표 <span class="search-count">999,999,999</span>건이 검색되었습니다.</span>
+                        </div>
+                        <div class="breadcrumb">
+                            <a class="bc-item">Home</a>
+                            <a class="bc-item">차량점검표</a>
+                        </div>
+                    </div>
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1920">
+                        <!-- 테이블 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header flex-between">
+                                <div class="header-option">
+                                    <div class="search-option">
+                                        <span class="option-title">검색어</span>
+                                        <input class="so_input" type="text" placeholder="회원번호, 이름, 연락처를 입력하세요.">
+                                    </div>
+                                    <button class="ho_button btn-search hover01 ml-10">검색</button>
+                                </div>
+                                <div class="etc-option toggle-target">
+                                    <div class="eo-icon hover01"><i class="xi-ellipsis-h"></i></div>
+                                    <div class="eo-menus">
+                                        <div class="btn-download_excel">엑셀 다운로드</div>
+                                        <div class="view-option">
+                                            <div class="vo-item toggle-select">15개씩 보기</div>
+                                            <div class="vo-item toggle-select">30개씩 보기</div>
+                                            <div class="vo-item toggle-select">60개씩 보기</div>
+                                            <div class="vo-item toggle-select">120개씩 보기</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-item-body">
+                                <div class="table-wrapper">
+                                    <div class="table overflow-scroll">
+                                        <div class="table-body">
+                                            <div class="item-list ti-header">
+                                                <div class="t-item">
+                                                    <div class="td center-align toggle-target" data-width="17">QN#</div>
+                                                    <div class="td center-align toggle-target" data-width="16">차량번호</div>
+                                                    <div class="td center-align toggle-target" data-width="13">브랜드</div>
+                                                    <div class="td center-align toggle-target" data-width="30">모델(트림)</span></div>
+                                                    <div class="td center-align toggle-target" data-width="10">연식</span></div>
+                                                    <div class="td center-align toggle-target" data-width="17">고객 담당자(연락처)</div>
+                                                </div>
+                                            </div>
+                                            <div class="item-list ti-standard">
+                                                <div class="t-item">
+                                                    <div class="td center-align">BC2105000002</div>
+                                                    <div class="td center-align">123가1234</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">팰리세이드(프레스티지)</div>
+                                                    <div class="td center-align">2020.5</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">BC2105000002</div>
+                                                    <div class="td center-align">123가1234</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">팰리세이드(프레스티지)</div>
+                                                    <div class="td center-align">2020.5</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">BC2105000002</div>
+                                                    <div class="td center-align">123가1234</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">팰리세이드(프레스티지)</div>
+                                                    <div class="td center-align">2020.5</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">BC2105000002</div>
+                                                    <div class="td center-align">123가1234</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">팰리세이드(프레스티지)</div>
+                                                    <div class="td center-align">2020.5</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">BC2105000002</div>
+                                                    <div class="td center-align">123가1234</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">팰리세이드(프레스티지)</div>
+                                                    <div class="td center-align">2020.5</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">BC2105000002</div>
+                                                    <div class="td center-align">123가1234</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">팰리세이드(프레스티지)</div>
+                                                    <div class="td center-align">2020.5</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">BC2105000002</div>
+                                                    <div class="td center-align">123가1234</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">팰리세이드(프레스티지)</div>
+                                                    <div class="td center-align">2020.5</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">BC2105000002</div>
+                                                    <div class="td center-align">123가1234</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">팰리세이드(프레스티지)</div>
+                                                    <div class="td center-align">2020.5</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">BC2105000002</div>
+                                                    <div class="td center-align">123가1234</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">팰리세이드(프레스티지)</div>
+                                                    <div class="td center-align">2020.5</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">BC2105000002</div>
+                                                    <div class="td center-align">123가1234</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">팰리세이드(프레스티지)</div>
+                                                    <div class="td center-align">2020.5</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-pagination">
+                                        <a class="tp-first"><img src="/bbs_admin/assets/img/icon-arrow_left2.png" alt=""></a>
+                                        <a class="tp-prev"><img src="/bbs_admin/assets/img/icon-arrow_left.png" alt=""></i></a>
+                                        <div class="tp-nav">
+                                            <a class="pg_num">1</a>
+                                            <a class="pg_num active">2</a> <!-- 활성화 class "active" -->
+                                            <a class="pg_num">3</a>
+                                            <a class="pg_num">4</a>
+                                            <a class="pg_num">5</a>
+                                        </div>
+                                        <a class="tp-next"><img src="/bbs_admin/assets/img/icon-arrow_right.png" alt=""></i></a>
+                                        <a class="tp-last"><img src="/bbs_admin/assets/img/icon-arrow_right2.png" alt=""></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <div id="footer"></div>
+        </div>
+    </div>
+
+    <!-- 모달 -->
+    <div class="modal">
+        <div class="modal-wrapper main-modal modal-check_list width-800">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">차량점검표 QN# (BC20210500002)</span>
+                </div>
+                <div class="breadcrumb">
+                    <a class="bc-item">Home</a>
+                    <a class="bc-item">차량점검표</a>
+                    <a class="bc-item">상세</a>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">차량점검표 작성자</span>
+                </div>
+                
+                <div class="content-item flex-row-4 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">이름(관리지점)</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">아이디</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">연락처</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">소속/지점</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">차량 정보</span>
+                </div>
+                
+                <div class="content-item flex-row-4 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">브랜드</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">모델</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">세부모델</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">등급</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">트림</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">연식</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text" id="datepicker" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">연료</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">배기량</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <span class="bb-text">cc</span>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">미션</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">주행거리</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <span class="bb-text">Km</span>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">사고유무</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">색상</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">차량번호</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">신차 가격(원)</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-item width-100p">
+                        <div class="modal-item_title">기타 사항</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-item width-100p">
+                        <div class="modal-item_title">옵션</div>
+                        <div class="modal-item_content">
+                            <div class="option-list">
+                                <span class="option-item">파노라마 썬루프</span>
+                                <span class="option-item">AUX</span>
+                                <span class="option-item">등등</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">가격</span>
+                </div>
+                
+                <div class="content-item flex-row-4 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">가이드 가격</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input btn-setting_price" type="text">
+                            <span class="bb-text">만원</span>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">점검 감가액</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input btn-setting_price" type="text">
+                            <span class="bb-text">만원</span>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">평가사 감가액</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input btn-setting_price" type="text">
+                            <span class="bb-text">만원</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">평가사 평가사유</span>
+                </div>
+                
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">평가사유</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text" placeholder="평가사유를 입력해주세요.">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content content-type02">
+                <div class="content-title">
+                    <span class="ct-title">최종 매입 가격</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title"></div>
+                        <div class="modal-item_content">
+                            <span class="total-price">100,000,000 만원</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">데미지 체크</span>
+                </div>
+
+                <div class="content-item w100p pb-10">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title"></div>
+                        <div class="modal-item_content border-none">
+                            <div class="damage-check-container">
+                                <div class="dc-image">
+                                    <div class="image-side"><img src="./assets/img/img-car_side.png" alt=""></div>
+                                    <div class="image-top"><img src="./assets/img/img-car_top.png" alt=""></div>
+                                    <div class="image-under"><img src="./assets/img/img-car_under.png" alt=""></div>
+                                </div>
+                                <div class="dc-ref mt-25 mb-25">
+                                    <div class="marking-item">
+                                        <span class="marker">A</span>
+                                        <span class="mi-desc">기교환</span>
+                                    </div>
+                                    <div class="marking-item">
+                                        <span class="marker">B</span>
+                                        <span class="mi-desc">기판금</span>
+                                    </div>
+                                    <div class="marking-item">
+                                        <span class="marker">C</span>
+                                        <span class="mi-desc">기도색</span>
+                                    </div>
+                                    <div class="marking-item">
+                                        <span class="marker">D</span>
+                                        <span class="mi-desc">교환요망</span>
+                                    </div>
+                                    <div class="marking-item">
+                                        <span class="marker">E</span>
+                                        <span class="mi-desc">판금요망</span>
+                                    </div>
+                                    <div class="marking-item">
+                                        <span class="marker">F</span>
+                                        <span class="mi-desc">도색요망</span>
+                                    </div>
+                                    <div class="marking-item">
+                                        <span class="marker">G</span>
+                                        <span class="mi-desc">기타</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">데미지 체크 세부 내역</span>
+                </div>
+
+                <div class="content-item flex-row-3 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">교환 (판수/원)</div>
+                        <div class="modal-item_content">
+                            <span class="ci-count">3 판</span>
+                            <span class="ci-price">600,000 원</span>
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">판금/용접 (판수/원)</div>
+                        <div class="modal-item_content">
+                            <span class="ci-count">3 판</span>
+                            <span class="ci-price">600,000 원</span>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">부식 (판수/원)</div>
+                        <div class="modal-item_content">
+                            <span class="ci-count">3 판</span>
+                            <span class="ci-price">600,000 원</span>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">흠집 (판수/원)</div>
+                        <div class="modal-item_content">
+                            <span class="ci-count">3 판</span>
+                            <span class="ci-price">600,000 원</span>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">요철 (판수/원)</div>
+                        <div class="modal-item_content">
+                            <span class="ci-count">3 판</span>
+                            <span class="ci-price">600,000 원</span>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">손상 (판수/원)</div>
+                        <div class="modal-item_content">
+                            <span class="ci-count">3 판</span>
+                            <span class="ci-price">600,000 원</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">체크리스트</span>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item width-40p">
+                        <div class="modal-item_title">체크리스트 합계</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <span class="bb-text">만원</span>
+                        </div>
+                    </div>
+
+                    <div class="checked-item-list">
+                        <div class="checked-item">
+                            <p class="ci-tit">차량 내부 크리닝 필요</p>
+                            <p class="ci-price">300,000 원</p>
+                        </div>
+                        <div class="checked-item">
+                            <p class="ci-tit">로커암 개스킷 누유</p>
+                            <p class="ci-price">300,000 원</p>
+                        </div>
+                        <div class="checked-item">
+                            <p class="ci-tit">타이어 마모 [3 EA]</p>
+                            <p class="ci-price">300,000 원</p>
+                        </div>
+                        <div class="checked-item">
+                            <p class="ci-tit">타이어 마모 [기타]</p>
+                            <p class="ci-price">800,000 원</p>
+                        </div>
+                    </div>
+
+                    <div class="modal-item width-100p">
+                        <div class="modal-item_title">타이어마모 기타 사유</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">사진</span>
+                </div>
+
+                <div class="content-item w100p">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title"></div>
+                        <div class="modal-item_content image-wrapper">
+                            <div class="image-container">
+                                <div class="image-item"><img src="assets/img/img-sample.png" alt=""></div>
+                                <div class="image-item"><img src="assets/img/img-sample.png" alt=""></div>
+                                <div class="image-item"><img src="assets/img/img-sample.png" alt=""></div>
+                                <div class="image-item"><img src="assets/img/img-sample.png" alt=""></div>
+                                <div class="image-item"><img src="assets/img/img-sample.png" alt=""></div>
+                                <div class="image-item"><img src="assets/img/img-sample.png" alt=""></div>
+                                <div class="image-item"><img src="assets/img/img-sample.png" alt=""></div>
+                                <div class="image-item"><img src="assets/img/img-sample.png" alt=""></div>
+                                <div class="image-item"><img src="assets/img/img-sample.png" alt=""></div>
+                                <div class="image-item"><img src="assets/img/img-sample.png" alt=""></div>
+                            </div>
+                            <button class="mf_button btn-submit hover01 mt-20">전체 다운</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title"></div>
+                        <div class="modal-item_content flex">
+                            <input class="mi_input" type="text" placeholder="내용을 입력하세요.">
+                            <button class="mf_button btn-submit hover01 ml-10 mr-0">댓글 등록</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="mf_button btn-guide hover01">가이드</button>
+                <button class="mf_button btn-submit hover01">삭제</button>
+                <button class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+            
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+    </div>
+</div>
+
+<!-- 2021-08-12 -->
+<style>
+    .ui-datepicker-calendar {display: none;}
+</style>
+<!-- //2021-08-12 -->
+
+<script>
+    $(function(){
+        // 초기화
+        $('#header').load("layout/header.html");
+        $('#navbar').load("layout/navbar.html");
+        $('#footer').load("layout/footer.html");
+
+        $('#a10 .ti-standard .t-item').on('click', activeModal_CheckList);
+
+        // 데이트피커
+        $('#datepicker').datepicker({
+            dateFormat: 'yy/mm',
+            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNamesMin: ['일','월','화','수','목','금','토'],
+            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] ,
+            changeYear: true,
+            changeMonth: true,
+            showButtonPanel: true,
+            showMonthAfterYear: true,
+            onClose: function (dateText, inst) {
+                $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+            }
+        })
+    });
+
+    function activeModal_CheckList(){
+        openLayer();
+        $('.modal-check_list').addClass('active');
+    }
+</script>

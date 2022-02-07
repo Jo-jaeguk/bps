@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a01">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <th:block th:insert="~{layout/common :: navbar}"></th:block>
+    
+        <!-- 메인 -->
+        <div id="main">
+
+            <div id="loading"><div class="round spinner"></div></div>
+
+            <!-- 헤더 -->
+            <th:block th:insert="~{layout/common :: header}"></th:block>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                        </div>
+                        <div class="breadcrumb">
+                            <a class="bc-item">Home</a>
+                            <a class="bc-item">로그</a>
+                            <a class="bc-item">회원로그</a>
+                        </div>
+                    </div>
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1920">
+                        <!-- 테이블 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header flex-between">
+                                <div class="header-option mf">
+                                    <div class="search-option">
+                                        <span class="option-title">검색어</span>
+                                        <input th:value="${param.search}" id="searchText"class="so_input" type="text" placeholder="이름, 연락처를 입력하세요.">
+                                    </div>
+                                    <div class="date-option">
+                                        <span class="option-title">기간</span>
+                                        <div class="parent-datepicker">
+                                            <input type="text" class="datepicker" id="datepicker1">
+                                        </div>
+                                        <span class="do-span">~</span>
+                                        <div class="parent-datepicker">
+                                            <input type="text" class="datepicker" id="datepicker2">
+                                        </div>
+                                    </div>
+                                    <button id="btnSearch" class="ho_button btn-search hover01">검색</button>
+                                </div>
+                            </div>
+                            <div class="content-item-body">
+                                <div class="table-wrapper">
+                                    <div class="table overflow-scroll">
+                                        <div class="table-body">
+                                            <div class="item-list ti-header">
+                                                <div class="t-item">
+                                                    <div class="td center-align toggle-target" data-width="13">회원로그번호</div>
+                                                    <div class="td center-align toggle-target" data-width="57">수정내용</div>
+                                                    <div class="td center-align toggle-target" data-width="15">수정일시</div>
+                                                    <div class="td center-align toggle-target" data-width="15">작성자(연락처)</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="item-list ti-standard">
+
+                                                <div th:each="item, stat : ${content}" th:id="${item.id}" class="t-item log">
+                                                    <div th:text="${item.id}" class="td center-align">00000000</div>
+                                                    <div th:text="${item.body}" class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm:ss')}" class="td center-align">2021-06-03 10:10</div>
+                                                    <div th:with="phone=${@customUtil.phoneFormat(item.writerPhone)}" th:text="${item.writerName + '(' + phone + ')'}" class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" id="page" th:value="${page.page}">
+                                    <input type="hidden" id="size" th:value="${page.size}">
+                                    <input type="hidden" id="sort" th:value="${page.sort}">
+                                    <input type="hidden" id="direction" th:value="${page.direction}">
+                                    <input type="hidden" id="search" th:value="${search}">
+                                    <div th:if="${page.totalPages > 0}" class="table-pagination">
+                                        <!--
+                                        <a th:if="${page.page != 1}" th:href="@{/admin/member(page=${page.page - 1}, size=${page.size})}"
+                                           class="tp-first"><img th:src="@{/assets/img/icon-arrow_left2.png}"  alt=""></a>
+                                        -->
+
+                                        <a th:if="${page.isFirst == false}"
+                                           th:href="@{/admin/log/member(page=${page.page - 1}, size=${page.size}, search=${param.search}, startedAt=${param.startedAt}, endedAt=${param.endedAt})}"
+                                           class="tp-prev"><img th:src="@{/assets/img/icon-arrow_left.png}"  alt=""></i></a>
+
+                                        <div class="tp-nav">
+                                            <a th:each="item, stat : ${ #numbers.sequence(page.startPage, page.endPage)}"
+                                               th:classappend="${item == page.page+1 ? 'active' : ''}"
+                                               th:href="@{/admin/log/member(page=${item-1}, size=${page.size}, search=${param.search}, startedAt=${param.startedAt}, endedAt=${param.endedAt})}"
+                                               th:text="${item}"
+                                               class="pg_num">1</a>
+                                        </div>
+                                        <a th:if="${page.isLast == false}"
+                                           th:href="@{/admin/log/member(page=${page.page + 1}, size=${page.size}, search=${param.search}, startedAt=${param.startedAt}, endedAt=${param.endedAt})}"
+                                           class="tp-next"><img th:src="@{/assets/img/icon-arrow_right.png}" alt=""></i></a>
+                                        <!--
+                                        <a class="tp-last"><img th:src="@{/assets/img/icon-arrow_right2.png}"  alt=""></i></a>
+                                        -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <th:block th:insert="~{layout/common :: footer}"></th:block>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let search = ""
+    $(function(){
+        $(".datepicker").datepicker({
+            showOn: "both",
+            buttonImage: "/assets/img/date_range.png",
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd',
+            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            dayNamesMin: ['일','월','화','수','목','금','토'],
+            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
+        });
+
+        search = $('#searchText').val();
+        $('#btnSearch').click(function () {
+
+            let startedAt = $('#datepicker1').val();
+            let endedAt = $('#datepicker2').val();
+            let searchText = $('#searchText').val();
+            let url = "/admin/log/member?";
+            if(!startedAt || !endedAt) {
+                alert('조회하실 날짜를 선택해 주세요');
+                return;
+            }
+            url += "startedAt=" + startedAt + 'T00:00:00';
+            url += "&endedAt=" + endedAt + 'T23:59:59';
+            if(searchText) {
+                url += "&search=" + searchText;
+            }
+           Common.goPage(url);
+        });
+
+    });
+
+    function searchValue(size) {
+        let url = `/admin/member?page=0&size=`+ size;
+        if($('#search').val()) {
+            url += '&search=' + $('#search').val();
+        }
+        Common.goPage(url);
+    }
+
+
+</script>

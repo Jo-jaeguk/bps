@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--
+<head>
+    <th:block th:insert="~{layout/common :: head}"></th:block>
+</head>
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="format-detection" content="telephone=no">
+    <title>BPS</title>
+
+    <!-- JQuery -->
+    <script th:src="@{/assets/js/jquery-3.3.1.min.js}" src=""></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <!-- Reference -->
+    <link rel="stylesheet" th:href="@{/assets/css/reset.css}" href="">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}" href="">
+    <link rel="stylesheet" th:href="@{/assets/css/custom.css}" href="">
+    <script th:src="@{/assets/js/custom.js}" src=""></script>
+</head>
+
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<th:block th:insert="~{layout/common :: script}"></th:block>
+
+<div class="wrap" id="p07">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+
+        <div id="loading"><div class="round spinner"></div></div>
+
+        <div id="header" class="">
+            <div class="header-button">
+                <a onclick="javascript:goToNext(true); return false;" class="button-back"><img th:src="@{/assets/img/icon-arrow_left.svg}" src="" alt=""></a>
+            </div>
+        </div>
+
+
+
+        <!-- 바디 -->
+        <div id="body" class="home">
+            <div class="inner-20">
+                <!-- 탭 아이템 -->
+                <div class="tab-wrapper">
+                    <!-- 탭 컨테이너 -->
+                    <div class="tab-container tab-type-02">
+                        <!-- 탭1 -->
+                        <div id="capture" class="tab tab01 active"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량 데미지 위치를 <br>터치해주세요!</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-40">
+                                <div id="mk-1" class="marking-container">
+                                    <div class="car-view">
+                                        <img id="img_inspect" class="touch-area" th:src="@{/assets/img/img-car@3x.png}"src="" alt="">
+                                    </div>
+                                    <div class="select-marker">
+                                        <div data-option="mi-04" class="marking-item mi-04 toggle-select active">흠집</div>
+                                        <div data-option="mi-01" class="marking-item mi-01 toggle-select">교환</div>
+                                        <div data-option="mi-02" class="marking-item mi-02 toggle-select">판금/용접</div>
+                                        <div data-option="mi-03" class="marking-item mi-03 toggle-select">부식</div>
+                                        <div data-option="mi-05" class="marking-item mi-05 toggle-select">요철</div>
+                                        <div data-option="mi-06" class="marking-item mi-06 toggle-select">손상</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭2 -->
+                        <!--
+                        <div class="tab tab02 ">
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량 데미지 위치를 <br>터치해주세요!</div>
+                            </div>
+                            <div class="tab-content mt-40">
+                                <div id="mk-2" class="marking-container">
+                                    <div class="car-view">
+                                        <img class="touch-area" src="assets/img/img-suv@3x.png" alt="">
+                                    </div>
+                                    <div class="select-marker">
+                                        <div data-option="mi-01" class="marking-item mi-01 toggle-select active">교환</div>
+                                        <div data-option="mi-02" class="marking-item mi-02 toggle-select">판금/용접</div>
+                                        <div data-option="mi-03" class="marking-item mi-03 toggle-select">부식</div>
+                                        <div data-option="mi-04" class="marking-item mi-04 toggle-select">흠집</div>
+                                        <div data-option="mi-05" class="marking-item mi-05 toggle-select">요철</div>
+                                        <div data-option="mi-06" class="marking-item mi-06 toggle-select">손상</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+                        <!-- 탭3 -->
+                    <!--
+                        <div class="tab tab03 ">
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량 데미지 위치를 <br>터치해주세요!</div>
+                            </div>
+                            <div class="tab-content mt-40">
+                                <div id="mk-3" class="marking-container">
+                                    <div class="car-view">
+                                        <img class="touch-area" src="assets/img/img-ban@3x.png" alt="">
+                                    </div>
+                                    <div class="select-marker">
+                                        <div data-option="mi-01" class="marking-item mi-01 toggle-select active">교환</div>
+                                        <div data-option="mi-02" class="marking-item mi-02 toggle-select">판금/용접</div>
+                                        <div data-option="mi-03" class="marking-item mi-03 toggle-select">부식</div>
+                                        <div data-option="mi-04" class="marking-item mi-04 toggle-select">흠집</div>
+                                        <div data-option="mi-05" class="marking-item mi-05 toggle-select">요철</div>
+                                        <div data-option="mi-06" class="marking-item mi-06 toggle-select">손상</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+                        <!-- 탭4 -->
+                        <div class="tab tab02 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량 사진을 <br>등록해주세요.</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-25">
+                                <div class="required-field">
+                                    <div class="field-title fz14 color-primary">필수사진</div>
+                                    <div class="image-container mt-10">
+                                        <div class="image-item">
+                                            <div class="item-img">
+                                                <img th:src="${gauge_img_url}" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">계기판</p>
+                                            <!--
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                            -->
+                                        </div>
+                                        <div class="image-item "> <!-- 이미지 추가 버튼 노출시 class "btn-file_add" -->
+                                            <div class="item-img">
+                                                <img th:src="${front_img_url}" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">전면</p>
+                                            <!--
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                            -->
+                                        </div>
+                                        <div class="image-item ">
+                                            <div class="item-img">
+                                                <img th:src="${back_img_url}" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">후면</p>
+                                            <!--
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                            -->
+                                        </div>
+                                        <div class="image-item ">
+                                            <div class="item-img">
+                                                <img th:src="${left_img_url}" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">옆(운전석)</p>
+                                            <!--
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                            -->
+                                        </div>
+                                        <div class="image-item ">
+                                            <div class="item-img">
+                                                <img th:src="${right_img_url}" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">옆(보조석)</p>
+                                            <!--
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                            -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="additional-field mt-40"> <!-- 숨김 처리 class "hidden" -->
+                                    <div class="field-title fz14 color-primary">추가사진</div>
+                                    <form method="post" enctype="multipart/form-data" id="fileUpload">
+                                        <input id="guideId" type="hidden" name="guideId" th:value="${guideId}">
+                                        <div id="img-div-parent" class="image-container mt-10">
+                                            <div id="img-div-1" class="image-item btn-file_add">
+                                                <div class="item-img">
+                                                    <img id="img-1" alt="">
+                                                    <input id="image-1" name="image_1" class="input-file" type="file">
+                                                </div>
+                                                <div id="delete-img-1" class="delete-img">
+                                                    <img th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg}" src="./" alt="">
+                                                </div>
+                                            </div>
+
+                                            <!--
+                                            <div id="img-div-2" class="image-item btn-file_add" hidden="hidden">
+                                                <div class="item-img">
+                                                    <img id="img-2" alt="">
+                                                    <input id="image-2" name="image_2" class="input-file" type="file">
+                                                </div>
+                                                <div id="delete-img-2" class="delete-img"><img
+                                                        th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg}"
+                                                        src="./" alt=""></div>
+                                            </div>
+                                            <div id="img-div-3" class="image-item btn-file_add" hidden="hidden">
+                                                <div class="item-img">
+                                                    <img id="img-3" alt="">
+                                                    <input id="image-3" name="image_3" class="input-file" type="file">
+                                                </div>
+                                                <div id="delete-img-3" class="delete-img"><img
+                                                        th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg}"
+                                                        src="./" alt=""></div>
+                                            </div>
+                                            <div id="img-div-4" class="image-item btn-file_add" hidden="hidden">
+                                                <div class="item-img">
+                                                    <img id="img-4" alt="">
+                                                    <input id="image-4" name="image_4" class="input-file" type="file">
+                                                </div>
+                                                <div id="delete-img-4" class="delete-img"><img
+                                                        th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg}"
+                                                        src="./" alt=""></div>
+                                            </div>
+                                            <div id="img-div-5" class="image-item btn-file_add" hidden="hidden">
+                                                <div class="item-img">
+                                                    <img id="img-5" alt="">
+                                                    <input id="image-5" name="image_5" class="input-file" type="file">
+                                                </div>
+                                                <div id="delete-img-5" class="delete-img"><img
+                                                        th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg}"
+                                                        src="./" alt=""></div>
+                                            </div>
+                                            -->
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭5 -->
+                        <div class="tab tab03 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">필요한 서류 모두 <br>확인하셨나요?</div>
+                                <div class="fz14 fw400 color-primary mt-10">차량등록증, 매도용인감증명서 등</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭6 -->
+                        <div class="tab tab04 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량내부 오염으로 <br>내부 클리닝이 필요한가요?</div>
+                                <div class="fz14 fw400 color-primary mt-10">흡연, 오물 등</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭7 -->
+                        <div class="tab tab05 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">버튼들을 모두 <br>정상적으로 작동하나요?</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭8 -->
+                        <div class="tab tab06 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">실린더 헤드 개스킷 <br>누유가 확인 되었나요?</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭9 -->
+                        <div class="tab tab07 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">프론트 케이스 <br>누유가 확인 되었나요?</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭10 -->
+                        <div class="tab tab08 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">로커암 개스킷 <br>누유가 확인 되었나요?</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭11 -->
+                        <div class="tab tab09 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">기타 엔진, 변속기에서 <br>누유가 확인 되었나요?</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭12 -->
+                        <div class="tab tab10 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">백판넬 교환을 <br>확인 또는 필요한가요?</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭13 -->
+                        <div class="tab tab11 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">앞삼박 교환을 <br>확인 또는 필요한가요?</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 탭14 -->
+                        <div class="tab tab12 "> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">필러 교환을 <br>확인 또는 필요한가요?</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">O</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 탭 프로그레스 -->
+        <div id="progress-bar" class="p1"> <!-- 프로그레스 진행률에 따라 class "p0 ~ p10" 부여 -->
+            <img class="progress-0" th:src="@{/assets/img/progress-0.svg}" src="assets/img/progress-0.svg" alt="">
+            <img class="progress-1" th:src="@{/assets/img/progress-1.svg}" src="assets/img/progress-1.svg" alt="">
+            <img class="progress-2" th:src="@{/assets/img/progress-2.svg}"src="assets/img/progress-2.svg" alt="">
+            <img class="progress-3" th:src="@{/assets/img/progress-3.svg}"src="assets/img/progress-3.svg" alt="">
+            <img class="progress-4" th:src="@{/assets/img/progress-4.svg}"src="assets/img/progress-4.svg" alt="">
+            <img class="progress-5" th:src="@{/assets/img/progress-5.svg}"src="assets/img/progress-5.svg" alt="">
+            <img class="progress-6" th:src="@{/assets/img/progress-6.svg}"src="assets/img/progress-6.svg" alt="">
+            <img class="progress-7" th:src="@{/assets/img/progress-7.svg}"src="assets/img/progress-7.svg" alt="">
+            <img class="progress-8" th:src="@{/assets/img/progress-8.svg}"src="assets/img/progress-8.svg" alt="">
+            <img class="progress-9" th:src="@{/assets/img/progress-9.svg}"src="assets/img/progress-9.svg" alt="">
+            <img class="progress-10" th:src="@{/assets/img/progress-10.svg}"src="assets/img/progress-10.svg" alt="">
+        </div>
+        <!-- 탭 버튼 -->
+
+        <div onclick="javascript:goToNext(false); return false;" class="button-tab-next"><img th:src="@{/assets/img/button_next.svg}" src="" alt=""></div>
+        
+    </div>
+    <a id="target" style="display: none"></a>
+</div>
+
+
+<script>
+    let guideId = "";
+    let selected_marking_item = 'mi-04';
+    let currentStep = 1;
+    let imgCnt = 0;
+    let imageList = [];
+
+    let imgFile_1;
+    let imgFile_2;
+    let imgFile_3;
+    let imgFile_4;
+    let imgFile_5;
+
+    $(function(){
+        $('.marking-item').on('click', function(e){
+            selected_marking_item = e.target.dataset.option;
+        });
+        $(document).on("change",".input-file", handleImgFileSelect);
+        //$('.input-file').on('change', handleImgFileSelect);
+        $(document).on("click",".delete-img", function () {
+            let targetId = $(this).attr('id');
+            console.log(targetId);
+            if(targetId == 'delete-img-1') {
+                $('#img-1').attr('src', '');
+                $('#image-1').val('');
+                imgFile_1 = "";
+                imgCnt--;
+            } else if(targetId == 'delete-img-2') {
+                $('#img-2').attr('src', '');
+                $('#image-2').val('');
+                imgFile_2 = "";
+                imgCnt--;
+            } else if(targetId == 'delete-img-3') {
+                $('#img-3').attr('src', '');
+                $('#image-3').val('');
+                imgFile_3 = "";
+                imgCnt--;
+            } else if(targetId == 'delete-img-4') {
+                $('#img-4').attr('src', '');
+                $('#image-4').val('');
+                imgFile_4 = "";
+                imgCnt--;
+            } else {
+                $('#img-5').attr('src', '');
+                $('#image-5').val('');
+                imgFile_5 = "";
+                imgCnt--;
+            }
+            handleImgFile();
+        });
+    });
+
+    function handleImgFile() {
+
+        imageList = [];
+        if(imgFile_1) {
+            let obj = {};
+            obj.src =  $('#img-1').attr('src');
+            imageList.push(obj);
+        }
+        if(imgFile_2) {
+            let obj = {};
+            obj.src =  $('#img-2').attr('src');
+            imageList.push(obj);
+        }
+        if(imgFile_3) {
+            let obj = {};
+            obj.src =  $('#img-3').attr('src');
+            imageList.push(obj);
+        }
+        if(imgFile_4) {
+            let obj = {};
+            obj.src =  $('#img-4').attr('src');
+            imageList.push(obj);
+        }
+        if(imgFile_5) {
+            let obj = {};
+            obj.src =  $('#img-5').attr('src');
+            imageList.push(obj);
+        }
+        /*
+        for (let i = 1; i <= 5; i++) {
+            let imageValue = $('#image-' + i).val();
+            console.log("i " + i + " , value : " + imageValue);
+            let imageSrc = $('#img-' + i).attr('src');
+            if(imageValue) {
+                let obj = {};
+                obj.value = imageValue;
+                obj.src = imageSrc;
+                imageList.push(obj);
+                console.log(obj);
+            }
+        }
+        */
+        $('#img-div-parent').empty();
+        console.log('size : ' + imageList.length);
+        let cnt = 1;
+        imageList.forEach(function (item) {
+            let innerHtml = ``;
+            innerHtml += `<div id="img-div-${cnt}" class="image-item">`;
+            innerHtml += `<div class="item-img">`;
+            innerHtml += `<img id="img-${cnt}" src="${item.src}" alt="">`;
+            innerHtml += `<input id="image-${cnt}" value="${item.value}" name="image_${cnt}" class="input-file" type="file">`;
+            innerHtml += `</div>`;
+            innerHtml += `<div id="delete-img-${cnt}" class="delete-img">`;
+            innerHtml += `<img src="https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg">`;
+            innerHtml += `</div>`;
+            innerHtml += `</div>`;
+            $('#img-div-parent').append(innerHtml);
+            cnt++;
+        });
+        if(cnt <= 5) {
+            let lastHtml = ``;
+            lastHtml += `<div id="img-div-${cnt}" class="image-item btn-file_add">`;
+            lastHtml += `<div class="item-img">`;
+            lastHtml += `<img id="img-${cnt}" alt="">`;
+            lastHtml += `<input id="image-${cnt}" name="image_${cnt}" class="input-file" type="file">`;
+            lastHtml += `</div>`;
+            lastHtml += `<div id="delete-img-${cnt}" class="delete-img">`;
+            lastHtml += `<img src="https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg">`;
+            lastHtml += `</div>`;
+            lastHtml += `</div>`;
+            $('#img-div-parent').append(lastHtml);
+        }
+    }
+
+    function handleImgFileSelect(e) {
+        console.log(e.target.id);
+        let targetId = e.target.id;
+        let files = e.target.files;
+        let filesArr = Array.prototype.slice.call(files);
+
+        filesArr.forEach(function (f) {
+            if(!f.type.match("image.*")) {
+                alert('이미지 파일만 등록 가능합니다.');
+                return;
+            }
+            sel_file = f;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                //
+                console.log('handleImgFileSelect targetId : ' + targetId);
+                if(targetId == 'image-1') {
+                    //$('#img-1').parent().parent().removeClass('btn-file_add');
+                    $('#img-1').attr('src', e.target.result);
+                    //handleImgFile();
+                    imgFile_1 = $('#image-1')[0].files;
+                    imgCnt++;
+                } else if(targetId == 'image-2') {
+                    //$('#img-2').parent().parent().removeClass('btn-file_add');
+                    $('#img-2').attr('src', e.target.result);
+                    imgFile_2 = $('#image-2')[0].files;
+                    //handleImgFile();
+                    imgCnt++;
+                } else if(targetId == 'image-3') {
+                    //$('#img-3').parent().parent().removeClass('btn-file_add');
+                    $('#img-3').attr('src', e.target.result);
+                    imgFile_3 = $('#image-3')[0].files;
+                    //handleImgFile();
+                    imgCnt++;
+                } else if(targetId == 'image-4') {
+                    //$('#img-4').parent().parent().removeClass('btn-file_add');
+                    $('#img-4').attr('src', e.target.result);
+                    imgFile_4 = $('#image-4')[0].files;
+                    //handleImgFile();
+                    imgCnt++;
+                } else {
+                    //$('#img-5').parent().parent().removeClass('btn-file_add');
+                    $('#img-5').attr('src', e.target.result);
+                    imgFile_5 = $('#image-5')[0].files;
+                    //handleImgFile();
+                    imgCnt++;
+                }
+                handleImgFile();
+            }
+            reader.readAsDataURL(f);
+        });
+
+    }
+
+    function saveAdditionalImages() {
+
+        let form = $('#fileUpload')[0];
+        let data = new FormData();
+
+        data.append("guideId" , $('#guideId').val());
+        if(imgFile_1) {
+            console.log("image_1 append");
+            data.append("image_1" , imgFile_1[0]);
+        }
+        if(imgFile_2) {
+            console.log("image_2 append");
+            data.append("image_2" , imgFile_2[0]);
+        }
+        if(imgFile_3) {
+            console.log("image_3 append");
+            data.append("image_3" , imgFile_3[0]);
+        }
+        if(imgFile_4) {
+            data.append("image_4" , imgFile_4[0]);
+        }
+        if(imgFile_5) {
+            data.append("image_5" , imgFile_5[0]);
+        }
+        console.log(data);
+
+        loading();
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/api/user/v1/guide/additional/car_image",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+                loadingClose();
+                alert('success');
+                procStep('02' , '03');
+            },
+            error: function (e) {
+                loadingClose();
+                console.log("ERROR : ", e);
+                alert("이미지 등록 실패하였습니다. 다시 시도하여 주세요.");
+            }
+        });
+
+    }
+
+    function procStep(currentStep, nextStep) {
+        let numCurrentStep = Number(currentStep);
+        let numNextStep = Number(nextStep);
+        numNextStep -= 1;
+        if(numNextStep > 10) {
+            numNextStep = 10;
+        }
+        if(numNextStep < 0) {
+            numNextStep = 0;
+        }
+        $('#progress-bar').removeClass();
+        $('#progress-bar').addClass('p' + numNextStep);
+        $('.tab' + currentStep).removeClass('active');
+        $('.tab' + nextStep).addClass('active');
+    }
+
+    function goToNext(isBack) {
+        if($('.tab01').hasClass('active')) {
+            if(isBack) {
+                back();
+            } else {
+                $('#body').addClass('loading-bg');
+                $('#loading').addClass('active');
+                Service.captureInspectImg($('#mk-1'), function (upload) {
+                    $('#body').removeClass('loading-bg');
+                    $('#loading').removeClass('active');
+                    //alert(upload.url);
+                    procStep('01' , '02');
+                });
+            }
+        } else if($('.tab02').hasClass('active')) {
+            if(isBack) {
+                procStep('02' , '01');
+            } else {
+                saveAdditionalImages();
+            }
+        } else if($('.tab03').hasClass('active')) {
+            if(isBack) {
+                procStep('03' , '02');
+            } else {
+                procStep('03' , '04');
+            }
+        } else if($('.tab04').hasClass('active')) {
+            if(isBack) {
+                procStep('04' , '03');
+            } else {
+                procStep('04' , '05');
+            }
+        } else if($('.tab05').hasClass('active')) {
+            if(isBack) {
+                procStep('05' , '04');
+            } else {
+                procStep('05' , '06');
+            }
+        } else if($('.tab06').hasClass('active')) {
+            if(isBack) {
+                procStep('06' , '05');
+            } else {
+                procStep('06' , '07');
+            }
+        } else if($('.tab07').hasClass('active')) {
+            if(isBack) {
+                procStep('07' , '06');
+            } else {
+                procStep('07' , '08');
+            }
+        } else if($('.tab08').hasClass('active')) {
+            if(isBack) {
+                procStep('08' , '07');
+            } else {
+                procStep('08' , '09');
+            }
+        } else if($('.tab09').hasClass('active')) {
+            if(isBack) {
+                procStep('09' , '08');
+            } else {
+                procStep('09' , '10');
+            }
+        } else if($('.tab10').hasClass('active')) {
+            if(isBack) {
+                procStep('10' , '09');
+            } else {
+                procStep('10' , '11');
+            }
+        } else if($('.tab11').hasClass('active')) {
+            if(isBack) {
+                procStep('11' , '10');
+            } else {
+                procStep('11' , '12');
+            }
+        } else if($('.tab12').hasClass('active')) {
+            alert('last');
+        } else if($('.tab13').hasClass('active')) {
+
+        } else if($('.tab14').hasClass('active')) {
+            // 마지막
+
+        }
+    }
+
+    document.addEventListener('click', function(e){
+        let container = e.target.closest('.marking-container');
+
+        if (e.target.classList.contains('touch-area')){
+            let body = container;
+            let marker = document.createElement('span');
+            marker.classList.add('marker_' + selected_marking_item);
+
+            let x = e.clientX;
+            let y = e.clientY;
+
+            marker.style.left = x + 'px';
+            marker.style.top = y + 'px';
+
+            body.appendChild(marker);
+        }
+    });
+    function downloadURI(uri, name){
+        var link = document.createElement("a")
+        link.download = name;
+        link.href = uri;
+        document.body.appendChild(link);
+        link.click();
+    }
+    function saveAs(uri, filename) {
+// 캡쳐된 파일을 이미지 파일로 내보낸다.
+        var link = document.createElement('a');
+        if (typeof link.download === 'string') {
+            link.href = uri;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            window.open(uri);
+        }
+    }
+
+    let Service = {
+        captureInspectImg: function (target, _func) {
+            /*
+            html2canvas(document.querySelector("#capture")).then(function (canvas) {
+                if (navigator.msSaveBlob) {
+                    var blob = canvas.msToBlob();
+                    return navigator.msSaveBlob(blob, 'test.jpg');
+                } else {
+                    var el = document.getElementById("target");
+                    el.href = canvas.toDataURL("image/jpeg");
+                    el.download = 'test.jpg';
+                    el.click();
+                }
+            });
+            */
+
+            let guideId = $('#guideId').val();
+            if (target != null && target.length > 0) {
+                var t = target[0];
+                html2canvas(t).then(function(canvas) {
+                    //let MyImage = canvas.toDataURL();
+                    //downloadURI(MyImage, "test.png");
+
+                    var myImg = canvas.toDataURL("image/png");
+                    myImg = myImg.replace("data:image/png;base64,", "");
+                    $.ajax({
+                        type : "POST",
+                        data : {
+                            "imgSrc" : myImg
+                        },
+                        dataType : "text",
+                        url : `/api/user/v1/guide/${guideId}/car_inspect/image`,
+                        success : function(data) {
+                            console.log(data);
+                            _func(data);
+                        },
+                        error : function(a, b, c) {
+                            alert("error");
+                        }
+                    });
+                });
+            }
+
+        }
+    }
+
+
+</script>

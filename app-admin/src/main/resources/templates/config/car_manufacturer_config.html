@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a01">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <th:block th:insert="~{layout/common :: navbar}"></th:block>
+    
+        <!-- 메인 -->
+        <div id="main">
+
+            <div id="loading"><div class="round spinner"></div></div>
+
+            <!-- 헤더 -->
+            <th:block th:insert="~{layout/common :: header}"></th:block>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                            <span class="ct-text">차량 <span class="search-count"th:text="${#numbers.formatInteger(page.totalElements , 0 , 'COMMA')}" >999,999,999</span>건이 검색되었습니다.</span>
+                        </div>
+                        <div class="breadcrumb">
+                            <a th:href="@{/}" class="bc-item">Home</a>
+                            <a class="bc-item">설정</a>
+                            <a th:href="@{/admin/config/car}" class="bc-item">차량 설정</a>
+                        </div>
+                    </div>
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1920">
+                        <!-- 테이블 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header">
+                                <div class="header-option">
+                                    <div class="search-option">
+                                        <span class="option-title">검색어</span>
+                                        <input th:value="${param.search}" id="searchText" class="so_input" type="text" placeholder="브랜드, 모델명을 입력하세요.">
+                                    </div>
+                                    <button id="btnSearch" class="ho_button btn-search hover01 ml-10">검색</button>
+                                </div>
+                                <div class="button-list">
+                                    <!--
+                                    <button class="ho_button btn-setting_brand hover01">브랜드 설정</button>
+                                    -->
+                                    <button class="ho_button btn-setting_color hover01">색상 설정</button>
+                                </div>
+                                <div class="etc-option toggle-target">
+                                    <div class="eo-icon hover01"><i class="xi-ellipsis-h"></i></div>
+                                    <div class="eo-menus">
+                                        <div onclick="javascript:excelDownload(); return false;" class="btn-download_excel">엑셀 다운로드</div>
+                                        <div id="btnCreateNew" class="btn-regi_model">브랜드등록</div>
+                                        <div class="view-option">
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(15); return false;">15개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(30); return false;">30개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(60); return false;">60개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(120); return false;">120개씩 보기</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-item-body">
+                                <div class="table-wrapper">
+                                    <div class="table overflow-scroll">
+                                        <div class="table-body">
+                                            <div class="item-list ti-header">
+                                                <div class="t-item">
+                                                    <div class="td center-align toggle-target" data-width="12">번호</div>
+                                                    <div class="td center-align toggle-target" data-width="20">브랜드명</div>
+                                                    <div class="td center-align toggle-target" data-width="20">영문명</div>
+                                                </div>
+                                            </div>
+                                            <div class="item-list ti-standard">
+                                                <div th:each="item, stat : ${content}" th:id="${item.id}" class="t-item">
+                                                    <div th:text="${#numbers.formatInteger(item.id , 0 , 'COMMA')}" class="td center-align">00000000</div>
+                                                    <div th:text="${item.name}" class="td center-align">현대</div>
+                                                    <div th:text="${item.nameEng}" class="td center-align">현대</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="page" th:value="${page.page}">
+                                    <input type="hidden" id="size" th:value="${page.size}">
+                                    <input type="hidden" id="sort" th:value="${page.sort}">
+                                    <input type="hidden" id="direction" th:value="${page.direction}">
+                                    <input type="hidden" id="search" th:value="${search}">
+                                    <div th:if="${page.totalPages > 0}" class="table-pagination">
+                                        <!--
+                                        <a th:if="${page.page != 1}" th:href="@{/admin/member(page=${page.page - 1}, size=${page.size})}"
+                                           class="tp-first"><img th:src="@{/assets/img/icon-arrow_left2.png}"  alt=""></a>
+                                        -->
+                                        <a th:if="${page.isFirst == false}"
+                                           th:href="@{/admin/config/car(page=${page.page - 1}, size=${page.size}, search=${param.search})}"
+                                           class="tp-prev"><img th:src="@{/assets/img/icon-arrow_left.png}"  alt=""></i></a>
+
+                                        <div class="tp-nav">
+                                            <a th:each="item, stat : ${ #numbers.sequence(page.startPage, page.endPage)}"
+                                               th:classappend="${item == page.page+1 ? 'active' : ''}"
+                                               th:href="@{/admin/config/car(page=${item-1}, size=${page.size}, search=${param.search})}"
+                                               th:text="${item}"
+                                               class="pg_num">1</a>
+                                        </div>
+                                        <a th:if="${page.isLast == false}"
+                                           th:href="@{/admin/config/car(page=${page.page + 1}, size=${page.size}, search=${param.search})}"
+                                           class="tp-next"><img th:src="@{/assets/img/icon-arrow_right.png}" alt=""></i></a>
+                                        <!--
+                                        <a class="tp-last"><img th:src="@{/assets/img/icon-arrow_right2.png}"  alt=""></i></a>
+                                        -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <th:block th:insert="~{layout/common :: footer}"></th:block>
+        </div>
+    </div>
+
+    <!-- 팝업 -->
+    <div class="modal">
+
+        <div class="modal-wrapper main-modal modal-detail width-600">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <input type="hidden" id="car_class_id"/>
+                    <span id="modal_detail_id" class="mt-text">모델번호()</span>
+                </div>
+                <div class="breadcrumb">
+                    <a th:href="@{/}" class="bc-item">Home</a>
+                    <a class="bc-item">설정</a>
+                    <a th:href="@{/admin/config/car}" class="bc-item">차량 설정</a>
+                    <a class="bc-item">상세</a>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">차량</span>
+                </div>
+
+                <div class="content-item flex-row-2 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">브랜드명</div>
+                        <div class="modal-item_content">
+                            <input id="modal_name" class="mi_input" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">브랜드 영문명</div>
+                        <div class="modal-item_content">
+                            <input id="modal_name_eng" class="mi_input" type="text" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">차량</span>
+                </div>
+
+                <div class="content-item ">
+                    <div class="modal-item">
+                        <div class="modal-item_title">국산/수입차</div>
+                        <div class="modal-item_content">
+                            <select class="mi_select" name="modal_countryType" id="countryType">
+
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="modal-footer">
+                <!--
+                <button id="btnModifyCarTrim" class="mf_button btn-save hover01">수정<button>
+                -->
+                <button id="btnDeleteCarTrim" class="mf_button btn-save hover01">삭제</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    let search = "";
+    let servletPath = `/admin/config/car_manufacturer`;
+
+    $(function(){
+        $('#btnCreateNew').on('click', activeModal_RegistryModel);
+        $('.btn-setting_brand').on('click', activeModal_SettingBrand);
+        $('.btn-setting_color').on('click', activeModal_SettingColor);
+        $('.table-body .t-item').on('click', activeModal_Detail);
+
+        search = $('#searchText').val();
+        $('#btnSearch').click(function () {
+           if(!$('#searchText').val()) {
+               alert("검색어를 입력해 주세요.");
+               return;
+           }
+           Common.goPage(servletPath + '?search=' + $('#searchText').val());
+        });
+
+
+        $('#btnCreateColor').click(function (){
+            if(!$.notnull($('#in_car_color') , '색상'))
+                return false;
+            Service.createCarColor($('#in_car_color').val());
+        });
+
+        $('.btn-close_modal').click(function () {
+            Common.reloadPage();
+        });
+
+
+        $('input:radio[name=domestic]').change(function (){
+            $('input:radio[name=international]').prop('checked', false);
+            Service.initFixBrandView();
+        });
+
+        $('input:radio[name=international]').change(function (){
+            $('input:radio[name=domestic]').prop('checked', false);
+            Service.initFixBrandView();
+        });
+
+
+
+    });
+
+    $('div[name=carManufacturer]').on('click', function(){
+        console.log($(this).attr(id));
+    });
+
+
+
+    function activeModal_RegistryModel(){
+    }
+
+
+    function activeModal_SettingColor(){
+        Service.getCarColors();
+    }
+
+    function activeModal_Detail() {
+
+    }
+
+    function searchValue(size) {
+        let url = `/admin/config/car?page=0&size=`+ size;
+        if($('#search').val()) {
+            url += '&search=' + $('#search').val();
+        }
+        Common.goPage(url);
+    }
+
+    function excelDownload() {
+        let url = `/admin/config/car/excel/download?page=` + $('#page').val() + `&size=`+ $('#size').val();
+        if($('#search').val()) {
+            url += '&search=' + $('#search').val();
+        }
+        Common.goPage(url);
+    }
+
+    let Service = {
+
+        deleteCarColor: function (id){
+            let obj = {};
+            var url = "/api/admin/v1/car_color/" + id;
+            var ajaxParam = {
+                "url": url,
+                "type": "DELETE",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    let innerHtml = "";
+                    $('div[color-id=' + id + ']').remove();
+                }
+                return;
+            });
+        },
+        createCarColor: function (color) {
+            let obj = {};
+            var url = "/api/admin/v1/car_color";
+            obj.color = color;
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    let innerHtml = "";
+                    innerHtml += `<div class="tag" name="carColor" color-id="${data.data.id}">${data.data.color}</div>`;
+                    $('#car_color').append(innerHtml);
+                    $('#in_car_color').val('');
+                }
+                return;
+            });
+        },
+        getCarColors: function () {
+            let obj = {};
+            var url = "/api/admin/v1/car_color";
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+
+                    $('#car_color').empty();
+                    for (let i = 0; i < data.data.length; i++) {
+                        let inner = data.data[i];
+                        let innerHtml = "";
+                        innerHtml += `<div class="tag" name="carColor" color-id="${inner.id}">${inner.color}</div>`;
+                        $('#car_color').append(innerHtml);
+                    }
+                    openLayer();
+                    $('.modal-setting_color').addClass('active');
+                }
+                return;
+            });
+        },
+
+
+    }
+
+
+</script>

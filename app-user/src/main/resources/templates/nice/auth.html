@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+        <script th:src="@{/naver/js/naverLogin_implicit-1.0.3.js}"></script>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+    <th:block th:insert="~{layout/common :: script}"></th:block>
+    <div class="wrap bg-color-secondary" id="p03">
+        <div id="overlay"></div>
+
+        <input type="hidden" id="id" th:value="${id}"/>
+        <input type="hidden" id="account_type" th:value="${accountType}"/>
+
+        <!-- 메인 -->
+        <div id="main">
+            <!-- 헤더 -->
+            <div id="header" class="fixed">
+                <div class="header-button">
+                    <a onclick="javascript:back(); return false;" class="button-back"><img th:src="@{/assets/img/icon-arrow_left.svg}" src="" alt=""></a>
+                </div>
+            </div>
+
+            <!-- 로딩 페이지 -->
+            <div id="body" class="loading active">  <!-- 하위 팝업 노출 class "active" -->
+                <!-- 메인 로고 -->
+                <div class="app-loading">
+                    <div class="main-logo">
+                        <img th:src="@{/assets/img/group-2@3x.png}" src="" alt="loading-image"/>
+                    </div>
+                </div>
+
+                <!-- 온보딩 - 회원가입-->
+                <div class="toast-onboarding">
+                    <div class="onboarding-button">
+                        <a onclick="javascript:join('kakao'); return false;" class="button bg-color-kakao"><img th:src="@{/assets/img/icon-brand_kakao.svg}" src="" alt=""/><span class="color-black">카카오 계정으로 회원가입</span></a>
+                        <div id="naver_login" class="button bg-color-naver">
+                            <img th:src="@{/assets/img/icon-brand_naver.svg}" src="" alt=""/>
+                            <span class="color-white">네이버 계정으로 회원가입</span>
+                        </div>
+                        <a onclick="javascript:join('email'); return false;" class="button bg-color-primary"><img th:src="@{/assets/img/icon-email.svg}" src="" alt=""/><span class="color-white">이메일 계정으로 회원가입</span></a>
+                        <a class="button bg-color-white hidden"><span class="color-primary border-bottom border-color-primary"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup popup-my_info "> <!-- 팝업 활성화 class "active" -->
+            <div class="popup-inner">
+                <div class="popup-header">
+                    <div class="popup-title">회원가입</div>
+                    <!--
+                    <div class="btn-close_popup"><img th:src="@{/assets/img/icon-close.svg}" src="" alt=""></div>
+                    -->
+                </div>
+                <div class="popup-body">
+                    <div class="form-insert">
+                        <div class="item-input">
+                            <div class="input-text">기존 가입 회원</div>
+                        </div>
+                        <div class="item-input">
+                            <div class="input-text">이미 가입되어 있습니다. 로그인을 해주세요.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-footer">
+                    <a onclick="javascript:goToLoginPage();" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup popup-join-success "> <!-- 팝업 활성화 class "active" -->
+            <div class="popup-inner">
+                <div class="popup-header">
+                    <div class="popup-title">회원가입</div>
+                    <!--
+                    <div class="btn-close_popup"><img th:src="@{/assets/img/icon-close.svg}" src="" alt=""></div>
+                    -->
+                </div>
+                <div class="popup-body">
+                    <div class="form-insert">
+                        <div class="item-input">
+                            <div class="input-text">회원가입 신청</div>
+                        </div>
+                        <div class="item-input">
+                            <div class="input-text">BPS 회원가입 신청이 완료되셨습니다. 승인 후 로그인하여 이용이 가능합니다.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-footer">
+                    <a onclick="javascript:goToLoginPage();" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <form name="form_chk" method="post">
+        <input type="hidden" name="m" value="checkplusService">
+        <input type="hidden" id="enc_data" name="EncodeData" th:value="${encData}">
+    </form>
+
+<script>
+
+    function goToLoginPage() {
+        $('#overlay').removeClass('active');
+        $('.popup-my_info').removeClass('active');
+        Common.goPage("/user/login");
+    }
+    
+
+    $(function(){
+        var encData = $('#enc_data').val();
+        var newForm = document.createElement('form');
+        newForm.name = 'newForm';
+        newForm.method = 'post';
+        newForm.action = 'https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb';
+
+        var encDataInput = document.createElement('input');
+        var mInput = document.createElement('input');
+
+        encDataInput.setAttribute('type' , 'hidden');
+        encDataInput.setAttribute('name' , 'EncodeData');
+        encDataInput.setAttribute('value' , encData);
+
+        mInput.setAttribute('type' , 'hidden');
+        mInput.setAttribute('name' , 'm');
+        mInput.setAttribute('value' , 'checkplusService');
+
+        newForm.appendChild(encDataInput);
+        newForm.appendChild(mInput);
+        document.body.appendChild(newForm);
+        newForm.submit();
+    });
+
+    let Service = {
+
+    }
+
+
+</script>

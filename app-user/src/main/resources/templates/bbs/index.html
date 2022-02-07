@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <title>Document</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <!-- jQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+    </head>
+
+<style>
+    a {display: block; font-size: 16px; padding: 6px 0; color: #3a3a3a;}
+    .im-tit {position: relative; display: inline-block; padding-right: 20px; font-size: 16px; font-weight: bold; cursor: pointer;}
+    .im-tit:after {position: absolute; top: 6px; right: 0; content: ''; border: 2px solid #000; border-width: 0 2px 2px 0; width: 5px; height: 5px; transform: rotate(45deg); pointer-events: none; transition: transform 0.15s ease-in-out;}
+    .sub-menu {display: none; margin-top: 12px;}
+    .index_menu {margin-bottom: 20px;}
+    .index_menu.active .sub-menu {display: block;}
+</style>
+
+<body style="padding: 50px;">
+    <P style="font-size: 16px;">2021-06-23 10:22</P>
+    <P style="margin-bottom: 20px; font-size: 16px;">2021-06-24 17:44</P>
+    <div class="index_menu">
+        <div class="im-tit">로그인/회원가입</div>
+        <div class="sub-menu">
+            <a href="p01.html">1. 앱 로딩</a>
+            <a href="p01_2.html">2. 앱 - 로그인</a>
+            <a href="p02.html">3. 로그인</a>
+            <a href="p03.html">4. 앱 - 회원가입</a>
+            <a href="p03_2.html">5. 회원가입</a>
+            <a href="p04.html">6. 비밀번호 변경</a>
+        </div>
+    </div>
+    <div class="index_menu">
+        <div class="im-tit">홈/정보입력</div>
+        <div class="sub-menu">
+            <a href="p05.html">1. 홈</a>
+            <a href="p06.html">2. 탭1</a>
+            <a href="p06_2.html">3. 탭2</a>
+            <a href="p06_3.html">4. 탭3</a>
+            <a href="p06_4.html">5. 탭4</a>
+            <a href="p06_5.html">6. 탭5</a>
+            <a href="p06_6.html">7. 탭6</a>
+            <a href="p06_7.html">8. 탭7</a>
+            <a href="p06_8.html">9. 탭8</a>
+            <a href="p06_9.html">10. 탭9</a>
+            <a href="p06_10.html">11. 탭10</a>
+            <a href="p06_11.html">12. 탭11</a>
+            <a href="p06_12.html">13. 탭12</a>
+            <a href="p06_13.html">14. 탭13</a>
+        </div>
+    </div>
+    <div class="index_menu">
+        <div class="im-tit">요청리스트</div>
+        <div class="sub-menu">
+            <a href="p07.html">1. 요청리스트 메인</a>
+            <a href="p08.html">2. 요청리스트 서브1</a>
+            <a href="p08_2.html">3. 요청리스트 서브2</a>
+            <a href="p08_3.html">4. 요청리스트 서브3</a>
+        </div>
+    </div>
+    <div class="index_menu">
+        <div class="im-tit">마이</div>
+        <div class="sub-menu">
+            <a href="p09.html">1. 마이</a>
+            <a href="p09_2.html">2. 마이 - 카카오</a>
+            <a href="p09_3.html">3. 마이 - 네이버</a>
+            <a href="p09_4.html">4. 마이 - 모달</a>
+            <a href="p09_5.html">5. 마이 - 모달2</a>
+        </div>
+    </div>
+    <div class="index_menu">
+        <div class="im-tit">알림</div>
+        <div class="sub-menu">
+            <a href="p10.html">1. 알림 목록</a>
+            <a href="p11.html">2. 알림 상세</a>
+        </div>
+    </div>
+    <a href="error.html">에러 페이지</a>
+</body>
+
+<script>
+    $('.im-tit').click(function(e){
+        $(e.currentTarget).parent().toggleClass('active');
+    });
+</script>

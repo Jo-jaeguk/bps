@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<th:block th:fragment="head">
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="author" content="">
+      <meta name="description" content="">
+      <meta name="keywords" content="">
+      <meta name="format-detection" content="telephone=no">
+      <title>BPS</title>
+
+      <!-- JQuery -->
+      <script th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/js/jquery-3.3.1.min.js}"></script>
+      <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+      <!-- Reference -->
+      <link rel="stylesheet" th:href="@{/assets/css/reset.css}" >
+      <link rel="stylesheet" th:href="@{/assets/css/style.css}" >
+      <link rel="stylesheet" th:href="@{/assets/css/custom.css}" >
+      <!--
+      <link rel="stylesheet" th:href="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/css/reset.css}" >
+      <link rel="stylesheet" th:href="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/css/style.css}" >
+      <link rel="stylesheet" th:href="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/css/custom.css}" >
+      -->
+
+      <script th:src="@{/assets/js/custom.js}" src=""></script>
+      <script th:src="@{/common/js/common.js}" ></script>
+
+      <script th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/js/kakao.js}" ></script>
+      <script src="https://developers.kakao.com/sdk/js/kakao.js" ></script>
+      <script src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
+      <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+
+      <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+      <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
+
+      <!-- Add Firebase products that you want to use -->
+      <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+
+
+
+</th:block>
+
+
+<th:block th:fragment="head_detail">
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="author" content="">
+      <meta name="description" content="">
+      <meta name="keywords" content="">
+      <meta name="format-detection" content="telephone=no">
+      <title>BPS</title>
+
+      <!-- JQuery -->
+      <script th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/js/jquery-3.3.1.min.js}"></script>
+
+      <!-- Reference -->
+
+      <link rel="stylesheet" th:href="@{/assets/css/reset.css}" >
+      <link rel="stylesheet" th:href="@{/assets/css/style.css}" >
+      <link rel="stylesheet" th:href="@{/assets/css/custom.css}" >
+      <!--
+      <link rel="stylesheet" th:href="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/css/reset.css}" >
+      <link rel="stylesheet" th:href="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/css/style.css}" >
+      <link rel="stylesheet" th:href="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/css/custom.css}" >
+            -->
+      <script th:src="@{/assets/js/custom.js}" src=""></script>
+      <script th:src="@{/common/js/common.js}" ></script>
+
+
+</th:block>
+
+<th:block th:fragment="script">
+      <script>
+            function back() {
+                  window.history.back();
+            }
+            function loading() {
+                  $('#body').addClass('loading-bg');
+                  $('#loading').addClass('active');
+            }
+            function loadingClose() {
+                  $('#body').removeClass('loading-bg');
+                  $('#loading').removeClass('active');
+            }
+      </script>
+</th:block>
+
+<th:block th:fragment="footer">
+      <div id="footer">
+            <a th:href="@{/user/home}"
+               th:classappend="${link == 'home' ? 'active' : ''}"
+                    class="menu">
+                  <div class="menu-icon">
+                        <img th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-home.svg}" src="" alt="">
+                        <img th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-home_active.svg}" src="" alt="">
+                  </div>
+                  <div class="menu-text">홈</div>
+            </a>
+            <a th:href="@{/user/guide}"
+               th:classappend="${link == 'ING' or link == 'FINISH' or link == 'SELL' or link == 'ALL'
+               ? 'active' : ''}"
+                    class="menu">
+                  <div class="menu-icon">
+                        <img th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-file.svg}" src="" alt="">
+                        <img th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-file_active.svg}" src="" alt="">
+                  </div>
+                  <div class="menu-text">요청리스트</div>
+            </a>
+            <a th:href="@{/user/mypage}"
+               th:classappend="${link == 'mypage' ? 'active' : ''}"
+                    class="menu">
+                  <div class="menu-icon">
+                        <img th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-person.svg}" src="" alt="">
+                        <img th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-person_active.svg}" src="" alt="">
+                  </div>
+                  <div class="menu-text">마이</div>
+            </a>
+            <a th:href="@{/user/notification}"
+               th:classappend="${link == 'notification' ? 'active' : ''}"
+                    class="menu">
+                  <div class="menu-icon">
+                        <img th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-bell.svg}" src="" alt="">
+                        <img th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-bell_active.svg}" src="" alt="">
+                  </div>
+                  <div class="menu-text">알림</div>
+            </a>
+      </div>
+
+      <script>
+            $(function(){
+
+            });
+      </script>
+
+</th:block>
+
+
+
+<th:block th:fragment="modal_html">
+
+      <div id="modal_noti" class="popup popup-join-success ">
+            <div class="popup-inner">
+                  <div class="popup-header">
+                        <div class="popup-title">가이드</div>
+                  </div>
+                  <div class="popup-body">
+                        <div class="form-insert">
+                              <div class="item-input">
+                                    <div class="input-text">차량점검표</div>
+                              </div>
+                              <div class="item-input">
+                                    <div id="modal_body" class="input-text"></div>
+                              </div>
+                        </div>
+                  </div>
+                  <div class="popup-footer">
+                        <a onclick="javascript:closeModal();" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+                  </div>
+            </div>
+      </div>
+
+      <div class="modal">
+            <div id="modal" class="modal-wrapper">
+                  <div class="modal-content">
+                        <p id="modal_content" class="fz16 text-align-center color-black">
+
+                        </p>
+                  </div>
+                  <div class="modal-footer mt-30">
+                        <div class="modal-button flex-align-center">
+                              <button id="modal_cancel"class="btn_modal-cancel">취소</button>
+                              <button id="modal_confirm"class="btn_modal-ok">확인</button>
+                              <button id="modal_normal"class="btn_modal-ok">확인</button>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</th:block>
+
+<th:block th:fragment="function">
+      <script>
+            function back() {
+                  window.history.back();
+            }
+            function loading() {
+                  $('#overlay').addClass('active');
+                  $('#loading').addClass('active');
+            }
+            function loadingClose() {
+                  $('#overlay').removeClass('active');
+                  $('#body').removeClass('loading-bg');
+                  $('#loading').removeClass('active');
+            }
+            function showNormalModal(content, _func) {
+                  console.log('invoke showNormalModal');
+                  $('#modal_content').text(content);
+                  $('#modal_cancel').addClass('hidden');
+                  $('#modal_confirm').addClass('hidden');
+                  $('#modal_normal').removeClass('hidden');
+                  $('#modal').addClass('active');
+                  $('#overlay').addClass('active');
+                  $('#modal_normal').click(function () {
+                        //event.preventDefault();
+                        _func(true);
+                        return;
+                  });
+            }
+            function showConfirmModal(content , _func) {
+                  $('#modal_content').text(content);
+                  $('#modal_cancel').removeClass('hidden');
+                  $('#modal_confirm').removeClass('hidden');
+                  $('#modal_normal').addClass('hidden');
+                  $('#modal').addClass('active');
+                  $('#overlay').addClass('active');
+                  $('#modal_confirm').click(function () {
+                        //event.preventDefault();
+                        _func(true);
+                        return;
+                  });
+                  $('#modal_cancel').click(function () {
+                        //event.preventDefault();
+                        _func(false);
+                        return;
+                  });
+            }
+            function closeModal() {
+                  $('#modal').removeClass('active');
+                  $('#overlay').removeClass('active');
+            }
+      </script>
+</th:block>
+
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+    <th:block th:insert="~{layout/common :: script}"></th:block>
+    <div class="wrap" id="p06">
+        <!-- 오버레이 처리 -->
+        <div id="overlay"></div>
+
+        <!-- 메인 -->
+        <div id="main">
+            <div id="header" class="none-fixed">
+                <div class="header-button">
+                    <!-- <a class="button-back"><img src="assets/img/icon-arrow_left.svg" alt=""></a> -->
+                </div>
+            </div>
+
+            <!-- 바디 -->
+            <div id="body" class="my">
+                <div class="inner">
+                    <!-- 앱 타이틀 -->
+                    <div class="app-title">
+                        <div class="fz30 fw600 color-black">
+                            <span class="em"><span class="em-text">반갑습니다!</span><span class="em-underline"></span></span> <br><span th:text="${member.name}" id="member_name_one"class="user-name">홍길동</span> 회원님
+                        </div>
+                    </div>
+
+                    <!-- 앱 내용 -->
+                    <div class="app-content">
+                        <div class="my-info">
+                            <div class="info_item-list">
+                                <div class="item">
+                                    <div class="if-header">
+                                        <div class="ih-tit">ID정보</div>
+                                        <input type="hidden" id="account_type" th:value="${member.accountType.name()}"/>
+                                        <a onclick="javascript:changePassword();return false;" class="ih-button">비밀번호 변경<img th:src="@{/assets/img/icon-arrow_right_s.svg}" src="" alt=""></a>
+                                    </div>
+                                    <div class="if-body">
+                                        <div class="ib-row">
+                                            <div class="irl">
+                                                <div class="irl-tit">ID</div>
+                                                <th:block th:if="${member.accountType.name() == 'KAKAO'}">
+                                                    <div class="irl-desc active-kakao">
+                                                </th:block>
+                                                <th:block th:if="${member.accountType.name() == 'NAVER'}">
+                                                    <div class="irl-desc active-naver">
+                                                </th:block>
+                                                <th:block th:if="${member.accountType.name() == 'EMAIL'}">
+                                                    <div class="irl-desc ">
+                                                </th:block>
+                                                  <!-- SNS 로그인 버튼 활성화 class "active-kakao", "active-naver"-->
+                                                    <span class="my-login-email" th:text="${member.emailAddress}">email@email.com</span>
+                                                    <a class="button-sns-login my-login-kakao"><img th:src="@{/assets/img/icon-brand_kakao.svg}" src="" alt="">카카오 로그인</a>
+                                                    <a class="button-sns-login my-login-naver"><img th:src="@{/assets/img/icon-brand_naver.svg}" src="" alt="">네이버 로그인</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ib-row">
+                                            <div class="irl">
+                                                <div class="irl-tit">연락처</div>
+                                                <div th:text="${member.phone}" id="member_phone_one"class="irl-desc">010-1234-5678</div>
+                                            </div>
+                                            <div class="irr">
+                                                <a th:href="@{/nice/auth/change/phone}" class="button-update">변경</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="item">
+                                    <div class="if-header">
+                                        <div class="ih-tit">내정보</div>
+                                        <a th:href="@{/logout}" class="ih-button">로그아웃<img th:src="@{/assets/img/icon-arrow_right_s.svg}" src="" alt=""></a>
+                                    </div>
+                                    <div class="if-body">
+                                        <div class="ib-row">
+                                            <div class="irl">
+                                                <div class="irl-tit">이름(직위)</div>
+                                                <div th:text="${member.name + ' ' + member.position}" id="member_name" class="irl-desc">홍길동 이사</div>
+                                            </div>
+                                            <div class="irr">
+                                                <a onclick="javascript:showMyInfoModal(); return false;" class="button-update">변경</a>
+                                            </div>
+                                        </div>
+                                        <div class="ib-row">
+                                            <div class="irl">
+                                                <div class="irl-tit">연락처</div>
+                                                <div th:text="${member.phone}" id="member_phone" class="irl-desc">010-1234-5678</div>
+                                            </div>
+                                        </div>
+                                        <div class="ib-row">
+                                            <div class="irl">
+                                                <div class="irl-tit">소속</div>
+                                                <div th:text="${member.groupName + ' ' + member.branch}" id="member_group"class="irl-desc">모빌리티케어 금천지점</div>
+                                            </div>
+                                            <div class="irr">
+                                                <a onclick="javascript:showMyInfoModal(); return false;" class="button-update">변경</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="item">
+                                    <div class="if-header">
+                                        <div class="ih-tit">가이드내역</div>
+                                        <a th:href="@{/user/guide}" class="ih-button">상세보기<img th:src="@{/assets/img/icon-arrow_right_s.svg}"  alt=""></a>
+                                    </div>
+                                    <div class="if-body">
+                                        <div class="ib-row">
+                                            <div class="irl">
+                                                <div class="irl-tit">총 가이드</div>
+                                            </div>
+                                            <div class="irr">
+                                                <div th:text="${#numbers.formatInteger(total_count , 0 , 'COMMA') + '건'}" class="irr-desc">31건</div>
+                                            </div>
+                                        </div>
+                                        <div class="ib-row">
+                                            <div class="irl">
+                                                <div class="irl-tit">진행중 가이드</div>
+                                            </div>
+                                            <div class="irr">
+                                                <div th:text="${#numbers.formatInteger(ing_count , 0 , 'COMMA') + '건'}"class="irr-desc">3건</div>
+                                            </div>
+                                        </div>
+                                        <div class="ib-row">
+                                            <div class="irl">
+                                                <div class="irl-tit">완료된 가이드</div>
+                                            </div>
+                                            <div class="irr">
+                                                <div th:text="${#numbers.formatInteger(finish_count , 0 , 'COMMA') + '건'}"class="irr-desc">28건</div>
+                                            </div>
+                                        </div>
+                                        <div class="ib-row">
+                                            <div class="irl">
+                                                <div class="irl-tit">매각 성사</div>
+                                            </div>
+                                            <div class="irr">
+                                                <div th:text="${#numbers.formatInteger(sell_count , 0 , 'COMMA') + '건'}"class="irr-desc">10건</div>
+                                            </div>
+                                        </div>
+                                        <div class="ib-row point">
+                                            <div class="irl">
+                                                <div class="irl-tit">누적 포인트</div>
+                                            </div>
+                                            <div class="irr">
+                                                <div th:text="${#numbers.formatInteger(member.point , 0 , 'COMMA') + 'P'}"class="irr-desc">10,000P</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 회사 정보 -->
+                <div class="corp-info">
+                    <div class="ci-header">
+                        <span class="ci-logo"><img th:src="@{/assets/img/logo-footer.svg}" src="" alt=""></span>
+                        <!--
+                        <span class="ci-name">(주)바잉카</span>
+                        -->
+                    </div>
+                    <div class="ci-address">
+                        <!--
+                        <div class="ci-add">주소1</div>
+                        <div class="ci-add">주소2</div>
+                        -->
+                    </div>
+                    <div class="ci-tel">
+                        문의전화 <span class="tel-num">1588-8978</span>
+                    </div>
+                    <div class="ci-service">
+                        <div class="cis-tit">고객센터 운영시간</div>
+                        <div class="cis-desc">평일 09:00 ~ 18:00</div>
+                        <div class="cis-desc">점심시간 12:00 ~ 13:00</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 푸터 -->
+        <th:block th:insert="~{layout/common :: footer}"></th:block>
+        </div>
+
+        <!-- 팝업 -->
+        <div class="popup popup-my_info"> <!-- 팝업 활성화 class "active" -->
+            <div class="popup-inner">
+                <div class="popup-header">
+                    <div class="popup-title">소속과 직위를 작성해주세요.</div>
+                    <div onclick="javascript:closeModal(); return false;" class="btn-close_popup"><img th:src="@{/assets/img/icon-close.svg}" src="" alt=""></div>
+                </div>
+                <div class="popup-body">
+                    <div class="form-insert">
+                        <div class="item-input">
+                            <div class="input-text">이름</div>
+                            <input id="modal_member_name"class="" type="text" placeholder="이름을 입력해주세요.">
+                        </div>
+                        <div class="item-input">
+                            <div class="input-text">소속</div>
+                            <input id="modal_member_group_name" class="" type="text" placeholder="소속을 입력해주세요.">
+                        </div>
+                        <div class="item-input">
+                            <div class="input-text">지점</div>
+                            <input id="modal_member_branch_name" class="" type="text" placeholder="지점명을 입력해주세요.">
+                        </div>
+                        <div class="item-input">
+                            <div class="input-text">직위</div>
+                            <input id="modal_member_position"class="" type="text" placeholder="직위를 입력해주세요.">
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-footer">
+                    <a onclick="javascript:updateMyInfo(); return false;" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+                </div>
+            </div>
+        </div>
+
+
+    <div class="popup popup-change_password"> <!-- 팝업 활성화 class "active" -->
+        <div class="popup-inner">
+            <div class="popup-header">
+                <div class="popup-title">소속과 직위를 작성해주세요.</div>
+                <div onclick="javascript:closeModal(); return false;" class="btn-close_popup"><img th:src="@{/assets/img/icon-close.svg}" src="" alt=""></div>
+            </div>
+            <div class="popup-body">
+                <div class="form-insert">
+                    <div class="item-input">
+                        <div class="input-text">변경하실 비밀번호</div>
+                        <input id="modal_password"class="" type="password" placeholder="변경하실 비밀번호 입력..">
+                    </div>
+                    <div class="item-input">
+                        <div class="input-text">비밀번호 재입력</div>
+                        <input id="modal_password_again" class="" type="text" placeholder="변경하실 비밀번호 재입력..">
+                    </div>
+
+                </div>
+            </div>
+            <div class="popup-footer">
+                <a onclick="javascript:changePassword(); return false;" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="popup popup-sns_change"> <!-- 팝업 활성화 class "active" -->
+        <div class="popup-inner">
+            <div class="popup-header">
+                <div class="popup-title">비밀번호변경</div>
+                <div onclick="javascript:closeModal(); return false;" class="btn-close_popup"><img th:src="@{/assets/img/icon-close.svg}" src="" alt=""></div>
+            </div>
+            <div class="popup-body">
+                <div class="form-insert">
+                    <div class="item-input">
+                        <div class="input-text">비밀번호 변경안내</div>
+                        <div id="modal_account_type" class="input-text"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <a onclick="javascript:closeModal(); return false;" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+<script>
+    function closeModal() {
+        $('#overlay').removeClass('active');
+        $('.popup-change_password').removeClass('active');
+        $('.popup-sns_change').removeClass('active');
+        $('.popup-my_info').removeClass('active');
+    }
+    function showMyInfoModal() {
+        Service.getMemberDetail();
+    }
+    function updateMyInfo() {
+        if(!$('#modal_member_name').val()) {
+            alert('이름을 입력해 주세요');
+            return false;
+        }
+        if(!$('#modal_member_group_name').val()) {
+            alert('소속을 입력해 주세요');
+            return false;
+        }
+        if(!$('#modal_member_branch_name').val()) {
+            alert('지점명을 입력해 주세요');
+            return false;
+        }
+        if(!$('#modal_member_position').val()) {
+            alert('직위을 입력해 주세요');
+            return false;
+        }
+        Service.updateMyInfo();
+    }
+    function changePassword() {
+        //Common.goPage('/user/mypage/change/password');
+        let accountType = $('#account_type').val();
+        if(accountType == 'KAKAO' || accountType == 'NAVER') {
+            $('#modal_account_type').text('고객님의 계정은 소셜 로그인 계정입니다. 비밀번호 변경이 불가합니다.');
+            $('#overlay').addClass('active');
+            $('.popup-sns_change').addClass('active');
+        } else {
+            Common.goPage('/nice/auth/change/password');
+        }
+
+    }
+
+    $(function(){
+
+    });
+    let Service = {
+        updateMyInfo: function () {
+            var url = "/api/user/v1/member";
+            let updateObj = {};
+            updateObj.name = $('#modal_member_name').val();
+            updateObj.groupName = $('#modal_member_group_name').val();
+            updateObj.branch = $('#modal_member_branch_name').val();
+            updateObj.position = $('#modal_member_position').val();
+            var ajaxParam = {
+                "url": url,
+                "type": "PUT",
+                "data": JSON.stringify(updateObj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    $('#member_name').text(data.data.name + ' ' + data.data.position);
+                    $('#member_name_one').text(data.data.name);
+
+                    $('#member_phone').text(data.data.phone);
+                    $('#member_phone_one').text(data.data.phone);
+                    $('#member_group').text(data.data.groupName + ' ' + data.data.branch);
+                    $('#overlay').removeClass('active');
+                    $('.popup-my_info').removeClass('active');
+                    return;
+                }
+                return;
+            });
+        },
+        getMemberDetail: function () {
+            var url = "/api/user/v1/member/me";
+            let updateObj = {};
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    $('#modal_member_name').val(data.data.member.name);
+                    $('#modal_member_group_name').val(data.data.member.groupName);
+                    $('#modal_member_position').val(data.data.member.position);
+                    $('#modal_member_branch_name').val(data.data.member.branch);
+                    $('#overlay').addClass('active');
+                    $('.popup-my_info').addClass('active');
+                    return;
+                }
+                return;
+            });
+        },
+    }
+</script>

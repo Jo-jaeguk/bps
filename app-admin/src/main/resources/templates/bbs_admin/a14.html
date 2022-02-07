@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Xeicon -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+        <!-- Library : Slick/Swiper -->
+        <link rel="stylesheet" href="assets/css/slick.css">
+        <link rel="stylesheet" href="assets/css/slick-theme.css">
+        <link rel="stylesheet" href="assets/css/swiper.css">
+        <script src="assets/js/slick.js"></script>
+        <script src="assets/js/swiper.js"></script>
+        <!-- Library : WOW -->
+        <link rel="stylesheet" href="assets/css/animate.css"/>
+        <link rel="stylesheet" href="assets/css/animate.min.css"/>
+        <script src="assets/js/wow.min.js"></script>
+        <!-- Library : nice-select -->
+        <link rel="stylesheet" href="assets/css/nice-select.css"/>
+        <script src="assets/js/jquery.nice-select.js"></script>
+        <!-- Library : C3 chart -->
+        <link rel="stylesheet" href="assets/css/c3.css">
+        <script src="assets/js/c3.min.js"></script>
+        <script src="assets/js/d3-5.8.2.min.js"></script>
+        <!-- Library : jQuery UI(datepicker) -->
+        <link rel="stylesheet" href="assets/datepicker/jquery-ui.min.css">
+        <script src="assets/datepicker/jquery-ui.min.js"></script>
+        <script src="assets/datepicker/datepicker-ko.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a14">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <div id="navbar"></div>
+    
+        <!-- 메인 -->
+        <div id="main">
+            <!-- 헤더 -->
+            <div id="header"></div>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                        </div>
+                        <div class="breadcrumb">
+                            <a class="bc-item">Home</a>
+                            <a class="bc-item">로그</a>
+                            <a class="bc-item">설정로그</a>
+                        </div>
+                    </div>
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1920">
+                        <!-- 테이블 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header flex-column">
+                                <div class="header-option mf">
+                                    <div class="search-option mb-10">
+                                        <span class="option-title">검색어</span>
+                                        <input class="so_input" type="text" placeholder="회원번호, 이름, 연락처를 입력하세요.">
+                                    </div>
+                                    <div class="search-option mb-10">
+                                        <span class="option-title">차량 모델</span>
+                                        <input class="so_input" type="text" placeholder="차량 모델을 입력하세요.">
+                                    </div>
+                                    <div class="search-option mb-10">
+                                        <span class="option-title">담당 딜러</span>
+                                        <input class="so_input" type="text" placeholder="담당 딜러를 입력하세요.">
+                                    </div>
+                                    
+                                    <div class="etc-option toggle-target">
+                                        <div class="eo-icon hover01"><i class="xi-ellipsis-h"></i></div>
+                                        <div class="eo-menus">
+                                            <div class="btn-download_excel">엑셀 다운로드</div>
+                                            <div id="btn-modal1" class="btn-modal">매입원가</div>
+                                            <div id="btn-modal2" class="btn-modal">상품화비용</div>
+                                            <div id="btn-modal3" class="btn-modal">경매비용</div>
+                                            <div id="btn-modal4" class="btn-modal">소매비용</div>
+                                            <div id="btn-modal5" class="btn-modal">매입구분</div>
+                                            <div id="btn-modal6" class="btn-modal">신차딜러(위치)</div>
+                                            <div id="btn-modal7" class="btn-modal">신차딜러(이름)</div>
+                                            <div id="btn-modal8" class="btn-modal">차량위치</div>
+                                            <div class="view-option">
+                                                <div class="vo-item toggle-select">15개씩 보기</div>
+                                                <div class="vo-item toggle-select">30개씩 보기</div>
+                                                <div class="vo-item toggle-select">60개씩 보기</div>
+                                                <div class="vo-item toggle-select">120개씩 보기</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="header-option mf">
+                                    <div class="date-option">
+                                        <span class="option-title">매입일</span>
+                                        <div class="parent-datepicker">
+                                            <input type="text" class="datepicker" id="datepicker1">
+                                        </div>
+                                        <span class="do-span">~</span>
+                                        <div class="parent-datepicker">
+                                            <input type="text" class="datepicker" id="datepicker2">
+                                        </div>
+                                        <button class="ho_button btn-search hover01 ml-10">검색</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-item-body">
+                                <div class="table-wrapper">
+                                    <div class="table overflow-scroll">
+                                        <div class="table-body">
+                                            <div class="item-list ti-header">
+                                                <div class="t-item">
+                                                    <div class="td center-align toggle-target" data-width="4">번호</div>
+                                                    <div class="td center-align toggle-target" data-width="5">매입일</div>
+                                                    <div class="td center-align toggle-target" data-width="5">매도일</div>
+                                                    <div class="td center-align toggle-target" data-width="5">재고기간</div>
+                                                    <div class="td center-align toggle-target" data-width="5">현재위치</div>
+                                                    <div class="td center-align toggle-target" data-width="5">브랜드</div>
+                                                    <div class="td center-align toggle-target" data-width="15">모델(세부모델)</div>
+                                                    <div class="td center-align toggle-target" data-width="15">등급(트림)</div>
+                                                    <div class="td center-align toggle-target" data-width="6">차량번호</div>
+                                                    <div class="td center-align toggle-target" data-width="6">차량대금</div>
+                                                    <div class="td center-align toggle-target" data-width="6">매입원가계</div>
+                                                    <div class="td center-align toggle-target" data-width="6">매출원가계</div>
+                                                    <div class="td center-align toggle-target" data-width="6">낙찰가</div>
+                                                    <div class="td center-align toggle-target" data-width="6">이익</div>
+                                                    <div class="td center-align toggle-target" data-width="5">상태</div>
+                                                </div>
+                                            </div>
+                                            <div class="item-list ti-standard">
+                                                <div class="t-item">
+                                                    <div class="td center-align">2</div>
+                                                    <div class="td center-align">2020.09.24</div>
+                                                    <div class="td center-align">2020.09.24</div>
+                                                    <div class="td center-align">23</div>
+                                                    <div class="td center-align">위치명</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">아반떼 (아반떼 AD(15년~18년))</div>
+                                                    <div class="td center-align">가솔린 1600cc (1.6 GDI 밸류 플러스)</div>
+                                                    <div class="td center-align">123가1234</div>
+                                                    <div class="td center-align">10,000,000</div>
+                                                    <div class="td center-align">10,000,000</div>
+                                                    <div class="td center-align">10,000,000</div>
+                                                    <div class="td center-align">10,000,000</div>
+                                                    <div class="td center-align">10,000,000</div>
+                                                    <div class="td center-align bg-color-01">판매중</div>
+                                                </div>
+
+                                                <div class="t-item">
+                                                    <div class="td center-align">1</div>
+                                                    <div class="td center-align">2020.09.24</div>
+                                                    <div class="td center-align">2020.09.24</div>
+                                                    <div class="td center-align">23</div>
+                                                    <div class="td center-align">위치명</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">아반떼 (아반떼 AD(15년~18년))</div>
+                                                    <div class="td center-align">가솔린 1600cc (1.6 GDI 밸류 플러스)</div>
+                                                    <div class="td center-align">123가1234</div>
+                                                    <div class="td center-align">10,000,000</div>
+                                                    <div class="td center-align">10,000,000</div>
+                                                    <div class="td center-align">10,000,000</div>
+                                                    <div class="td center-align">10,000,000</div>
+                                                    <div class="td center-align">10,000,000</div>
+                                                    <div class="td center-align bg-color-05">판매완료</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-pagination">
+                                        <a class="tp-first"><img src="/bbs_admin/assets/img/icon-arrow_left2.png" alt=""></a>
+                                        <a class="tp-prev"><img src="/bbs_admin/assets/img/icon-arrow_left.png" alt=""></i></a>
+                                        <div class="tp-nav">
+                                            <a class="pg_num">1</a>
+                                            <a class="pg_num active">2</a> <!-- 활성화 class "active" -->
+                                            <a class="pg_num">3</a>
+                                            <a class="pg_num">4</a>
+                                            <a class="pg_num">5</a>
+                                        </div>
+                                        <a class="tp-next"><img src="/bbs_admin/assets/img/icon-arrow_right.png" alt=""></i></a>
+                                        <a class="tp-last"><img src="/bbs_admin/assets/img/icon-arrow_right2.png" alt=""></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <div id="footer"></div>
+        </div>
+    </div>
+
+    <!-- 모달 -->
+    <div class="modal">
+        <!-- 매입 매출 모달 -->
+        <div class="modal-wrapper main-modal modal-account width-800">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">매입매출</span>
+                </div>
+                <div class="breadcrumb">
+                    <a class="bc-item">Home</a>
+                    <a class="bc-item">매입매출</a>
+                </div>
+            </div>
+
+            <div class="tab-container">
+                <div class="tab-header">
+                    <div class="btn-tab toggle-select active" id="tab01">
+                        <div class="tit-k">기본정보</div>
+                    </div>
+                    <div class="btn-tab toggle-select" id="tab02">
+                        <div class="tit-k">매입</div>
+                    </div>
+                    <div class="btn-tab toggle-select" id="tab03">
+                        <div class="tit-k">매출</div>
+                    </div>
+                </div>
+                <div class="tab-cont">
+                    <div class="tab tab01 active">
+                        <div class="modal-content">
+                            <div class="content-title">
+                                <span class="ct-title">기본</span>
+                            </div>
+                            
+                            <div class="content-item flex-row-4 mt-15">
+                                <div class="modal-item">
+                                    <div class="modal-item_title">매입일</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input modal-datepicker" type="text" readonly>
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">브랜드</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">모델</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+            
+                                <div class="modal-item">
+                                    <div class="modal-item_title">세부모델</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+            
+                                <div class="modal-item">
+                                    <div class="modal-item_title">등급</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+            
+                                <div class="modal-item">
+                                    <div class="modal-item_title">트림</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+            
+                                <div class="modal-item">
+                                    <div class="modal-item_title">차량번호</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+            
+                                <div class="modal-item">
+                                    <div class="modal-item_title">색상</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+            
+                                <div class="modal-item">
+                                    <div class="modal-item_title">연식</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input modal-datepicker" type="text" readonly>
+                                    </div>
+                                </div>
+            
+                                <div class="modal-item">
+                                    <div class="modal-item_title">주행거리</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+            
+                                <div class="modal-item">
+                                    <div class="modal-item_title">수정 차량번호</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-content">
+                            <div class="content-title">
+                                <span class="ct-title">매입 경로</span>
+                            </div>
+                            
+                            <div class="content-item flex-row-4 mt-15">
+                                <div class="modal-item">
+                                    <div class="modal-item_title">구매자</div>
+                                    <div class="modal-item_content border-box">
+                                        <select class="mi_select" name="" id="">
+                                            <option value="">전체</option>
+                                            <option value="">옵션1</option>
+                                            <option value="">옵션2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">매입구분</div>
+                                    <div class="modal-item_content border-box">
+                                        <select class="mi_select" name="" id="">
+                                            <option value="">전체</option>
+                                            <option value="">옵션1</option>
+                                            <option value="">옵션2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">신차딜러(위치)</div>
+                                    <div class="modal-item_content border-box">
+                                        <select class="mi_select" name="" id="">
+                                            <option value="">전체</option>
+                                            <option value="">옵션1</option>
+                                            <option value="">옵션2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">신차딜러(이름)</div>
+                                    <div class="modal-item_content border-box">
+                                        <select class="mi_select" name="" id="">
+                                            <option value="">전체</option>
+                                            <option value="">옵션1</option>
+                                            <option value="">옵션2</option>
+                                        </select>
+                                    </div>
+                                </div>
+            
+                                <div class="modal-item">
+                                    <div class="modal-item_title">소매평균가(원)</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="modal-content">
+                            <div class="content-item mt-15">
+                                <div class="account-wrap">
+                                    <div class="awl">
+                                        <div class="account-item">
+                                            <p class="ai-tit">판매예상가</p>
+                                            <p class="ai-price">15,000,000 원</p>
+                                        </div>
+                                        <div class="account-item">
+                                            <p class="ai-tit">판매가</p>
+                                            <p class="ai-price">15,000,000 원</p>
+                                        </div>
+                                        <div class="account-item">
+                                            <p class="ai-tit">기타 수수료 수입</p>
+                                            <p class="ai-price">15,000,000 원</p>
+                                        </div>
+                                        <div class="account-item">
+                                            <p class="ai-tit">판매가 차액</p>
+                                            <p class="ai-price">15,000,000 원</p>
+                                        </div>
+                                    </div>
+                                    <div class="aw-calc">
+                                        <div class="awc-tit">매입원가 계</div>
+                                        <div class="awc-price">15,000,000 원</div>
+                                    </div>
+                                    <div class="awr">
+                                        <div class="account-item">
+                                            <p class="ai-tit">예상이익</p>
+                                            <p class="ai-price">15,000,000 원</p>
+                                        </div>
+                                        <div class="account-item active">
+                                            <p class="ai-tit">매출이익</p>
+                                            <p class="ai-price">15,000,000 원</p>
+                                        </div>
+                                        <div class="account-item">
+                                            <p class="ai-tit">매출이익 차액</p>
+                                            <p class="ai-price">15,000,000 원</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="modal-content content-type02">
+                            <div class="content-title">
+                                <span class="ct-title">매출이익</span>
+                            </div>
+            
+                            <div class="content-item w100p pb-20">
+                                <div class="modal-item mt-15">
+                                    <div class="modal-item_title"></div>
+                                    <div class="modal-item_content">
+                                        <span class="total-price">15,000,000 원</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="modal-content">
+                            <div class="content-title">
+                                <span class="ct-title">정보</span>
+                            </div>
+                            
+                            <div class="content-item flex-row-4 mt-15">
+                                <div class="modal-item">
+                                    <div class="modal-item_title">매출처</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+            
+                                <div class="modal-item">
+                                    <div class="modal-item_title">낙찰일</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input modal-datepicker2" type="text">
+                                    </div>
+                                </div>
+            
+                                <div class="modal-item">
+                                    <div class="modal-item_title">입금일</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input modal-datepicker2" type="text">
+                                    </div>
+                                </div>
+            
+                                <div class="modal-item">
+                                    <div class="modal-item_title">상태값</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                <div class="modal-item">
+                                    <div class="modal-item_title">실판매자</div>
+                                    <div class="modal-item_content border-box">
+                                        <select class="mi_select" name="" id="">
+                                            <option value="">전체</option>
+                                            <option value="">옵션1</option>
+                                            <option value="">옵션2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">차량위치</div>
+                                    <div class="modal-item_content border-box">
+                                        <select class="mi_select" name="" id="">
+                                            <option value="">전체</option>
+                                            <option value="">옵션1</option>
+                                            <option value="">옵션2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <div class="modal-item checkbox_group flex-align-end">
+                                <div class="modal-item_content border-none mr-20">
+                                    <div class="mi_check-item">
+                                        <label for="check-03">수입</label>
+                                        <input type="checkbox" id="check-03" class="check_normal" name="checklist-01" value="excel_choice">
+                                    </div>
+                                </div>
+                                <div class="modal-item_content border-none">
+                                    <div class="mi_check-item">
+                                        <label for="check-03">필요서류 확인</label>
+                                        <input type="checkbox" id="check-03" class="check_normal" name="checklist-01" value="excel_choice">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab tab02">
+                        <div class="modal-content">
+                            <div class="content-title">
+                                <span class="ct-title">매입원가(원)</span>
+                            </div>
+                            
+                            <div class="content-item flex-row-4 mt-15">
+                                <div class="modal-item">
+                                    <div class="modal-item_title">차량원가 계</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="content-item flex-row-4 mt-15">
+                                <div class="modal-item">
+                                    <div class="modal-item_title">차량대금</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">딜러수수료</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">경매수수료</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">성능점검</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">이전등록비</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">탁송비</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">기타</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-content">
+                            <div class="content-title">
+                                <span class="ct-title">상품화비용(원)</span>
+                            </div>
+                            
+                            <div class="content-item flex-row-4 mt-15">
+                                <div class="modal-item">
+                                    <div class="modal-item_title">상품화비용 계</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="content-item flex-row-4 mt-15">
+                                <div class="modal-item">
+                                    <div class="modal-item_title">정기검사</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">보험료</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">판금</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">도장</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">광택</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">유리</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">기타</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-content">
+                            <div class="content-title">
+                                <span class="ct-title">경매비용(원)</span>
+                            </div>
+                            
+                            <div class="content-item flex-row-4 mt-15">
+                                <div class="modal-item">
+                                    <div class="modal-item_title">경매비용 계</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="content-item flex-row-4 mt-15">
+                                <div class="modal-item">
+                                    <div class="modal-item_title">출품료</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">탁송비</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">성약수수료</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">기타</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-content">
+                            <div class="content-title">
+                                <span class="ct-title">소매비용(원)</span>
+                            </div>
+                            
+                            <div class="content-item flex-row-4 mt-15">
+                                <div class="modal-item">
+                                    <div class="modal-item_title">소매비용 계</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="content-item flex-row-4 mt-15">
+                                <div class="modal-item">
+                                    <div class="modal-item_title">판매수수료</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">조합수수료</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">탁송비</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-item">
+                                    <div class="modal-item_title">기타</div>
+                                    <div class="modal-item_content">
+                                        <input class="mi_input" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab tab03">
+                        <div class="tab-title">
+                            <span class="tit-desc">매출(원)</span>
+                            <button type="button" class="add-outcome_item">+</button>
+                        </div>
+                        <div class="outcome-list">
+                            <div class="modal-content">
+                                <div class="content-item flex-row-4 mt-15">
+                                    <div class="modal-item">
+                                        <div class="modal-item_title">매출처</div>
+                                        <div class="modal-item_content">
+                                            <select class="mi_select" name="" id="">
+                                                <option value="">전체</option>
+                                                <option value="">옵션1</option>
+                                                <option value="">옵션2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+    
+                                    <div class="modal-item">
+                                        <div class="modal-item_title">희망가(광고가)</div>
+                                        <div class="modal-item_content">
+                                            <input class="mi_input" type="text">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="modal-item">
+                                        <div class="modal-item_title">판매가</div>
+                                        <div class="modal-item_content">
+                                            <input class="mi_input" type="text">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="modal-item">
+                                        <div class="modal-item_title">기타 수수료 수입</div>
+                                        <div class="modal-item_content">
+                                            <input class="mi_input" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="content-item mt-15">
+                                    <div class="modal-item">
+                                        <div class="modal-item_title">비고</div>
+                                        <div class="modal-item_content">
+                                            <input class="mi_input" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="mf_button btn-guide hover01">가이드</button>
+                <button class="mf_button btn-table hover01">차량점검표</button>
+                <button class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+            
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+        <!-- 매입원가 항목 추가 -->
+        <div class="modal-wrapper main-modal modal-setting_01 width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">매입원가 항목 추가</span>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">항목명</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <div class="modal-item-button btn-enroll_model hover03">등록</div>
+                        </div>
+                    </div>
+
+                    <div class="tag-list">
+                        <div class="tag">차량대금</div>
+                        <div class="tag">딜러수수료</div>
+                        <div class="tag">경매수수료</div>
+                        <div class="tag">성능점검</div>
+                        <div class="tag">이전등록비</div>
+                        <div class="tag">탁송비</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+            
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+        <!-- 상품화비용 항목 추가 -->
+        <div class="modal-wrapper main-modal modal-setting_02 width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">상품화비용 항목 추가</span>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">항목명</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <div class="modal-item-button btn-enroll_model hover03">등록</div>
+                        </div>
+                    </div>
+
+                    <div class="tag-list">
+                        <div class="tag">정기검사</div>
+                        <div class="tag">보험료</div>
+                        <div class="tag">판금</div>
+                        <div class="tag">도장</div>
+                        <div class="tag">광택</div>
+                        <div class="tag">유리</div>
+                        <div class="tag">기타</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+            
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+        <!-- 경매비용 항목 추가 -->
+        <div class="modal-wrapper main-modal modal-setting_03 width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">경매비용 항목 추가</span>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">항목명</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <div class="modal-item-button btn-enroll_model hover03">등록</div>
+                        </div>
+                    </div>
+
+                    <div class="tag-list">
+                        <div class="tag">출품료</div>
+                        <div class="tag">탁송비</div>
+                        <div class="tag">성약수수료</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+            
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+        <!-- 소매비용 항목 추가 -->
+        <div class="modal-wrapper main-modal modal-setting_04 width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">소매비용 항목 추가</span>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">항목명</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <div class="modal-item-button btn-enroll_model hover03">등록</div>
+                        </div>
+                    </div>
+
+                    <div class="tag-list">
+                        <div class="tag">판매수수료</div>
+                        <div class="tag">조합수수료</div>
+                        <div class="tag">탁송비</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+            
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        // 초기화
+        $('#header').load("layout/header.html");
+        $('#navbar').load("layout/navbar.html");
+        $('#footer').load("layout/footer.html");
+
+        // 데이트피커
+        $(".datepicker").datepicker({
+            showOn: "both", 
+            buttonImage: "assets/img/date_range.png", 
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd',
+            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            dayNamesMin: ['일','월','화','수','목','금','토'],
+            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] 
+        });
+
+        $('.modal-datepicker').datepicker({
+            dateFormat: 'yy/mm',
+            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNamesMin: ['일','월','화','수','목','금','토'],
+            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] ,
+            changeYear: true,
+            changeMonth: true,
+            showButtonPanel: true,
+            showMonthAfterYear: true,
+            onClose: function (dateText, inst) {
+                $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+            }
+        })
+        
+        $('.modal-datepicker2').datepicker({
+            dateFormat: 'yy-mm-dd',
+            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            dayNamesMin: ['일','월','화','수','목','금','토'],
+            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] ,
+            changeYear: true,
+            changeMonth: true,
+            showButtonPanel: true,
+            showMonthAfterYear: true
+        })
+
+        // 버튼 클릭 - 모달 노출
+        $('#a14 .ti-standard .t-item').on('click', activeModal_Account);
+        $('#btn-modal1').on('click', activeModal_Modal1);
+        $('#btn-modal2').on('click', activeModal_Modal2);
+        $('#btn-modal3').on('click', activeModal_Modal3);
+        $('#btn-modal4').on('click', activeModal_Modal4);
+
+        // 매출 아이템 추가
+        let outcome_item = "\
+            <div class='modal-content'>\
+                <div class='content-item flex-row-4 mt-15'>\
+                    <div class='modal-item'>\
+                        <div class='modal-item_title'>매출처</div>\
+                        <div class='modal-item_content'>\
+                            <select class='mi_select' name='' id=''>\
+                                <option value=''>전체</option>\
+                                <option value=''>옵션1</option>\
+                                <option value=''>옵션2</option>\
+                            </select>\
+                        </div>\
+                    </div>\
+                    <div class='modal-item'>\
+                        <div class='modal-item_title'>희망가(광고가)</div>\
+                        <div class='modal-item_content'>\
+                            <input class='mi_input' type='text'>\
+                        </div>\
+                    </div>\
+                    \
+                    <div class='modal-item'>\
+                        <div class='modal-item_title'>판매가</div>\
+                        <div class='modal-item_content'>\
+                            <input class='mi_input' type='text'>\
+                        </div>\
+                    </div>\
+                    \
+                    <div class='modal-item'>\
+                        <div class='modal-item_title'>기타 수수료 수입</div>\
+                        <div class='modal-item_content'>\
+                            <input class='mi_input' type='text'>\
+                        </div>\
+                    </div>\
+                </div>\
+                \
+                <div class='content-item mt-15'>\
+                    <div class='modal-item'>\
+                        <div class='modal-item_title'>비고</div>\
+                        <div class='modal-item_content'>\
+                            <input class='mi_input' type='text'>\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>\
+        ";
+        
+        $('.add-outcome_item').on('click', ()=>{
+            $('.outcome-list').append(outcome_item);
+        });
+    });
+    
+    function activeModal_Account(){
+        $('.btn-tab').removeClass('active');
+        $('.btn-tab#tab01').addClass('active');
+        $('.tab').removeClass('active');
+        $('.tab.tab01').addClass('active');
+        
+        openLayer();
+        $('.modal-account').addClass('active');
+    }
+    function activeModal_Modal1(){
+        openLayer();
+        $('.modal-setting_01').addClass('active');
+    }
+    function activeModal_Modal2(){
+        openLayer();
+        $('.modal-setting_01').addClass('active');
+    }
+    function activeModal_Modal3(){
+        openLayer();
+        $('.modal-setting_01').addClass('active');
+    }
+    function activeModal_Modal4(){
+        openLayer();
+        $('.modal-setting_01').addClass('active');
+    }
+</script>

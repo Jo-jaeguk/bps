@@ -1,0 +1,8 @@
+<svg width="14" height="20" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" fill-rule="evenodd">
+        <circle fill="#BDBDBD" cx="7" cy="10" r="7"/>
+        <text font-family="SpoqaHanSans-Bold, SpoqaHanSans" font-size="10" font-weight="bold" letter-spacing="-.417" fill="#FFF">
+                        <tspan x="3.5" y="12">C</tspan>
+                    </text>
+    </g>
+</svg>

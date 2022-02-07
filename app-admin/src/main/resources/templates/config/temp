@@ -1,0 +1,23 @@
+
+car_manufacturer_search
+btn_car_manufacturer_search
+
+car_manufacturer_table_body
+<div class="t-item toggle-select">
+    <div class="td center-align">2</div>
+    <div class="td center-align">현대</div>
+    <div class="td center-align">HYUNDAI</div>
+</div>
+
+car_manufacturer_table_pagination
+<a class="tp-first"><img th:src="@{/assets/img/icon-arrow_left2.png}" src="/bbs_admin/" alt=""></a>
+                                <a class="tp-prev"><img th:src="@{/assets/img/icon-arrow_left.png}" src="/bbs_admin/" alt=""></i></a>
+                                <div class="tp-nav">
+                                    <a class="pg_num">1</a>
+                                    <a class="pg_num active">2</a> <!-- 활성화 class "active" -->
+                                    <a class="pg_num">3</a>
+                                    <a class="pg_num">4</a>
+<a class="pg_num">5</a>
+
+<a class="tp-next"><img th:src="@{/assets/img/icon-arrow_right.png}" src="/bbs_admin/" alt=""></i></a>
+<a class="tp-last"><img th:src="@{/assets/img/icon-arrow_right2.png}" src="/bbs_admin/" alt=""></i></a>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+    </head>
+<style>
+</style>
+    <div id="wrap">
+
+        <input type="hidden" id="error" th:value="${error}"/>
+        <input type="hidden" id="success" th:value="${success}"/>
+        <input type="hidden" id="naver_client_id" th:value="${naverClientId}"/>
+        <input type="hidden" id="naver_redirect_url" th:value="${naverRedirectUrl}"/>
+        <input type="hidden" id="kakao_redirect_url" th:value="${kakaoRedirectUrl}"/>
+        <input type="hidden" id="naver_state" th:value="${naver_state}"/>
+
+        <!-- 메인 -->
+        <div id="login">
+            <div class="cont" id="p01">
+                <div class="login-modal">
+                    <div class="modal">
+                        <div class="logo"><img th:src="@{/assets/img/main_logo.png}" src="" alt=""></div>
+                        <div class="form">
+                            <input name="id" id="input_memberId" type="text" placeholder="아이디">
+                            <input name="pw" id="input_memberPwd" type="password" placeholder="비밀번호">
+                            <!--
+                            <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me" checked>
+                            <label class="form-check-label" for="rememberMe" aria-describedby="rememberMeHelp">로그인 유지</label>
+                            -->
+                            <div class="err">
+                                아이디, 비밀번호 분실시 담당 영업사원에게 연락 부탁드립니다.
+                            </div>
+                        </div>
+                        <div class="cont-btn">
+                            <a href="javascript:kakaoLogin();" class="button bg-color-kakao"><img src="assets/img/icon-brand_kakao.svg" alt=""/><span class="color-black">카카오 계정으로 로그인</span></a>
+                            <a href="javascript:naverLogin();" class="button bg-color-naver"><img src="assets/img/icon-brand_naver.svg" alt=""/><span class="color-white">네이버 계정으로 로그인</span></a>
+                            <a href="javascript:login();"><div class="btn-type01">로그인</div></a>
+                            <!--
+                            <button id="btnKakao">카카오로그인</button>
+                            -->
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright">
+                    Copyright © BBS Corp. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+    Kakao.init('628e3644dfe4c9c9baea57b0c79a4d58');
+
+    // SDK 초기화 여부를 판단합니다.
+    console.log(Kakao.isInitialized());
+
+    function kakaoLogin() {
+        let redirectUrl = $('#kakao_redirect_url').val();
+        Kakao.Auth.authorize({
+            redirectUri: redirectUrl,
+            prompts: 'login'
+        });
+    }
+
+    function naverLogin() {
+        console.log("naver login");
+        let naverClientId = $('#naver_client_id').val();
+        let naverRedirectUrl = $('#naver_redirect_url').val();
+        let naver_state = $('#naver_state').val();
+
+        let url = `https://nid.naver.com/oauth2.0/authorize`;
+        url += `?response_type=code`;
+        url += `&client_id=${naverClientId}`;
+        url += `&redirect_uri=${naverRedirectUrl}`;
+        url += `&state=${naver_state}`;
+        Common.goPage(url);
+    }
+
+
+    function login() {
+        var paramId = $('#input_memberId').val();
+        var paramPwd = $('#input_memberPwd').val();
+
+        var newForm = document.createElement('form');
+        newForm.name = 'newForm';
+        newForm.method = 'post';
+        newForm.action = '/loginProcess';
+
+        var id = document.createElement('input');
+        var pw = document.createElement('input');
+        var rememberMe = document.createElement('input');
+
+        id.setAttribute('type' , 'hidden');
+        id.setAttribute('name' , 'id');
+        id.setAttribute('value' , paramId);
+
+        pw.setAttribute('type' , 'hidden');
+        pw.setAttribute('name' , 'pw');
+        pw.setAttribute('value' , paramPwd);
+
+        var check = '';
+        if($('#rememberMe').is(":checked") == true) {
+            check = 'on';
+        } else {
+            check = 'off';
+        }
+        console.log('check : ' + check);
+        rememberMe.setAttribute('type' , 'hidden');
+        rememberMe.setAttribute('name' , 'remember-me');
+        rememberMe.setAttribute('value' , check);
+
+        newForm.appendChild(id);
+        newForm.appendChild(pw);
+        newForm.appendChild(rememberMe);
+
+        document.body.appendChild(newForm);
+
+        newForm.submit();
+    }
+    function enterkey() {
+        if(window.enterkey()) {
+
+        }
+    }
+
+    $(function(){
+
+        $('#btnKakao').click(function () {
+            Kakao.Auth.authorize({
+                redirectUri: 'http://andyoudev.cafe24.com/kakao/oauth/join',
+                prompts: 'login'
+            });
+        });
+
+        $('#input_memberPwd').keyup(function (e) {
+           if(e.keyCode == 13) {
+               login();
+           }
+        });
+    });
+</script>

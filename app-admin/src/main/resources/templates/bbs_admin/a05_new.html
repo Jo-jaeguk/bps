@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Xeicon -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+        <!-- Library : Slick/Swiper -->
+        <link rel="stylesheet" href="assets/css/slick.css">
+        <link rel="stylesheet" href="assets/css/slick-theme.css">
+        <link rel="stylesheet" href="assets/css/swiper.css">
+        <script src="assets/js/slick.js"></script>
+        <script src="assets/js/swiper.js"></script>
+        <!-- Library : WOW -->
+        <link rel="stylesheet" href="assets/css/animate.css"/>
+        <link rel="stylesheet" href="assets/css/animate.min.css"/>
+        <script src="assets/js/wow.min.js"></script>
+        <!-- Library : nice-select -->
+        <link rel="stylesheet" href="assets/css/nice-select.css"/>
+        <script src="assets/js/jquery.nice-select.js"></script>
+        <!-- Library : C3 chart -->
+        <link rel="stylesheet" href="assets/css/c3.css">
+        <script src="assets/js/c3.min.js"></script>
+        <script src="assets/js/d3-5.8.2.min.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a05">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <div id="navbar"></div>
+    
+        <!-- 메인 -->
+        <div id="main">
+            <!-- 헤더 -->
+            <div id="header"></div>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                            <span class="ct-text">차량 <span class="search-count">999,999,999</span>명이 검색되었습니다.</span>
+                        </div>
+                        <div class="breadcrumb">
+                            <a class="bc-item">Home</a>
+                            <a class="bc-item">설정</a>
+                            <a class="bc-item">차량 설정</a>
+                        </div>
+                    </div>
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1920">
+                        <!-- 테이블 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header">
+                                <div class="header-option">
+                                    <div class="search-option">
+                                        <span class="option-title">검색어</span>
+                                        <input class="so_input" type="text" placeholder="회원번호, 이름, 연락처를 입력하세요.">
+                                    </div>
+                                    <button class="ho_button btn-search hover01 ml-10">검색</button>
+                                </div>
+                                <div class="button-list">
+                                    <button class="ho_button btn-setting_brand hover01">브랜드 설정</button>
+                                    <button class="ho_button btn-setting_color hover01">색상 설정</button>
+                                </div>
+                                <div class="etc-option toggle-target">
+                                    <div class="eo-icon hover01"><i class="xi-ellipsis-h"></i></div>
+                                    <div class="eo-menus">
+                                        <div class="btn-download_excel">엑셀 다운로드</div>
+                                        <div class="btn-regi_model">신규모델 등록</div>
+                                        <div class="view-option">
+                                            <div class="vo-item toggle-select">15개씩 보기</div>
+                                            <div class="vo-item toggle-select">30개씩 보기</div>
+                                            <div class="vo-item toggle-select">60개씩 보기</div>
+                                            <div class="vo-item toggle-select">120개씩 보기</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-item-body">
+                                <div class="table-wrapper">
+                                    <div class="table overflow-scroll">
+                                        <div class="table-body">
+                                            <div class="item-list ti-header">
+                                                <div class="t-item">
+                                                    <div class="td center-align toggle-target" data-width="12">번호</div>
+                                                    <div class="td center-align toggle-target" data-width="44">브랜드</div>
+                                                    <div class="td center-align toggle-target" data-width="44">모델</div>
+                                                </div>
+                                            </div>
+                                            <div class="item-list ti-standard">
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">그랜저</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-pagination">
+                                        <a class="tp-first"><img src="/bbs_admin/assets/img/icon-arrow_left2.png" alt=""></a>
+                                        <a class="tp-prev"><img src="/bbs_admin/assets/img/icon-arrow_left.png" alt=""></i></a>
+                                        <div class="tp-nav">
+                                            <a class="pg_num">1</a>
+                                            <a class="pg_num active">2</a> <!-- 활성화 class "active" -->
+                                            <a class="pg_num">3</a>
+                                            <a class="pg_num">4</a>
+                                            <a class="pg_num">5</a>
+                                        </div>
+                                        <a class="tp-next"><img src="/bbs_admin/assets/img/icon-arrow_right.png" alt=""></i></a>
+                                        <a class="tp-last"><img src="/bbs_admin/assets/img/icon-arrow_right2.png" alt=""></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <div id="footer"></div>
+        </div>
+    </div>
+
+    <!-- 모달 -->
+    <div class="modal">
+        <!-- 신규모델 등록 모달 -->
+        <div class="modal-wrapper main-modal modal-registry_model modal-tab_wrapper width-600">
+            <!-- 2021-08-04 신규 추가 -->
+            <!-- Modal - STEP 1 -->
+            <div class="modal-tab_container mtc01 active"> <!-- 활성화 modal-tab_container에게 class "active" -->
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <span class="mt-text">STEP 1 차량 브랜드</span>
+                    </div>
+                    <div class="breadcrumb">
+                        <a class="bc-item">Home</a>
+                        <a class="bc-item">설정</a>
+                        <a class="bc-item">차량 설정</a>
+                        <a class="bc-item">상세</a>
+                    </div>
+                </div>
+    
+                <div class="modal-content">
+                    <div class="car-breadcrumb">
+                    </div>
+                    
+                    <div class="content-item flex mt-15">
+                        <div class="modal-item width-100p">
+                            <div class="modal-item_title">차량 브랜드 검색</div>
+                            <div class="modal-item_content border-box">
+                                <input class="mi_input" type="text">
+                                <div class="modal-item-button btn-enroll_model hover03">조회</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="content-table">
+                        <div class="table-wrapper">
+                            <div class="table">
+                                <div class="table-body without-number-column">
+                                    <div class="item-list ti-header">
+                                        <div class="t-item">
+                                            <div class="td center-align toggle-target">브랜드명</div>
+                                            <div class="td center-align toggle-target">영문명</div>
+                                        </div>
+                                    </div>
+                                    <div class="item-list ti-standard">
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">현대</div>
+                                            <div class="td center-align">HYUNDAI</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">현대</div>
+                                            <div class="td center-align">HYUNDAI</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">현대</div>
+                                            <div class="td center-align">HYUNDAI</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">현대</div>
+                                            <div class="td center-align">HYUNDAI</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">현대</div>
+                                            <div class="td center-align">HYUNDAI</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">현대</div>
+                                            <div class="td center-align">HYUNDAI</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">현대</div>
+                                            <div class="td center-align">HYUNDAI</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">현대</div>
+                                            <div class="td center-align">HYUNDAI</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">현대</div>
+                                            <div class="td center-align">HYUNDAI</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">현대</div>
+                                            <div class="td center-align">HYUNDAI</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-pagination">
+                                <a class="tp-first"><img src="/bbs_admin/assets/img/icon-arrow_left2.png" alt=""></a>
+                                <a class="tp-prev"><img src="/bbs_admin/assets/img/icon-arrow_left.png" alt=""></i></a>
+                                <div class="tp-nav">
+                                    <a class="pg_num">1</a>
+                                    <a class="pg_num active">2</a> <!-- 활성화 class "active" -->
+                                    <a class="pg_num">3</a>
+                                    <a class="pg_num">4</a>
+                                    <a class="pg_num">5</a>
+                                </div>
+                                <a class="tp-next"><img src="/bbs_admin/assets/img/icon-arrow_right.png" alt=""></i></a>
+                                <a class="tp-last"><img src="/bbs_admin/assets/img/icon-arrow_right2.png" alt=""></i></a>
+                            </div>
+                        </div>
+                        
+                        <div class="content-table-buttons flex-align-center">
+                            <button class="mf_button btn-enroll hover04" id="btn-step1_registry">신규등록</button>
+                            <button class="mf_button btn-modify hover04" id="btn-step1_update">수정</button>
+                            <button class="mf_button btn-delete hover04">삭제</button>
+                            <button class="mf_button btn-close_modal hover04">닫기</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer flex-between">
+                    <button class="mf_button btn-tab_prev hover01 hidden">이전</button>
+                    <button class="mf_button btn-tab_next hover01">다음</button>
+                </div>
+            </div>
+
+            <!-- Modal - STEP 2 -->
+            <div class="modal-tab_container mtc02">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <span class="mt-text">STEP 2 차량 모델</span>
+                    </div>
+                    <div class="breadcrumb">
+                        <a class="bc-item">Home</a>
+                        <a class="bc-item">설정</a>
+                        <a class="bc-item">차량 설정</a>
+                        <a class="bc-item">상세</a>
+                    </div>
+                </div>
+    
+                <div class="modal-content">
+                    <div class="car-breadcrumb">
+                        <span class="cb-title">브랜드 : <span class="result_brand">현대</span></span>
+                    </div>
+                    
+                    <div class="content-item flex mt-15">
+                        <div class="modal-item width-100p">
+                            <div class="modal-item_title">차량 브랜드 검색</div>
+                            <div class="modal-item_content border-box">
+                                <input class="mi_input" type="text">
+                                <div class="modal-item-button btn-enroll_model hover03">조회</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="content-table">
+                        <div class="table-wrapper">
+                            <div class="table">
+                                <div class="table-body">
+                                    <div class="item-list ti-header">
+                                        <div class="t-item">
+                                            <div class="td center-align toggle-target">번호</div>
+                                            <div class="td center-align toggle-target">모델명</div>
+                                            <div class="td center-align toggle-target">세부모델명</div>
+                                        </div>
+                                    </div>
+                                    <div class="item-list ti-standard">
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">1</div>
+                                            <div class="td center-align">아반떼</div>
+                                            <div class="td center-align">프레스티지</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">2</div>
+                                            <div class="td center-align">스포티지</div>
+                                            <div class="td center-align">스탠다드</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">3</div>
+                                            <div class="td center-align">아반떼</div>
+                                            <div class="td center-align">프레스티지</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">4</div>
+                                            <div class="td center-align">스포티지</div>
+                                            <div class="td center-align">스탠다드</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">5</div>
+                                            <div class="td center-align">아반떼</div>
+                                            <div class="td center-align">프레스티지</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">6</div>
+                                            <div class="td center-align">스포티지</div>
+                                            <div class="td center-align">스탠다드</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">7</div>
+                                            <div class="td center-align">아반떼</div>
+                                            <div class="td center-align">프레스티지</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">8</div>
+                                            <div class="td center-align">스포티지</div>
+                                            <div class="td center-align">스탠다드</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">9</div>
+                                            <div class="td center-align">아반떼</div>
+                                            <div class="td center-align">프레스티지</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">10</div>
+                                            <div class="td center-align">스포티지</div>
+                                            <div class="td center-align">스탠다드</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-pagination">
+                                <a class="tp-first"><img src="/bbs_admin/assets/img/icon-arrow_left2.png" alt=""></a>
+                                <a class="tp-prev"><img src="/bbs_admin/assets/img/icon-arrow_left.png" alt=""></i></a>
+                                <div class="tp-nav">
+                                    <a class="pg_num">1</a>
+                                    <a class="pg_num active">2</a> <!-- 활성화 class "active" -->
+                                    <a class="pg_num">3</a>
+                                    <a class="pg_num">4</a>
+                                    <a class="pg_num">5</a>
+                                </div>
+                                <a class="tp-next"><img src="/bbs_admin/assets/img/icon-arrow_right.png" alt=""></i></a>
+                                <a class="tp-last"><img src="/bbs_admin/assets/img/icon-arrow_right2.png" alt=""></i></a>
+                            </div>
+                        </div>
+                        
+                        <div class="content-table-buttons flex-align-center">
+                            <button class="mf_button btn-enroll hover04" id="btn-step2_registry">신규등록</button>
+                            <button class="mf_button btn-modify hover04" id="btn-step2_update">수정</button>
+                            <button class="mf_button btn-delete hover04">삭제</button>
+                            <button class="mf_button btn-close_modal hover04">닫기</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer flex-between">
+                    <button class="mf_button btn-tab_prev hover01 ">이전</button>
+                    <button class="mf_button btn-tab_next hover01">다음</button>
+                </div>
+            </div>
+
+            <!-- Modal - STEP 3 -->
+            <div class="modal-tab_container mtc03">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <span class="mt-text">STEP 3 차량 등급</span>
+                    </div>
+                    <div class="breadcrumb">
+                        <a class="bc-item">Home</a>
+                        <a class="bc-item">설정</a>
+                        <a class="bc-item">차량 설정</a>
+                        <a class="bc-item">상세</a>
+                    </div>
+                </div>
+    
+                <div class="modal-content">
+                    <div class="car-breadcrumb">
+                        <span class="cb-title">브랜드 : <span class="result_brand">현대</span></span>
+                        <span class="cb-title">모델 : <span class="result_brand">아반떼</span></span>
+                    </div>
+                    
+                    <div class="content-item flex mt-15">
+                        <div class="modal-item width-100p">
+                            <div class="modal-item_title">차량 등급 검색</div>
+                            <div class="modal-item_content border-box">
+                                <input class="mi_input" type="text">
+                                <div class="modal-item-button btn-enroll_model hover03">조회</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="content-table">
+                        <div class="table-wrapper">
+                            <div class="table">
+                                <div class="table-body">
+                                    <div class="item-list ti-header">
+                                        <div class="t-item">
+                                            <div class="td center-align toggle-target">번호</div>
+                                            <div class="td center-align toggle-target">등급</div>
+                                            <div class="td center-align toggle-target">배기량</div>
+                                            <div class="td center-align toggle-target">인기여부</div>
+                                        </div>
+                                    </div>
+                                    <div class="item-list ti-standard">
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">1</div>
+                                            <div class="td center-align">1.6</div>
+                                            <div class="td center-align">1600</div>
+                                            <div class="td center-align">인기</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">2</div>
+                                            <div class="td center-align">2.0</div>
+                                            <div class="td center-align">2000</div>
+                                            <div class="td center-align">비인기</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">3</div>
+                                            <div class="td center-align">1.6</div>
+                                            <div class="td center-align">1600</div>
+                                            <div class="td center-align">인기</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">4</div>
+                                            <div class="td center-align">2.0</div>
+                                            <div class="td center-align">2000</div>
+                                            <div class="td center-align">비인기</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">5</div>
+                                            <div class="td center-align">1.6</div>
+                                            <div class="td center-align">1600</div>
+                                            <div class="td center-align">인기</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">6</div>
+                                            <div class="td center-align">2.0</div>
+                                            <div class="td center-align">2000</div>
+                                            <div class="td center-align">비인기</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">7</div>
+                                            <div class="td center-align">1.6</div>
+                                            <div class="td center-align">1600</div>
+                                            <div class="td center-align">인기</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">8</div>
+                                            <div class="td center-align">2.0</div>
+                                            <div class="td center-align">2000</div>
+                                            <div class="td center-align">비인기</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">9</div>
+                                            <div class="td center-align">1.6</div>
+                                            <div class="td center-align">1600</div>
+                                            <div class="td center-align">인기</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">10</div>
+                                            <div class="td center-align">2.0</div>
+                                            <div class="td center-align">2000</div>
+                                            <div class="td center-align">비인기</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-pagination">
+                                <a class="tp-first"><img src="/bbs_admin/assets/img/icon-arrow_left2.png" alt=""></a>
+                                <a class="tp-prev"><img src="/bbs_admin/assets/img/icon-arrow_left.png" alt=""></i></a>
+                                <div class="tp-nav">
+                                    <a class="pg_num">1</a>
+                                    <a class="pg_num active">2</a> <!-- 활성화 class "active" -->
+                                    <a class="pg_num">3</a>
+                                    <a class="pg_num">4</a>
+                                    <a class="pg_num">5</a>
+                                </div>
+                                <a class="tp-next"><img src="/bbs_admin/assets/img/icon-arrow_right.png" alt=""></i></a>
+                                <a class="tp-last"><img src="/bbs_admin/assets/img/icon-arrow_right2.png" alt=""></i></a>
+                            </div>
+                        </div>
+                        
+                        <div class="content-table-buttons flex-align-center">
+                            <button class="mf_button btn-enroll hover04" id="btn-step3_registry">신규등록</button>
+                            <button class="mf_button btn-modify hover04" id="btn-step3_update">수정</button>
+                            <button class="mf_button btn-delete hover04">삭제</button>
+                            <button class="mf_button btn-close_modal hover04">닫기</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer flex-between">
+                    <button class="mf_button btn-tab_prev hover01">이전</button>
+                    <button class="mf_button btn-tab_next hover01">다음</button>
+                </div>
+            </div>
+
+            <!-- Modal - STEP 4 -->
+            <div class="modal-tab_container mtc04">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <span class="mt-text">STEP 4 차량 트림</span>
+                    </div>
+                    <div class="breadcrumb">
+                        <a class="bc-item">Home</a>
+                        <a class="bc-item">설정</a>
+                        <a class="bc-item">차량 설정</a>
+                        <a class="bc-item">상세</a>
+                    </div>
+                </div>
+    
+                <div class="modal-content">
+                    <div class="car-breadcrumb">
+                        <span class="cb-title">브랜드 : <span class="result_brand">현대</span></span>
+                        <span class="cb-title">모델 : <span class="result_brand">아반떼</span></span>
+                        <span class="cb-title">등급 : <span class="result_brand">1.6 1600cc 비인기</span></span>
+                    </div>
+                    
+                    <div class="content-item flex mt-15">
+                        <div class="modal-item width-100p">
+                            <div class="modal-item_title">차량 트림 검색</div>
+                            <div class="modal-item_content border-box">
+                                <input class="mi_input" type="text">
+                                <div class="modal-item-button btn-enroll_model hover03">조회</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="content-table">
+                        <div class="table-wrapper">
+                            <div class="table">
+                                <div class="table-body">
+                                    <div class="item-list ti-header">
+                                        <div class="t-item">
+                                            <div class="td center-align toggle-target">번호</div>
+                                            <div class="td center-align toggle-target">트림</div>
+                                        </div>
+                                    </div>
+                                    <div class="item-list ti-standard">
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">1</div>
+                                            <div class="td center-align">1.6</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">2</div>
+                                            <div class="td center-align">2.0</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">3</div>
+                                            <div class="td center-align">1.6</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">4</div>
+                                            <div class="td center-align">2.0</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">5</div>
+                                            <div class="td center-align">1.6</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">6</div>
+                                            <div class="td center-align">2.0</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">7</div>
+                                            <div class="td center-align">1.6</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">8</div>
+                                            <div class="td center-align">2.0</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">9</div>
+                                            <div class="td center-align">1.6</div>
+                                        </div>
+                                        
+                                        <div class="t-item toggle-select">
+                                            <div class="td center-align">10</div>
+                                            <div class="td center-align">2.0</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-pagination">
+                                <a class="tp-first"><img src="/bbs_admin/assets/img/icon-arrow_left2.png" alt=""></a>
+                                <a class="tp-prev"><img src="/bbs_admin/assets/img/icon-arrow_left.png" alt=""></i></a>
+                                <div class="tp-nav">
+                                    <a class="pg_num">1</a>
+                                    <a class="pg_num active">2</a> <!-- 활성화 class "active" -->
+                                    <a class="pg_num">3</a>
+                                    <a class="pg_num">4</a>
+                                    <a class="pg_num">5</a>
+                                </div>
+                                <a class="tp-next"><img src="/bbs_admin/assets/img/icon-arrow_right.png" alt=""></i></a>
+                                <a class="tp-last"><img src="/bbs_admin/assets/img/icon-arrow_right2.png" alt=""></i></a>
+                            </div>
+                        </div>
+                        
+                        <div class="content-table-buttons flex-align-center">
+                            <button class="mf_button btn-enroll hover04" id="btn-step4_registry">신규등록</button>
+                            <button class="mf_button btn-modify hover04" id="btn-step4_update">수정</button>
+                            <button class="mf_button btn-delete hover04">삭제</button>
+                            <button class="mf_button btn-close_modal hover04">닫기</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer flex-between">
+                    <button class="mf_button btn-tab_prev hover01">이전</button>
+                    <button class="mf_button btn-save hover01">저장</button>
+                </div>
+            </div>
+            
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+        <!-- 모달 STEP1 신규등록 -->
+        <div class="modal-wrapper sub-modal modal-step1_enroll width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">차량 브랜드 등록</span>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">차량 브랜드</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">브랜드명</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">영문명</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="mf_button btn-save_modal hover02">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+        </div>
+
+        <!-- 모달 STEP2 신규등록 -->
+        <div class="modal-wrapper sub-modal modal-step2_enroll width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">차량 모델 등록</span>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">차량 모델</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">모델명</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">세부모델명</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="mf_button btn-save_modal hover02">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+        </div>
+
+        <!-- 모달 STEP3 신규등록 -->
+        <div class="modal-wrapper sub-modal modal-step3_enroll width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">차량 등급 등록</span>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">차량 등급</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">등급</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">배기량</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">인기여부</div>
+                        <div class="mi_check mt-10">
+                            <div class="mi_check-item">
+                                <input type="radio" id="check-01" name="radio1" value="favorite" checked>
+                                <label for="check-01">인기</label>
+                            </div>
+                            <div class="mi_check-item">
+                                <input type="radio" id="check-02" name="radio1" value="non-favorite">
+                                <label for="check-02">비인기</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="mf_button btn-save_modal hover02">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+        </div>
+
+        <!-- 모달 STEP4 신규등록 -->
+        <div class="modal-wrapper sub-modal modal-step4_enroll width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">차량 트림 등록</span>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">차량 트림</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">트림명</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="mf_button btn-save_modal hover02">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+        </div>
+        <!-- 2021-08-04 신규 추가 끝 -->
+
+        <!-- 브랜드 설정 모달 -->
+        <div class="modal-wrapper main-modal modal-setting_brand width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">브랜드 설정</span>
+                </div>
+                <div class="breadcrumb">
+                    <a class="bc-item">Home</a>
+                    <a class="bc-item">설정</a>
+                    <a class="bc-item">차량 설정</a>
+                    <a class="bc-item">브랜드</a>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">국산 브랜드</span>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">신규 국산 브랜드</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <div class="modal-item-button btn-enroll_model hover03">등록</div>
+                        </div>
+                    </div>
+
+                    <div class="tag-list">
+                        <div class="tag">현대</div>
+                        <div class="tag">기아</div>
+                        <div class="tag">르노삼성</div>
+                        <div class="tag">쌍용</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">수입 브랜드</span>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">신규 수입 브랜드</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <div class="modal-item-button btn-enroll_model hover03">등록</div>
+                        </div>
+                    </div>
+
+                    <div class="tag-list">
+                        <div class="tag">벤츠</div>
+                        <div class="tag">BMW</div>
+                        <div class="tag">미니</div>
+                        <div class="tag">폭스바겐</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title flex-between">
+                    <span class="ct-title">고정 브랜드 선택</span>
+                    <div class="mi_check">
+                        <div class="mi_check-item">
+                            <input type="radio" id="check-03" name="radio2" value="domestic" checked>
+                            <label for="check-03">국산</label>
+                        </div>
+                        <div class="mi_check-item">
+                            <input type="radio" id="check-04" name="radio2" value="foreign">
+                            <label for="check-04">수입</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">브랜드</div>
+                        <div class="modal-item_content border-box">
+                            <select class="mi_select" name="" id="">
+                                <option value="">현대</option>
+                                <option value="">기아</option>
+                                <option value="">르노삼성</option>
+                                <option value="">쌍용</option>
+                            </select>
+                            <div class="modal-item-button btn-enroll_model hover03">등록</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tag-list">
+                        <div class="tag">현대</div>
+                        <div class="tag">기아</div>
+                        <div class="tag">르노삼성</div>
+                        <div class="tag">쌍용</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-10 right-align"><span class="p-red">고정 브랜드는 최대 9개까지 선택 가능합니다.</span></div>
+
+            <div class="modal-footer">
+                <button class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+            
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+        <!-- 색상 설정 모달 -->
+        <div class="modal-wrapper main-modal modal-setting_color width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">색상</span>
+                </div>
+                <div class="breadcrumb">
+                    <a class="bc-item">Home</a>
+                    <a class="bc-item">설정</a>
+                    <a class="bc-item">차량 설정</a>
+                    <a class="bc-item">색상</a>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">색상</span>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">색상</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <div class="modal-item-button btn-enroll_model hover03">등록</div>
+                        </div>
+                    </div>
+
+                    <div class="tag-list">
+                        <div class="tag">블루</div>
+                        <div class="tag">블랙</div>
+                        <div class="tag">화이트</div>
+                        <div class="tag">그린</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+            
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var tab_count = 1;
+
+    $(function(){
+        // 초기화
+        $('#header').load("layout/header.html");
+        $('#navbar').load("layout/navbar.html");
+        $('#footer').load("layout/footer.html");
+
+        $('#a05 .btn-regi_model').on('click', activeModal_RegistryModel);
+        $('#a05 .btn-setting_brand').on('click', activeModal_SettingBrand);
+        $('#a05 .btn-setting_color').on('click', activeModal_SettingColor);
+
+        // 2021-08-04 신규 추가
+        // 신규등록/수정 버튼 클릭 서브 팝업 띄우기
+        $('.mf_button').on('click', activeModal_StepSub);
+        // 탭 이동 관련 함수
+        $('.btn-tab_prev').on('click', prevTabMenu);
+    	$('.btn-tab_next').on('click', nextTabMenu);
+        // 2021-08-04 신규 추가 끝
+    });
+
+    function activeModal_RegistryModel(){
+        openLayer();
+        $('.modal-registry_model').addClass('active');
+    }
+    function activeModal_SettingBrand(){
+        openLayer();
+        $('.modal-setting_brand').addClass('active');
+    }
+    function activeModal_SettingColor(){
+        openLayer();
+        $('.modal-setting_color').addClass('active');
+    }
+    // 2021-08-04 신규 추가
+    function activeModal_StepSub(){
+        var id = this.id;
+
+        switch(id)
+        {
+            case "btn-step1_registry" : $('.main-modal').css('z-index', '100'); $('.modal-step1_enroll').addClass('active'); break;
+            case "btn-step1_update" : $('.main-modal').css('z-index', '100'); $('.modal-step1_enroll').addClass('active'); break;
+            case "btn-step2_registry" : $('.main-modal').css('z-index', '100'); $('.modal-step2_enroll').addClass('active'); break;
+            case "btn-step2_update" : $('.main-modal').css('z-index', '100'); $('.modal-step2_enroll').addClass('active'); break;
+            case "btn-step3_registry" : $('.main-modal').css('z-index', '100'); $('.modal-step3_enroll').addClass('active'); break;
+            case "btn-step3_update" : $('.main-modal').css('z-index', '100'); $('.modal-step3_enroll').addClass('active'); break;
+            case "btn-step4_registry" : $('.main-modal').css('z-index', '100'); $('.modal-step4_enroll').addClass('active'); break;
+            case "btn-step4_update" : $('.main-modal').css('z-index', '100'); $('.modal-step4_enroll').addClass('active'); break;
+        }
+    }
+
+    // 모달 STEP별 탭 이동 관련
+    function prevTabMenu(e){
+        var page = $(e.currentTarget).closest('.cont').prop('id'); // 페이지
+        var container = $('#' + page).find('.cont-tab_content .tab');
+
+        for($i = 0; $i < container.length; $i++){
+            if($(container[$i]).hasClass('active')){
+                tab_count = $(container[$i]).data("count");
+            }
+        }
+
+        if(tab_count == 1) {
+            return;
+        }
+
+        tab_count -= 1;
+
+        switchingTab(tab_count);
+    }
+    function nextTabMenu(e){
+        var page = $(e.currentTarget).closest('.cont').prop('id'); // 페이지
+        var container = $('#' + page).find('.cont-tab_content .tab');
+
+        for($i = 0; $i < container.length; $i++){
+            if($(container[$i]).hasClass('active')){
+                tab_count = $(container[$i]).data("count");
+            }
+        }
+
+        if(tab_count == 4) {
+            return;
+        }
+
+        tab_count += 1;
+        switchingTab(tab_count);
+    }
+    function switchingTab(count){
+        $('.modal-tab_container').removeClass('active');
+        $('.mtc0' + count).addClass('active');
+    }
+    // 2021-08-04 신규 추가 끝
+</script>

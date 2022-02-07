@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="p07">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+        <div id="header" class="">
+            <div class="header-button">
+                <a class="button-back"><img src="assets/img/icon-arrow_left.svg" alt=""></a>
+            </div>
+        </div>
+
+        <!-- 바디 -->
+        <div id="body" class="home">
+            <div class="inner-20">
+                <!-- 탭 아이템 -->
+                <div class="tab-wrapper">
+                    <!-- 탭 컨테이너 -->
+                    <div class="tab-container">
+                        <!-- 추가_1 -->
+                        <div class="tab active"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    차량 데미지 위치를 터치해주세요!
+                                </div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-15">
+                                <div class="inner-tab-wrapper">
+                                    <div class="inner-tab-header">
+                                        <button class="ith-tit active" data-tab-button="tab-01">승용</button>
+                                        <button class="ith-tit" data-tab-button="tab-02">승합</button>
+                                        <button class="ith-tit" data-tab-button="tab-03">화물</button>
+                                    </div>
+                                    <div class="inner-tab-container">
+                                        <div class="inner-tab active" data-tab-index="tab-01">
+                                            <div class="damage-check-section">
+                                                <div class="dcs-image">
+                                                    <div class="di-body">
+                                                        <div class="db-img image-touch-area active" data-img-index="img-01"><img src="./assets/img/img-car_side.png" alt=""></div>
+                                                        <div class="db-img image-touch-area" data-img-index="img-02"><img src="./assets/img/img-car_top.png" alt=""></div>
+                                                        <div class="db-img image-touch-area" data-img-index="img-03"><img src="./assets/img/img-car_under.png" alt=""></div>
+                                                    </div>
+                                                    <div class="di-header">
+                                                        <button class="dh-tit active" data-img-button="img-01">윗면</button>
+                                                        <button class="dh-tit" data-img-button="img-02">측면</button>
+                                                        <button class="dh-tit" data-img-button="img-03">아랫면</button>
+                                                    </div>
+                                                </div>   
+                                                <div class="marker-buttons">
+                                                    <div class="mb-tit">프론트 라디에이터서포트</div>
+                                                    <div class="mb-list">
+                                                        <button data-marker="marker-1" class="marking-item toggle-select active">
+                                                            <span class="marker-1"></span>
+                                                            <span class="mi-desc">기교환</span>
+                                                        </button>
+                                                        <button data-marker="marker-2" class="marking-item toggle-select">
+                                                            <span class="marker-2"></span>
+                                                            <span class="mi-desc">기판금</span>
+                                                        </button>
+                                                        <button data-marker="marker-3" class="marking-item toggle-select">
+                                                            <span class="marker-3"></span>
+                                                            <span class="mi-desc">기도색</span>
+                                                        </button>
+                                                        <button data-marker="marker-4" class="marking-item toggle-select">
+                                                            <span class="marker-4"></span>
+                                                            <span class="mi-desc">교환요망</span>
+                                                        </button>
+                                                        <button data-marker="marker-5" class="marking-item toggle-select">
+                                                            <span class="marker-5"></span>
+                                                            <span class="mi-desc">판금요망</span>
+                                                        </button>
+                                                        <button data-marker="marker-6" class="marking-item toggle-select">
+                                                            <span class="marker-6"></span>
+                                                            <span class="mi-desc">도색요망</span>
+                                                        </button>
+                                                        <button data-marker="marker-7" class="marking-item toggle-select">
+                                                            <span class="marker-7"></span>
+                                                            <span class="mi-desc">기타</span>
+                                                        </button>
+                                                    </div>
+                                                </div>                                         
+                                            </div>
+                                        </div>
+                                        <div class="inner-tab" data-tab-index="tab-02">
+                                            <div class="damage-check-section">
+                                                <div class="dcs-image">
+                                                    <div class="di-body">
+                                                        <div class="db-img image-touch-area active" data-img-index="img-01"><img src="./assets/img/img-van_side.png" alt=""></div>
+                                                        <div class="db-img image-touch-area" data-img-index="img-02"><img src="./assets/img/img-van_top.png" alt=""></div>
+                                                        <div class="db-img image-touch-area" data-img-index="img-03"><img src="./assets/img/img-van_under.png" alt=""></div>
+                                                    </div>
+                                                    <div class="di-header">
+                                                        <button class="dh-tit active" data-img-button="img-01">윗면</button>
+                                                        <button class="dh-tit" data-img-button="img-02">측면</button>
+                                                        <button class="dh-tit" data-img-button="img-03">아랫면</button>
+                                                    </div>
+                                                </div>   
+                                                <div class="marker-buttons">
+                                                    <div class="mb-tit">프론트 라디에이터서포트</div>
+                                                    <div class="mb-list">
+                                                        <button data-marker="marker-1" class="marking-item toggle-select active">
+                                                            <span class="marker-1"></span>
+                                                            <span class="mi-desc">기교환</span>
+                                                        </button>
+                                                        <button data-marker="marker-2" class="marking-item toggle-select">
+                                                            <span class="marker-2"></span>
+                                                            <span class="mi-desc">기판금</span>
+                                                        </button>
+                                                        <button data-marker="marker-3" class="marking-item toggle-select">
+                                                            <span class="marker-3"></span>
+                                                            <span class="mi-desc">기도색</span>
+                                                        </button>
+                                                        <button data-marker="marker-4" class="marking-item toggle-select">
+                                                            <span class="marker-4"></span>
+                                                            <span class="mi-desc">교환요망</span>
+                                                        </button>
+                                                        <button data-marker="marker-5" class="marking-item toggle-select">
+                                                            <span class="marker-5"></span>
+                                                            <span class="mi-desc">판금요망</span>
+                                                        </button>
+                                                        <button data-marker="marker-6" class="marking-item toggle-select">
+                                                            <span class="marker-6"></span>
+                                                            <span class="mi-desc">도색요망</span>
+                                                        </button>
+                                                        <button data-marker="marker-7" class="marking-item toggle-select">
+                                                            <span class="marker-7"></span>
+                                                            <span class="mi-desc">기타</span>
+                                                        </button>
+                                                    </div>
+                                                </div>                                         
+                                            </div>
+                                        </div>
+                                        <div class="inner-tab" data-tab-index="tab-03">
+                                            <div class="damage-check-section">
+                                                <div class="dcs-image">
+                                                    <div class="di-body">
+                                                        <div class="db-img image-touch-area active" data-img-index="img-01"><img src="./assets/img/img-truck_side.png" alt=""></div>
+                                                        <div class="db-img image-touch-area" data-img-index="img-02"><img src="./assets/img/img-truck_top.png" alt=""></div>
+                                                        <div class="db-img image-touch-area" data-img-index="img-03"><img src="./assets/img/img-truck_under.png" alt=""></div>
+                                                    </div>
+                                                    <div class="di-header">
+                                                        <button class="dh-tit active" data-img-button="img-01">윗면</button>
+                                                        <button class="dh-tit" data-img-button="img-02">측면</button>
+                                                        <button class="dh-tit" data-img-button="img-03">아랫면</button>
+                                                    </div>
+                                                </div>   
+                                                <div class="marker-buttons">
+                                                    <div class="mb-tit">프론트 라디에이터서포트</div>
+                                                    <div class="mb-list">
+                                                        <button data-marker="marker-1" class="marking-item toggle-select active">
+                                                            <span class="marker-1"></span>
+                                                            <span class="mi-desc">기교환</span>
+                                                        </button>
+                                                        <button data-marker="marker-2" class="marking-item toggle-select">
+                                                            <span class="marker-2"></span>
+                                                            <span class="mi-desc">기판금</span>
+                                                        </button>
+                                                        <button data-marker="marker-3" class="marking-item toggle-select">
+                                                            <span class="marker-3"></span>
+                                                            <span class="mi-desc">기도색</span>
+                                                        </button>
+                                                        <button data-marker="marker-4" class="marking-item toggle-select">
+                                                            <span class="marker-4"></span>
+                                                            <span class="mi-desc">교환요망</span>
+                                                        </button>
+                                                        <button data-marker="marker-5" class="marking-item toggle-select">
+                                                            <span class="marker-5"></span>
+                                                            <span class="mi-desc">판금요망</span>
+                                                        </button>
+                                                        <button data-marker="marker-6" class="marking-item toggle-select">
+                                                            <span class="marker-6"></span>
+                                                            <span class="mi-desc">도색요망</span>
+                                                        </button>
+                                                        <button data-marker="marker-7" class="marking-item toggle-select">
+                                                            <span class="marker-7"></span>
+                                                            <span class="mi-desc">기타</span>
+                                                        </button>
+                                                    </div>
+                                                </div>                                         
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 버튼 -->
+        <div class="button-tab-next"><img src="assets/img/button_next.svg" alt=""></div>
+    </div>
+</div>
+
+<script>
+    // 선택된 마커
+    var selected_marking_item = 'marker-1';
+    var car_marker_count = [0, 0, 0, 0, 0, 0, 0];
+    var van_marker_count = [0, 0, 0, 0, 0, 0, 0];
+    var truck_marker_count = [0, 0, 0, 0, 0, 0, 0];
+    // 마커 카운트
+    var parent_idx = 0;
+    var marker_idx = 0;
+    var delete_target_idx = 0;
+
+    $(()=>{
+        // 차량 데미지 체크 섹션 탭 기능
+        $('.ith-tit').on('click', (e)=>{
+            let tabBtn = e.currentTarget;
+            let tab_idx = $(tabBtn).data('tabButton'); 
+            let tabCont = $('[data-tab-index="' + tab_idx + '"]');
+            
+            $('.ith-tit').removeClass('active');
+            $('.inner-tab').removeClass('active');
+            $(tabBtn).addClass('active');
+            $(tabCont).addClass('active');
+
+            // 이미지 탭 헤더 초기화
+            $('.dh-tit').removeClass('active');
+            $('.dh-tit:first-child').addClass('active');
+            $('.db-img').removeClass('active');
+            $('.db-img:first-child').addClass('active');
+            // 마커 초기화
+            resetMarker();
+        });
+
+        // 차량 윗면/측면/아랫면 이미지 스위칭
+        $('.dh-tit').on('click', (e)=>{
+            let imgBtn = e.currentTarget;
+            let img_idx = $(imgBtn).data('imgButton'); 
+            let imgCont = $('[data-img-index="' + img_idx + '"]');
+            
+            $('.dh-tit').removeClass('active');
+            $('.db-img').removeClass('active');
+            $(imgBtn).addClass('active');
+            $(imgCont).addClass('active');
+
+            // 마커 초기화
+            resetMarker();
+        });
+
+        // 마커 선택
+        $('.marking-item').on('click', (e)=>{
+            let markBtn = e.currentTarget;
+            selected_marking_item = $(markBtn).data('marker'); 
+        });
+
+        // 마커 표시
+        $('.image-touch-area').on('click', (e)=>{
+            let cont = e.currentTarget;
+
+            // 마커 카운트
+            parent_idx = $(e.currentTarget.closest('.inner-tab')).data('tabIndex');
+            marker_idx = selected_marking_item.split('-')[1];
+
+            if($(e.target).hasClass('marker')){ // 마커가 표시된 영역 선택시 해당 마커 삭제
+                $(e.target).remove();
+
+                var delete_target = $(e.target).removeClass('marker');
+                delete_target_idx = $(delete_target).attr('class').split('-')[1];
+
+                markerCount(parent_idx, delete_target_idx, 0);
+            }
+            else{
+                let x = e.offsetX - 7;
+                let y = e.offsetY - 7;
+                let el = "<span class='marker " + selected_marking_item + "' style='left: " + x + "px; top: " + y + "px;'></span>";
+    
+                $(cont).append(el);
+
+                markerCount(parent_idx, marker_idx, 1);
+            }
+        });
+    });
+
+    // 마커 초기화
+    function resetMarker(){
+        selected_marking_item = 'marker-1';
+        $('.marking-item').removeClass('active');
+        $('.marking-item:first-child').addClass('active');
+    }
+
+    // 마킹 카운트
+    function markerCount(parent_idx, marker_idx, calc){ /* 차 종류, 마킹 번호, 계산 구분(1 : + / 0 : -) */
+        switch(parent_idx)
+        {
+            case 'tab-01' :{
+                calc == 0 ? car_marker_count[marker_idx - 1]-- : car_marker_count[marker_idx - 1]++;
+                console.log('승용차 데미지 카운트 ' + car_marker_count);
+                break;
+            }
+            case 'tab-02' :{
+                calc == 0 ? van_marker_count[marker_idx - 1]-- : van_marker_count[marker_idx - 1]++;
+                console.log('승합차 데미지 카운트 ' + van_marker_count);
+                break;
+            }
+            case 'tab-03' :{
+                calc == 0 ? truck_marker_count[marker_idx - 1]-- : truck_marker_count[marker_idx - 1]++;
+                console.log('화물차 데미지 카운트 ' + truck_marker_count);
+                break;
+            }
+        }
+    }
+</script>

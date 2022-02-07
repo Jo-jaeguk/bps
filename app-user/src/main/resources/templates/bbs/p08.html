@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="p07">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+        <div id="header" class="">
+            <div class="header-button">
+                <a class="button-back"><img src="assets/img/icon-arrow_left.svg" alt=""></a>
+            </div>
+        </div>
+
+        <!-- 바디 -->
+        <div id="body" class="guide">
+            <div class="inner-20">
+                <!-- 앱 타이틀 -->
+                <div class="app-title">
+                    <div class="fz24 fw600 color-primary">가이드를 <br>확인 할 수 있어요!</div>
+                </div>
+
+                <!-- 앱 내용 -->
+                <div class="app-content">
+                    <div class="guide_item-container">
+                        <div class="guide_item-data">
+                            <div class="date">2021.06.02</div>
+                            <div class="ed">E/D : 30 working days</div>
+                        </div>
+                        <div class="guide_item-list">
+                            <div class="item has-sub status1"> <!-- 진행중인 아이템 class "status1" -->
+                                <div class="item-header">
+                                    <div class="num-code">
+                                        <div class="qn">Quote No(QN#)</div>
+                                        <div class="sn">BC20210500002</div>
+                                    </div>
+                                    <div class="status"></div>
+                                </div>
+                                <div class="item-body "> <!-- 하위 항목 펼칠 경우 class "opened" -->
+                                    <div class="ib-main toggle-parent">
+                                        <div class="car-number">123가 1234</div>
+                                        <div class="car-model">2020 제네시스 EQ 리무진</div>
+                                    </div>
+                                    <div class="ib-sub">
+                                        <div class="is-item">
+                                            <div class="isi-tit">브랜드 / 세부모델 / 등급</div>
+                                            <div class="isi-data">
+                                                <span class="id-data">기아</span><span class="id-data">더 뉴 그랜져(19년~현재)</span><span class="id-data">프레스티지</span>
+                                            </div>
+                                        </div>
+                                        <div class="is-item">
+                                            <div class="isi-tit">연식 / 색상 / 연료 / 배기량 / 미션</div>
+                                            <div class="isi-data">
+                                                <span class="id-data">2020.5</span><span class="id-data">검정</span><span class="id-data">가솔린</span><span class="id-data">2400cc</span><span class="id-data">오토</span>
+                                            </div>
+                                        </div>
+                                        <div class="is-item">
+                                            <div class="isi-tit">주행거리 / 사고유무</div>
+                                            <div class="isi-data">
+                                                <span class="id-data"></span>60500 Km<span class="id-data">단순교환</span>
+                                            </div>
+                                        </div>
+                                        <div class="is-item">
+                                            <div class="isi-tit">주요 옵션</div>
+                                            <div class="isi-data">
+                                                <span class="id-data">HUD</span><span class="id-data">선루프</span>
+                                            </div>
+                                        </div>
+                                        <div class="is-item">
+                                            <div class="isi-tit">고객명 / 고객 연락처</div>
+                                            <div class="isi-data">
+                                                <span class="id-data">카옥션</span><span class="id-data">010-0000-0000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="guide_item-management">
+                            <div class="gim-title">고객 담당자 / 연락처</div>
+                            <div class="gim-manager">
+                                <span class="gm-name">홍길동 상무</span><span class="gm-tel">010-0000-0000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 가이드 팝업-->
+            <div class="toast-guide active">
+                <div class="toast-guide-header">
+                    <div class="tgh-img"><img src="assets/img/logo-guide.svg" alt=""></div>
+                    <div class="tgh-title">바잉카 매입 가이드!</div>
+                </div>
+                <div class="toast-guide-body">
+                    <div class="tgb-info">
+                        <div class="ti-desc">BuyingCar 매입가 Guideline</div>
+                        <div class="ti-price">1,442만원</div>
+                    </div>
+                    <div class="tgb-management">
+                        <div class="tm-item">
+                            <div class="ti-tit">가이드 제출자</div>
+                            <div class="ti-data">홍길동 이사</div>
+                        </div>
+                        <div class="tm-item">
+                            <div class="ti-tit">연락처</div>
+                            <div class="ti-data">010-0000-0000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 가이드 작성중 팝업-->
+            <div class="toast-guide_writting">
+                <div class="toast_desc">
+                    <div class="desc-img"><img src="assets/img/icon-edit.svg" alt=""></div>
+                    <div class="fz20 fw500 color-white mt-20">잠시만 기다려주세요!</div>
+                    <div class="fz12 color-white mt-10">지금! 가이드를 작성중 입니다!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+</script>

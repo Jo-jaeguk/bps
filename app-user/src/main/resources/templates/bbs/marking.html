@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="p07">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+        <div id="header" class="">
+            <div class="header-button">
+                <a class="button-back"><img src="assets/img/icon-arrow_left.svg" alt=""></a>
+            </div>
+        </div>
+
+        <!-- 바디 -->
+        <div id="body" class="home">
+            <div class="inner-20">
+                <!-- 탭 아이템 -->
+                <div class="tab-wrapper">
+                    <!-- 탭 컨테이너 -->
+                    <div class="tab-container">
+                        <!-- 추가_1 -->
+                        <div class="tab active"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    차량 데미지 위치를 터치해주세요!
+                                </div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-15">
+                                <div class="inner-tab-wrapper">
+                                    <div class="inner-tab-header">
+                                        <button class="ith-tit active" data-tab-button="tab-01">승용</button>
+                                        <button class="ith-tit" data-tab-button="tab-02">승합</button>
+                                        <button class="ith-tit" data-tab-button="tab-03">화물</button>
+                                    </div>
+                                    <div class="select-damage-type">
+                                        <div class="sdt-header">
+                                            <div class="shl"><span class="part-name">데미지체크 재설정.</span></div>
+                                            <div class="shr">
+                                                <img class="sh-default" src="./assets/img/icon-arrow_down.svg" alt="">
+                                                <img class="sh-active" src="./assets/img/icon-arrow_up.svg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="sdt-body">
+                                            <div class="sb-list">
+                                                <div class="sb-item" id="damage-check-A"><span class="damage-icon">a</span><span class="damage-tit">기교환</span></div>
+                                                <div class="sb-item" id="damage-check-B"><span class="damage-icon">b</span><span class="damage-tit">기판금</span></div>
+                                                <div class="sb-item" id="damage-check-C"><span class="damage-icon">c</span><span class="damage-tit">기도색</span></div>
+                                                <div class="sb-item" id="damage-check-D"><span class="damage-icon">d</span><span class="damage-tit">교환요망</span></div>
+                                                <div class="sb-item" id="damage-check-E"><span class="damage-icon">e</span><span class="damage-tit">판금요망</span></div>
+                                                <div class="sb-item" id="damage-check-F"><span class="damage-icon">f</span><span class="damage-tit">도색요망</span></div>
+                                                <div class="sb-item" id="damage-check-G"><span class="damage-icon">g</span><span class="damage-tit">기타</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="inner-tab-container">
+                                        <div class="inner-tab active" data-tab-index="tab-01">
+                                            <div class="damage-check-section">
+                                                <div class="dcs-image">
+                                                    <div class="di-body">
+                                                        <div class="db-img image-touch-area active" data-img-index="img-01">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('./assets/img/img-car_top@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: -4%; left: 46%;">1</span>
+                                                                    <span class="el" style="top: 4%; left: 46%;">2</span>
+                                                                    <span class="el" style="top: 8%; left: 24%;">3</span>
+                                                                    <span class="el" style="top: 8%; left: 67%;">21</span>
+                                                                    <span class="el" style="top: 14%; left: 46%;">8</span>
+                                                                    <span class="el" style="top: 34%; left: 14%;">11</span>
+                                                                    <span class="el" style="top: 30%; left: 46%;">12</span>
+                                                                    <span class="el" style="top: 34%; left: 78%;">26</span>
+                                                                    <span class="el" style="top: 51%; left: 46%;">14</span>
+                                                                    <span class="el" style="top: 63%; left: 46%;">44</span>
+                                                                    <span class="el" style="top: 77%; left: 46%;">17</span>
+                                                                    <span class="el" style="top: 87%; left: 26%;">19</span>
+                                                                    <span class="el" style="top: 88%; left: 46%;">18</span>
+                                                                    <span class="el" style="top: 87%; left: 65%;">32</span>
+                                                                    <span class="el" style="top: 98%; left: 46%;">20</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="db-img image-touch-area" data-img-index="img-02">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('./assets/img/img-car@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: 3%; left: 12%;">4</span>
+                                                                    <span class="el" style="top: 11%; left: -7%;">6</span>
+                                                                    <span class="el" style="top: 16%; left: 6%;">5</span>
+                                                                    <span class="el" style="top: 22%; left: 18%;">7</span>
+                                                                    <span class="el" style="top: 37%; left: -2%;">9</span>
+                                                                    <span class="el" style="top: 38%; left: 13%;">10</span>
+                                                                    <span class="el" style="top: 33%; left: 37%;">41</span>
+                                                                    <span class="el" style="top: 51%; left: 33%;">42</span>
+                                                                    <span class="el" style="top: 59%; left: 13%;">13</span>
+                                                                    <span class="el" style="top: 71%; left: -7%;">16</span>
+                                                                    <span class="el" style="top: 75%; left: 5%;">15</span>
+                                                                    <span class="el" style="top: 72%; left: 35%;">43</span>
+                                                                    <span class="el" style="top: 85%; left: 17%;">46</span>
+                                                                    <span class="el" style="top: 3%; left: 71%;">22</span>
+                                                                    <span class="el" style="top: 11%; left: 99%;">25</span>
+                                                                    <span class="el" style="top: 15%; left: 86%;">24</span>
+                                                                    <span class="el" style="top: 18%; left: 63%;">23</span>
+                                                                    <span class="el" style="top: 38%; left: 51%;">46</span>
+                                                                    <span class="el" style="top: 38%; left: 77%;">27</span>
+                                                                    <span class="el" style="top: 37%; left: 93%;">28</span>
+                                                                    <span class="el" style="top: 51%; left: 57%;">47</span>
+                                                                    <span class="el" style="top: 59%; left: 77%;">29</span>
+                                                                    <span class="el" style="top: 75%; left: 53%;">48</span>
+                                                                    <span class="el" style="top: 75%; left: 86%;">30</span>
+                                                                    <span class="el" style="top: 71%; left: 98%;">31</span>
+                                                                    <span class="el" style="top: 85%; left: 74%;">49</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="db-img image-touch-area" data-img-index="img-03">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('./assets/img/img-car_bot@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: 0%; left: 60%;">50</span>
+                                                                    <span class="el" style="top: 8%; left: 34%;">51</span>
+                                                                    <span class="el" style="top: 18%; left: 25%;">52</span>
+                                                                    <span class="el" style="top: 28%; left: 25%;">53</span>
+                                                                    <span class="el" style="top: 21%; left: 37%;">54</span>
+                                                                    <span class="el" style="top: 21%; left: 56%;">55</span>
+                                                                    <span class="el" style="top: 18%; left: 67%;">56</span>
+                                                                    <span class="el" style="top: 28%; left: 68%;">57</span>
+                                                                    <span class="el" style="top: 34%; left: 46%;">58</span>
+                                                                    <span class="el" style="top: 42%; left: 46%;">59</span>
+                                                                    <span class="el" style="top: 59%; left: 46%;">60</span>
+                                                                    <span class="el" style="top: 73%; left: 46%;">61</span>
+                                                                    <span class="el" style="top: 80%; left: 25%;">62</span>
+                                                                    <span class="el" style="top: 81%; left: 36%;">63</span>
+                                                                    <span class="el" style="top: 82%; left: 46%;">64</span>
+                                                                    <span class="el" style="top: 81%; left: 56%;">65</span>
+                                                                    <span class="el" style="top: 80%; left: 68%;">66</span>
+                                                                    <span class="el" style="top: 91%; left: 46%;">67</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="di-header">
+                                                        <button class="dh-tit active" data-img-button="img-01">윗면</button>
+                                                        <button class="dh-tit" data-img-button="img-02">측면</button>
+                                                        <button class="dh-tit" data-img-button="img-03">아랫면</button>
+                                                    </div>
+                                                </div>                                        
+                                            </div>
+                                        </div>
+                                        <div class="inner-tab" data-tab-index="tab-02">
+                                            <div class="damage-check-section">
+                                                <div class="dcs-image">
+                                                    <div class="di-body">
+                                                        <div class="db-img image-touch-area active" data-img-index="img-01">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('./assets/img/img-van_top@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: -4%; left: 46%;">1</span>
+                                                                    <span class="el" style="top: 3%; left: 46%;">2</span>
+                                                                    <span class="el" style="top: 6%; left: 27%;">3</span>
+                                                                    <span class="el" style="top: 13%; left: 46%;">8</span>
+                                                                    <span class="el" style="top: 6%; left: 65%;">21</span>
+                                                                    <span class="el" style="top: 24%; left: 46%;">12</span>
+                                                                    <span class="el" style="top: 27%; left: 14%;">11</span>
+                                                                    <span class="el" style="top: 27%; left: 79%;">26</span>
+                                                                    <span class="el" style="top: 50%; left: 46%;">14</span>
+                                                                    <span class="el" style="top: 89%; left: 46%;">18</span>
+                                                                    <span class="el" style="top: 88%; left: 25%;">19</span>
+                                                                    <span class="el" style="top: 88%; left: 66%;">32</span>
+                                                                    <span class="el" style="top: 97%; left: 46%;">20</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="db-img image-touch-area" data-img-index="img-02">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('./assets/img/img-van@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: 8%; left: 16%;">4</span>
+                                                                    <span class="el" style="top: 14%; left: -2%;">6</span>
+                                                                    <span class="el" style="top: 20%; left: 8%;">5</span>
+                                                                    <span class="el" style="top: 24%; left: 21%;">7</span>
+                                                                    <span class="el" style="top: 38%; left: 3%;">9</span>
+                                                                    <span class="el" style="top: 39%; left: 17%;">10</span>
+                                                                    <span class="el" style="top: 33%; left: 35%;">41</span>
+                                                                    <span class="el" style="top: 51%; left: 35%;">42</span>
+                                                                    <span class="el" style="top: 54%; left: 17%;">13</span>
+                                                                    <span class="el" style="top: 66%; left: -2%;">16</span>
+                                                                    <span class="el" style="top: 72%; left: 7%;">15</span>
+                                                                    <span class="el" style="top: 69%; left: 36%;">43</span>
+                                                                    <span class="el" style="top: 81%; left: 20%;">46</span>
+                                                                    <span class="el" style="top: 8%; left: 68%;">22</span>
+                                                                    <span class="el" style="top: 14%; left: 95%;">25</span>
+                                                                    <span class="el" style="top: 20%; left: 85%;">24</span>
+                                                                    <span class="el" style="top: 22%; left: 61%;">23</span>
+                                                                    <span class="el" style="top: 40%; left: 52%;">46</span>
+                                                                    <span class="el" style="top: 39%; left: 75%;">27</span>
+                                                                    <span class="el" style="top: 35%; left: 88%;">28</span>
+                                                                    <span class="el" style="top: 51%; left: 56%;">47</span>
+                                                                    <span class="el" style="top: 54%; left: 75%;">29</span>
+                                                                    <span class="el" style="top: 69%; left: 55%;">48</span>
+                                                                    <span class="el" style="top: 66%; left: 93%;">31</span>
+                                                                    <span class="el" style="top: 72%; left: 84%;">30</span>
+                                                                    <span class="el" style="top: 81%; left: 71%;">49</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="db-img image-touch-area" data-img-index="img-03">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('./assets/img/img-van_bot@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: 0%; left: 60%;">50</span>
+                                                                    <span class="el" style="top: 8%; left: 34%;">51</span>
+                                                                    <span class="el" style="top: 18%; left: 25%;">52</span>
+                                                                    <span class="el" style="top: 28%; left: 25%;">53</span>
+                                                                    <span class="el" style="top: 21%; left: 37%;">54</span>
+                                                                    <span class="el" style="top: 21%; left: 56%;">55</span>
+                                                                    <span class="el" style="top: 18%; left: 67%;">56</span>
+                                                                    <span class="el" style="top: 28%; left: 68%;">57</span>
+                                                                    <span class="el" style="top: 36%; left: 46%;">58</span>
+                                                                    <span class="el" style="top: 44%; left: 46%;">59</span>
+                                                                    <span class="el" style="top: 59%; left: 46%;">60</span>
+                                                                    <span class="el" style="top: 75%; left: 46%;">61</span>
+                                                                    <span class="el" style="top: 83%; left: 25%;">62</span>
+                                                                    <span class="el" style="top: 84%; left: 36%;">63</span>
+                                                                    <span class="el" style="top: 85%; left: 46%;">64</span>
+                                                                    <span class="el" style="top: 84%; left: 56%;">65</span>
+                                                                    <span class="el" style="top: 83%; left: 68%;">66</span>
+                                                                    <span class="el" style="top: 94%; left: 46%;">67</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="di-header">
+                                                        <button class="dh-tit active" data-img-button="img-01">윗면</button>
+                                                        <button class="dh-tit" data-img-button="img-02">측면</button>
+                                                        <button class="dh-tit" data-img-button="img-03">아랫면</button>
+                                                    </div>
+                                                </div>                                          
+                                            </div>
+                                        </div>
+                                        <div class="inner-tab" data-tab-index="tab-03">
+                                            <div class="damage-check-section">
+                                                <div class="dcs-image">
+                                                    <div class="di-body">
+                                                        <div class="db-img image-touch-area active" data-img-index="img-01">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('./assets/img/img-truck_top@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: -1%; left: 46%;">1</span>
+                                                                    <span class="el" style="top: 5%; left: 31%;">3</span>
+                                                                    <span class="el" style="top: 5%; left: 60%;">21</span>
+                                                                    <span class="el" style="top: 8%; left: 46%;">69</span>
+                                                                    <span class="el" style="top: 15%; left: 46%;">23</span>
+                                                                    <span class="el" style="top: 28%; left: 46%;">44</span>
+                                                                    <span class="el" style="top: 62%; left: 46%;">68</span>
+                                                                    <span class="el" style="top: 87%; left: 46%;">75</span>
+                                                                    <span class="el" style="top: 92%; left: 31%;">8</span>
+                                                                    <span class="el" style="top: 92%; left: 62%;">32</span>
+                                                                    <span class="el" style="top: 96%; left: 46%;">70</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="db-img image-touch-area" data-img-index="img-02">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('./assets/img/img-truck@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: 9%; left: 17%;">7</span>
+                                                                    <span class="el" style="top: 16%; left: 8%;">19</span>
+                                                                    <span class="el" style="top: 17%; left: 20%;">10</span>
+                                                                    <span class="el" style="top: 14%; left: 31%;">11</span>
+                                                                    <span class="el" style="top: 19%; left: 41%;">41</span>
+                                                                    <span class="el" style="top: 26%; left: 35%;">42</span>
+                                                                    <span class="el" style="top: 28%; left: 22%;">13</span>
+                                                                    <span class="el" style="top: 34%; left: 35%;">43</span>
+                                                                    <span class="el" style="top: 36%; left: 21%;">27</span>
+                                                                    <span class="el" style="top: 65%; left: 18%;">73</span>
+                                                                    <span class="el" style="top: 65%; left: 34%;">71</span>
+                                                                    <span class="el" style="top: 9%; left: 73%;">12</span>
+                                                                    <span class="el" style="top: 16%; left: 61%;">46</span>
+                                                                    <span class="el" style="top: 19%; left: 52%;">26</span>
+                                                                    <span class="el" style="top: 17%; left: 72%;">45</span>
+                                                                    <span class="el" style="top: 17%; left: 84%;">20</span>
+                                                                    <span class="el" style="top: 26%; left: 56%;">47</span>
+                                                                    <span class="el" style="top: 28%; left: 68%;">29</span>
+                                                                    <span class="el" style="top: 34%; left: 56%;">48</span>
+                                                                    <span class="el" style="top: 36%; left: 70%;">49</span>
+                                                                    <span class="el" style="top: 65%; left: 57%;">72</span>
+                                                                    <span class="el" style="top: 65%; left: 72%;">74</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="db-img image-touch-area" data-img-index="img-03">
+                                                            <div class="imgbox" style="width: 217px; height: 310px; background: url('./assets/img/img-truck_bot@2x.png') center center no-repeat; background-size: contain;">
+                                                                <div class="el-list">
+                                                                    <span class="el" style="top: 5%; left: 46%;">34</span>
+                                                                    <span class="el" style="top: 13%; left: 27%;">35</span>
+                                                                    <span class="el" style="top: 13%; left: 64%;">36</span>
+                                                                    <span class="el" style="top: 13%; left: 46%;">37</span>
+                                                                    <span class="el" style="top: 38%; left: 46%;">40</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="di-header">
+                                                        <button class="dh-tit active" data-img-button="img-01">윗면</button>
+                                                        <button class="dh-tit" data-img-button="img-02">측면</button>
+                                                        <button class="dh-tit" data-img-button="img-03">아랫면</button>
+                                                    </div>
+                                                </div>                                         
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 버튼 -->
+        <div class="button-tab-next"><img src="assets/img/button_next.svg" alt=""></div>
+    </div>
+</div>
+
+<script>
+    // 데미지체크 부위 명칭
+    let vh_part = {
+        1: '1. 앞범퍼',
+        2: '2. 프론트 라디에이터서포트',
+        3: '3. 전조등(좌)',
+        4: '4. 안개등(좌)',
+        5: '5. 앞휠(좌)',
+        6: '6. 앞타이어(좌)',
+        7: '7. 프론트 휀더(좌)',
+        8: '8. 보닛',
+        9: '9. (운)사이드실',
+        10: '10. 프론트도어(좌)',
+        11: '11. 사이드미러(좌)',
+        12: '12. 앞유리',
+        13: '13. 리어도어(좌)',
+        14: '14. 선루프',
+        15: '15. 뒤휠(좌)',
+        16: '16. 뒤타이어(좌)',
+        17: '17. 뒷유리',
+        18: '18. 트렁크',
+        19: '19. 리어컴비램프(좌)',
+        20: '20. 뒤범퍼',
+        21: '21. 전조등(우)',
+        22: '22. 안개등(우)',
+        23: '23. 프론트 휀더(우)',
+        24: '24. 앞휠(우)',
+        25: '25. 앞타이어(우)',
+        26: '26. 사이드미러(우)',
+        27: '27. 프론트도어(우)',
+        28: '28. (조)사이드실',
+        29: '29. 리어도어(우)',
+        30: '30. 뒤휠(우)',
+        31: '31. 뒤타이어(우)',
+        32: '32. 리어컴비램프(우)',
+        41: '41. (운)A필러',
+        42: '42. (운)B필러',
+        43: '43. (운)C필러',
+        44: '44. 루프',
+        45: '45. 리어휀더(좌)',
+        46: '46. (조)A필러',
+        47: '47. (조)B필러',
+        48: '48. (조)C필러',
+        49: '49. 리어휀더(좌)',
+        50: '50. 앞패널',
+        51: '51. 앞크로스맴버',
+        52: '52. 앞인사이드패널(좌)',
+        53: '53. 앞휠하우스(좌)',
+        54: '54. 앞사이드맴버(좌)',
+        55: '55. 앞사이드맴버(우)',
+        56: '56. 앞인사이드패널(우)',
+        57: '57. 앞휠하우스(우)',
+        58: '58. 뒷크로스맴버',
+        59: '59. 대쉬보드(카울패널)',
+        60: '60. 플로어패널',
+        61: '61. 리어패키지트레이',
+        62: '62. 뒤휠하우스(좌)',
+        63: '63. 뒤사이드맴버(좌)',
+        64: '64. 트렁크플로어패널',
+        65: '65. 뒤사이드맴버(우)',
+        66: '66. 뒤휠하우스(우)',
+        67: '67. 뒤패널',
+        68: '68. 적재함바닥',
+        69: '69. 스텝(좌)',
+        70: '70. 스텝(우)',
+        71: '71. 적재함(좌) [탑차]',
+        72: '72. 적재함(우) [탑차]',
+        73: '73. 적재함도어(좌)',
+        74: '74. 적재함도어(우)',
+        75: '75. 적재함도어(후)'
+    };
+    let selected_el = null;
+
+    $(()=>{
+        // 차량 데미지 체크 섹션 탭 기능
+        $('.ith-tit').on('click', (e)=>{
+            let tabBtn = e.currentTarget;
+            let tab_idx = $(tabBtn).data('tabButton'); 
+            let tabCont = $('[data-tab-index="' + tab_idx + '"]');
+            
+            $('.ith-tit').removeClass('active');
+            $('.inner-tab').removeClass('active');
+            $(tabBtn).addClass('active');
+            $(tabCont).addClass('active');
+
+            // 이미지 탭 헤더 초기화
+            $('.dh-tit').removeClass('active');
+            $('.dh-tit:first-child').addClass('active');
+            $('.db-img').removeClass('active');
+            $('.db-img:first-child').addClass('active');
+        });
+
+        // 차량 윗면/측면/아랫면 이미지 스위칭
+        $('.dh-tit').on('click', (e)=>{
+            let imgBtn = e.currentTarget;
+            let img_idx = $(imgBtn).data('imgButton'); 
+            let imgCont = $('[data-img-index="' + img_idx + '"]');
+            
+            $('.dh-tit').removeClass('active');
+            $('.db-img').removeClass('active');
+            $(imgBtn).addClass('active');
+            $(imgCont).addClass('active');
+        });
+
+        // 차량 이미지 번호 선택시 SELECTBOX OPEN
+        $('.el').on('click', (e)=>{
+            if($(e.currentTarget).hasClass('marking-a') ||
+               $(e.currentTarget).hasClass('marking-b') ||
+               $(e.currentTarget).hasClass('marking-c') ||
+               $(e.currentTarget).hasClass('marking-d') ||
+               $(e.currentTarget).hasClass('marking-e') ||
+               $(e.currentTarget).hasClass('marking-f') ||
+               $(e.currentTarget).hasClass('marking-g'))
+            {
+                $(e.currentTarget).removeClass('marking-a');
+                $(e.currentTarget).removeClass('marking-b');
+                $(e.currentTarget).removeClass('marking-c');
+                $(e.currentTarget).removeClass('marking-d');
+                $(e.currentTarget).removeClass('marking-e');
+                $(e.currentTarget).removeClass('marking-f');
+                $(e.currentTarget).removeClass('marking-g');
+
+                return;
+            }
+
+            selected_el = e.target;
+            let idx = $(e.currentTarget).html();
+            
+            $('.select-damage-type').addClass('active');
+            $('.part-name').html(vh_part[idx]);
+        });
+
+        // 차량 데미지 체크 SELECTBOX OPEN 상태 / ICON UP 버튼 클릭시
+        $('.sh-active').on('click', (e)=>{
+            selected_el = null;
+
+            $('.select-damage-type').removeClass('active');
+            $('.part-name').html('데미지체크 재설정.');
+        })
+
+        // SELECTBOX ITEM 선택
+        $('.sb-item').on('click', (e)=>{
+            let targetId = e.currentTarget.id;
+            let marker = targetId.split('-')[2];
+            
+            switch(marker)
+            {
+                case "A": $(selected_el).addClass('marking-a'); break;
+                case "B": $(selected_el).addClass('marking-b'); break;
+                case "C": $(selected_el).addClass('marking-c'); break;
+                case "D": $(selected_el).addClass('marking-d'); break;
+                case "E": $(selected_el).addClass('marking-e'); break;
+                case "F": $(selected_el).addClass('marking-f'); break;
+                case "G": $(selected_el).addClass('marking-g'); break;
+            }
+            
+            $('.select-damage-type').removeClass('active');
+            $('.part-name').html('데미지체크 재설정.');
+        });
+    });
+</script>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Xeicon -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+        <!-- Library : Slick/Swiper -->
+        <link rel="stylesheet" href="assets/css/slick.css">
+        <link rel="stylesheet" href="assets/css/slick-theme.css">
+        <link rel="stylesheet" href="assets/css/swiper.css">
+        <script src="assets/js/slick.js"></script>
+        <script src="assets/js/swiper.js"></script>
+        <!-- Library : WOW -->
+        <link rel="stylesheet" href="assets/css/animate.css"/>
+        <link rel="stylesheet" href="assets/css/animate.min.css"/>
+        <script src="assets/js/wow.min.js"></script>
+        <!-- Library : nice-select -->
+        <link rel="stylesheet" href="assets/css/nice-select.css"/>
+        <script src="assets/js/jquery.nice-select.js"></script>
+        <!-- Library : C3 chart -->
+        <link rel="stylesheet" href="assets/css/c3.css">
+        <script src="assets/js/c3.min.js"></script>
+        <script src="assets/js/d3-5.8.2.min.js"></script>
+        <!-- Library : jQuery UI(datepicker) -->
+        <link rel="stylesheet" href="assets/datepicker/jquery-ui.min.css">
+        <script src="assets/datepicker/jquery-ui.min.js"></script>
+        <script src="assets/datepicker/datepicker-ko.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a07">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <div id="navbar"></div>
+    
+        <!-- 메인 -->
+        <div id="main">
+            <!-- 헤더 -->
+            <div id="header"></div>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                        </div>
+                        <div class="breadcrumb">
+                            <a class="bc-item">Home</a>
+                            <a class="bc-item">로그</a>
+                            <a class="bc-item">회원로그</a>
+                        </div>
+                    </div>
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1920">
+                        <!-- 테이블 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header flex-between">
+                                <div class="header-option mf">
+                                    <div class="search-option">
+                                        <span class="option-title">검색어</span>
+                                        <input class="so_input" type="text" placeholder="회원번호, 이름, 연락처를 입력하세요.">
+                                    </div>
+                                    <div class="date-option">
+                                        <span class="option-title">기간</span>
+                                        <div class="parent-datepicker">
+                                            <input type="text" class="datepicker" id="datepicker1">
+                                        </div>
+                                        <span class="do-span">~</span>
+                                        <div class="parent-datepicker">
+                                            <input type="text" class="datepicker" id="datepicker2">
+                                        </div>
+                                    </div>
+                                    <button class="ho_button btn-search hover01">검색</button>
+                                </div>
+                            </div>
+                            <div class="content-item-body">
+                                <div class="table-wrapper">
+                                    <div class="table overflow-scroll">
+                                        <div class="table-body">
+                                            <div class="item-list ti-header">
+                                                <div class="t-item">
+                                                    <div class="td center-align toggle-target" data-width="13">회원로그번호</div>
+                                                    <div class="td center-align toggle-target" data-width="57">수정내용</div>
+                                                    <div class="td center-align toggle-target" data-width="15">수정일시</div>
+                                                    <div class="td center-align toggle-target" data-width="15">작성자(연락처)</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="item-list ti-standard">
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">00000000</div>
+                                                    <div class="td center-align">등급 (신규) -> (관리자) 변경</div>
+                                                    <div class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">홍길동 이사(010-1234-5678)</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-pagination">
+                                        <a class="tp-first"><img src="/bbs_admin/assets/img/icon-arrow_left2.png" alt=""></a>
+                                        <a class="tp-prev"><img src="/bbs_admin/assets/img/icon-arrow_left.png" alt=""></i></a>
+                                        <div class="tp-nav">
+                                            <a class="pg_num">1</a>
+                                            <a class="pg_num active">2</a> <!-- 활성화 class "active" -->
+                                            <a class="pg_num">3</a>
+                                            <a class="pg_num">4</a>
+                                            <a class="pg_num">5</a>
+                                        </div>
+                                        <a class="tp-next"><img src="/bbs_admin/assets/img/icon-arrow_right.png" alt=""></i></a>
+                                        <a class="tp-last"><img src="/bbs_admin/assets/img/icon-arrow_right2.png" alt=""></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <div id="footer"></div>
+        </div>
+    </div>
+
+    <!-- 팝업 -->
+    <div class="popup"></div>
+</div>
+
+<script>
+    $(function(){
+        // 초기화
+        $('#header').load("layout/header.html");
+        $('#navbar').load("layout/navbar.html");
+        $('#footer').load("layout/footer.html");
+        
+        // 데이트피커
+        $(".datepicker").datepicker({
+            showOn: "both", 
+            buttonImage: "assets/img/date_range.png", 
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd',
+            monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            dayNamesMin: ['일','월','화','수','목','금','토'],
+            dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] 
+        });
+    });
+</script>

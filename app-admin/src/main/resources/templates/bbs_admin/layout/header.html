@@ -1,0 +1,31 @@
+<!-- 헤더 -->
+<div class="header">
+    <div id="btn-sidebar"><i class="xi-bars"></i></div>
+    <div class="hr">
+        <div class="acc">
+            <div class="user-name">홍길동</div>
+        </div>
+        <a class="logout"><i class="xi-log-out"></i>로그아웃</a>
+    </div>
+    <div class="mobile-logo"><a href="index.html"><img src="/bbs_admin/assets/img/main_logo.png" alt=""></a></div>
+</div>
+
+<script>
+    $(function(){
+        // 사이드바 열기/닫기
+        $('#btn-sidebar').on('click', openSidebar);
+        $('#btn-close_sidebar').on('click', closeSidebar);
+    });
+
+    // 사이드바 열기
+    function openSidebar(){
+        openLayer();
+        $('#navbar').addClass('active');
+    }
+
+    // 사이드바 닫기
+    function closeSidebar(){
+        $('#overlay').removeClass('active');
+        $('#navbar').removeClass('active');
+    }
+</script>

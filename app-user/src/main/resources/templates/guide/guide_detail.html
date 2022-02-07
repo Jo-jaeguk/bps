@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head_detail}"></th:block>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+    <th:block th:insert="~{layout/common :: script}"></th:block>
+
+    <div class="wrap" id="p07">
+        <!-- 오버레이 처리 -->
+        <div id="overlay"></div>
+
+        <!-- 메인 -->
+        <div id="main">
+            <div id="header" class="">
+                <div class="header-button">
+                    <a onclick="javascript:Common.goBackPage(); return false;" class="button-back"><img th:src="@{/assets/img/icon-arrow_left.svg}" src="assets/img/icon-arrow_left.svg" alt=""></a>
+                </div>
+                <th:block th:if="${item.sendYn != null and item.sendYn.name() == 'Y'}">
+                    <a onclick="javascript:goToInspect(); return false;"  class="btn-check_car">차량점검표</a> <!-- 숨김처리 class "hidden" -->
+                </th:block>
+            </div>
+
+            <!-- 바디 -->
+            <div id="body" class="guide">
+                <div class="inner-20">
+                    <!-- 앱 타이틀 -->
+                    <div class="app-title">
+                        <div class="fz24 fw600 color-primary">가이드를 <br>확인 할 수 있어요!</div>
+                        <th:block th:if="${item.inspectedYn != null and item.inspectedYn.name() == 'Y'}  ">
+                            <a onclick="requestBuy();" class="btn-request_sell active">매각 신청</a> <!-- 활성화 class "active" / 숨김처리 class "hidden" -->
+                        </th:block>
+                    </div>
+
+                    <!-- 앱 내용 -->
+                    <div class="app-content">
+                        <div class="guide_item-container">
+                            <div class="guide_item-data">
+                                <div th:text="${#temporals.format(item.createdAt, 'yyyy.MM.dd')}" class="date">2021.06.02</div>
+                                <div class="ed">E/D : 30 working days</div>
+                            </div>
+                            <div class="guide_item-list">
+                                <div th:classappend="${guideStatus}"
+                                        class="item has-sub"> <!-- 진행중인 아이템 class "status1" -->
+                                    <div class="item-header">
+                                        <div class="num-code">
+                                            <div class="qn">Quote No(QN#)</div>
+                                            <div th:text="${item.serial}" class="sn">BC20210500002</div>
+                                        </div>
+                                        <div class="status"></div>
+                                    </div>
+                                    <div class="item-body "> <!-- 하위 항목 펼칠 경우 class "opened" -->
+                                        <div class="ib-main toggle-parent">
+                                            <div th:text="${item.carNumber}" class="car-number">123가 1234</div>
+                                            <div th:text="${item.carMadedYear + ' ' + item.carModel + ' ' + item.carModelDetail}" class="car-model">2020 제네시스 EQ 리무진</div>
+                                        </div>
+                                        <div class="ib-sub">
+                                            <div class="is-item">
+                                                <div class="isi-tit">브랜드 / 세부모델 / 등급</div>
+                                                <div class="isi-data">
+                                                    <span th:text="${item.carManufacturer}" class="id-data">기아</span>
+                                                    <span th:text="${item.carModel + ' ' + item.carModelDetail}" class="id-data">더 뉴 그랜져(19년~현재)</span>
+                                                    <span th:text="${item.carClassName + ' ' + item.carTrim}" class="id-data">프레스티지</span>
+                                                </div>
+                                            </div>
+                                            <div class="is-item">
+                                                <div class="isi-tit">연식 / 색상 / 연료 / 배기량 / 미션</div>
+                                                <div class="isi-data">
+                                                    <span th:text="${item.carMadedYear +'.'+item.carMadedMonth}" class="id-data">2020.5</span>
+                                                    <span th:text="${item.carColor}" class="id-data">검정</span>
+                                                    <span th:text="${item.fuelType.description}" class="id-data">가솔린</span>
+                                                    <span th:text="${item.carDisplacement}" class="id-data">2400cc</span>
+                                                    <span th:text="${item.motorType.description}" class="id-data">오토</span>
+                                                </div>
+                                            </div>
+                                            <div class="is-item">
+                                                <div class="isi-tit">주행거리 / 사고유무</div>
+                                                <div class="isi-data">
+                                                    <span th:text="${#numbers.formatInteger(item.mileage , 0 , 'COMMA')}"  class="id-data"></span>
+                                                    <span th:text="${item.accident.description}" class="id-data">단순교환</span>
+                                                </div>
+                                            </div>
+                                            <div class="is-item">
+                                                <div class="isi-tit">주요 옵션</div>
+                                                <div class="isi-data">
+                                                    <span th:each="item, stat: ${guide_option_list}" th:text="${item.option}" class="id-data"></span>
+                                                </div>
+                                            </div>
+                                            <div class="is-item">
+                                                <div class="isi-tit">고객명 / 고객 연락처</div>
+                                                <div class="isi-data">
+                                                    <span th:text="${item.customerName}" class="id-data"></span>
+                                                    <span th:text="${item.customerContact}" class="id-data">010-0000-0000</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="guide_item-management">
+                                <div class="gim-title">고객 담당자 / 연락처</div>
+                                <div class="gim-manager">
+                                    <span th:text="${item.memberName}" class="gm-name">홍길동 상무</span>
+                                    <span th:text="${item.memberPhone}" class="gm-tel">010-0000-0000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 최초 가이드 작성 -->
+                <th:block th:if="${
+                item.sendYn.name() == 'N' and
+                item.inspectedYn.name() == 'N' and
+                item.finalBuyPriceSendYn.name() == 'N'
+                 }">
+                    <!-- 가이드 작성중 팝업-->
+                    <div class="toast_wrapper active">
+                        <div class="toast-guide_writting active">
+                            <div class="toast_desc">
+                                <div class="desc-img"><img th:src="@{/assets/img/icon-edit.svg}" src="" alt=""></div>
+                                <div class="fz20 fw500 color-white mt-20">잠시만 기다려주세요!</div>
+                                <div class="fz12 color-white mt-10">지금! 가이드를 작성중 입니다!</div>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+                <!-- end -->
+
+                <!-- 가이드전송 && 차량점검표 작성 미완료 -->
+                <th:block th:if="${
+                item.sendYn.name() == 'Y' and
+                item.inspectedYn.name() == 'N' and
+                item.finalBuyPriceSendYn.name() == 'N'
+                 }">
+                    <div class="toast_wrapper active2">
+                        <div class="toast-guide">
+                            <div class="toast-guide-header">
+                                <div class="tgh-img"><img th:src="@{/assets/img/logo-guide.svg}" src="" alt=""></div>
+                                <div class="tgh-title">바잉카 매입 가이드!</div>
+                                <th:block th:if="${popular_type.name() == 'POPULAR'}">
+                                    <div class="tgh-popular">인기</div>
+                                </th:block>
+                                <th:block th:if="${popular_type.name() == 'ESSENTIAL'}">
+                                    <div class="tgh-popular">이건꼭!</div>
+                                </th:block>
+                            </div>
+                            <div class="toast-guide-body">
+                                <div class="tgb-info">
+                                    <div class="ti-desc">BuyingCar 매입가 Guideline</div>
+                                    <div th:text="${#numbers.formatInteger(item.sendPrice , 0 , 'COMMA')}" class="ti-price">1,442만원</div>
+                                </div>
+                                <div class="tgb-management">
+                                    <div class="tm-item">
+                                        <div class="ti-tit">가이드 제출자</div>
+                                        <div th:text="${item.adminName + ' ' + item.adminPosition}" class="ti-data">홍길동 이사</div>
+                                    </div>
+                                    <div class="tm-item">
+                                        <div class="ti-tit">연락처</div>
+                                        <div th:text="${item.adminPhone}" class="ti-data">010-0000-0000</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div onclick="javascript:goToInspect(); return false;" class="toast-sub text-align-center">
+                            <div class="writing active"> <!-- 노출시 class "active" -->
+                                <p class="fz20 fw500 color-white">차량점검표를 작성해주세요.</p>
+                            </div>
+                            <div class="process "> <!-- 노출시 class "active" -->
+                                <h4 class="fz20 fw500 color-white">차량점검표 작성완료</h4>
+                                <p class="fz12 fw300 color-white mt-10">지금 매입가격을 책정중입니다. <br>잠시만 기다려주세요!</p>
+                            </div>
+                            <div class="sub-tgb-info"> <!-- 노출시 class "active" -->
+                                <div class="ti-desc">BuyingCar 최종매입가격</div>
+                                <div class="ti-price">10,000만원</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </th:block>
+
+                <!-- 가이드전송 && 차량점검표 작성 완료 -->
+                <th:block th:if="${
+                item.sendYn.name() == 'Y' and
+                item.inspectedYn.name() == 'Y' and
+                item.finalBuyPriceSendYn.name() == 'N'
+                 }">
+                    <!-- 가이드 팝업-->
+                    <div class="toast_wrapper active2"> <!-- 팝업 노출시 class "active" / 아래 남색 팝업까지 노출시엔 class "active2" -->
+                        <div class="toast-guide">
+                            <div class="toast-guide-header">
+                                <div class="tgh-img"><img th:src="@{/assets/img/logo-guide.svg}" alt=""></div>
+                                <div class="tgh-title">바잉카 매입 가이드!</div>
+                                <th:block th:if="${popular_type.name() == 'POPULAR'}">
+                                    <div class="tgh-popular">인기</div>
+                                </th:block>
+                                <th:block th:if="${popular_type.name() == 'ESSENTIAL'}">
+                                    <div class="tgh-popular">이건꼭!</div>
+                                </th:block>
+                            </div>
+                            <div class="toast-guide-body">
+                                <div class="tgb-info">
+                                    <div class="ti-desc">BuyingCar 매입가 Guideline</div>
+                                    <div th:text="${#numbers.formatInteger(item.sendPrice , 0 , 'COMMA')}" class="ti-price">1,442만원</div>
+                                </div>
+                                <div class="tgb-management">
+                                    <div class="tm-item">
+                                        <div class="ti-tit">가이드 제출자</div>
+                                        <div th:text="${item.adminName + ' ' + item.adminPosition}" class="ti-data">홍길동 이사</div>
+                                    </div>
+                                    <div class="tm-item">
+                                        <div class="ti-tit">연락처</div>
+                                        <div th:text="${item.adminPhone}" class="ti-data">010-0000-0000</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div onclick="javascript:goToInspect(); return false;" class="toast-sub text-align-center">
+                            <div class="process "> <!-- 노출시 class "active" -->
+                                <h4 class="fz20 fw500 color-white">차량점검표 작성완료</h4>
+                                <p class="fz12 fw300 color-white mt-10">지금 매입가격을 책정중입니다. <br>잠시만 기다려주세요!</p>
+                            </div>
+                            <div class="sub-tgb-info active"> <!-- 노출시 class "active" -->
+                                <div class="ti-desc">BuyingCar 최종매입가격</div>
+                                <div th:text="${#numbers.formatInteger(item.finalBuyPrice , 0 , 'COMMA')}" class="ti-price">10,000만원</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </th:block>
+                <!-- end -->
+            </div>
+        </div>
+    </div>
+
+
+    <input type="hidden" id="guideId" th:value="${guideId}">
+
+<script>
+    function closeModal() {
+        $('#overlay').removeClass('active');
+        $('.popup-change_password').removeClass('active');
+        $('.popup-my_info').removeClass('active');
+    }
+    function showMyInfoModal() {
+        Service.getMemberDetail();
+    }
+    function goToInspect() {
+        let guideId = $('#guideId').val();
+        let url = `/user/guide/${guideId}/inspect`;
+        Common.goPage(url);
+    }
+    function updateMyInfo() {
+        if(!$.notnull($('#modal_member_name') , '이름'))
+            return false;
+        if(!$.notnull($('#modal_member_group_name') , '소속'))
+            return false;
+        if(!$.notnull($('#modal_member_position') , '직위'))
+            return false;
+        Service.updateMyInfo();
+    }
+    
+    function requestBuy() {
+        // 매각요청
+        let guideId = $('#guideId').val();
+        Service.requestBuy(guideId, function (data) {
+            alert('매각 신청이 완료되었습니다.');
+        });
+    }
+
+    $(function(){
+
+    });
+    let Service = {
+
+        requestBuy: function (guideId, _func) {
+            var url = `/api/user/v1/guide/${guideId}/request_buy`;
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data);
+                }
+                return;
+            });
+        },
+        updateMyInfo: function () {
+            var url = "/api/user/v1/member";
+            let updateObj = {};
+            updateObj.name = $('#modal_member_name').val();
+            updateObj.groupName = $('#modal_member_group_name').val();
+            updateObj.position = $('#modal_member_position').val();
+            var ajaxParam = {
+                "url": url,
+                "type": "PUT",
+                "data": JSON.stringify(updateObj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    $('#member_name').text(data.data.name + ' ' + data.data.position);
+                    $('#member_name_one').text(data.data.name);
+
+                    $('#member_phone').text(data.data.phone);
+                    $('#member_phone_one').text(data.data.phone);
+                    $('#member_group').text(data.data.groupName + ' ' + data.data.branch);
+                    $('#overlay').removeClass('active');
+                    $('.popup-my_info').removeClass('active');
+                    return;
+                }
+                return;
+            });
+        },
+
+    }
+</script>

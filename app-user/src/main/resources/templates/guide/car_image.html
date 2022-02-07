@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:insert="~{layout/common :: head}"></th:block>
+</head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+<th:block th:insert="~{layout/common :: script}"></th:block>
+
+<div class="wrap" id="p07">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+
+        <div id="loading"><div class="round spinner"></div></div>
+
+        <div id="header" class="">
+            <div class="header-button">
+                <a onclick="javascript:back(); return false;" class="button-back"><img th:src="@{/assets/img/icon-arrow_left.svg}" src="" alt=""></a>
+            </div>
+        </div>
+
+        <!-- 바디 -->
+        <div id="body" class="home">
+
+            <div class="inner-20">
+                <!-- 탭 아이템 -->
+                <div class="tab-wrapper">
+                    <!-- 탭 컨테이너 -->
+                    <div class="tab-container tab-type-02">
+
+                        <div class="tab tab04 active"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량 사진을 <br>등록해주세요.</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-25">
+                                <div class="required-field">
+                                    <div class="field-title fz14 color-primary">필수사진</div>
+                                        <form method="post" enctype="multipart/form-data" id="fileUpload">
+                                            <input id="guideTempId" type="hidden" name="guideTempId" th:value="${guideTempId}">
+                                            <div class="image-container mt-10">
+                                                <div class="image-item btn-file_add">
+                                                    <div class="item-img">
+                                                        <img id="img-1" alt="">
+                                                        <input id="image-1" name="image_1" class="input-file" type="file">
+                                                    </div>
+                                                    <p class="fz14 mt-5">계기판</p>
+                                                    <div id="delete-img-1" class="delete-img"><img
+                                                            th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg}"
+                                                            src="./" alt=""></div>
+                                                </div>
+                                                <div class="image-item btn-file_add">
+                                                    <div class="item-img">
+                                                        <img id="img-2">
+                                                        <input id="image-2" name="image_2" class="input-file" type="file">
+                                                    </div>
+                                                    <p class="fz14 mt-5">전면</p>
+                                                    <div id="delete-img-2" class="delete-img"><img
+                                                            th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg}"
+                                                            src="./" alt=""></div>
+                                                </div>
+                                                <div class="image-item btn-file_add">
+                                                    <div class="item-img">
+                                                        <img id="img-3">
+                                                        <input id="image-3" name="image_3" class="input-file" type="file">
+                                                    </div>
+                                                    <p class="fz14 mt-5">후면</p>
+                                                    <div id="delete-img-3" class="delete-img"><img
+                                                            th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg}"
+                                                            src="./" alt=""></div>
+                                                </div>
+                                                <div class="image-item btn-file_add">
+                                                    <div class="item-img">
+                                                        <img id="img-4">
+                                                        <input id="image-4" name="image_4" class="input-file" type="file">
+                                                    </div>
+                                                    <p class="fz14 mt-5">옆(운전석)</p>
+                                                    <div id="delete-img-4" class="delete-img"><img
+                                                            th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg}"
+                                                            src="./" alt=""></div>
+                                                </div>
+                                                <div class="image-item btn-file_add">
+                                                    <div class="item-img">
+                                                        <img id="img-5">
+                                                        <input id="image-5" name="image_5" class="input-file" type="file">
+                                                    </div>
+                                                    <p class="fz14 mt-5">옆(보조석)</p>
+                                                    <div id="delete-img-5" class="delete-img"><img
+                                                            th:src="@{https://kwpmmvsraait7016527.gcdn.ntruss.com/assets/img/icon-delete.svg}"
+                                                            src="./" alt=""></div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="inner">
+                <div class="app-content">
+                    <div class="form-submit">
+                        <div class="item-checkbox mt-45">
+                            <div class="login-button mt-15">
+                                <a onclick="javascript:requestGuide(); return false;" class="button bg-color-primary"><span class="color-white">신청하기</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 탭 프로그레스 -->
+        <div id="progress-bar" class="p10"> <!-- 프로그레스 진행률에 따라 class "p0 ~ p10" 부여 -->
+            <img class="progress-0" th:src="@{/assets/img/progress-0.svg}" src="assets/img/progress-0.svg" alt="">
+            <img class="progress-1" th:src="@{/assets/img/progress-1.svg}" src="assets/img/progress-1.svg" alt="">
+            <img class="progress-2" th:src="@{/assets/img/progress-2.svg}"src="assets/img/progress-2.svg" alt="">
+            <img class="progress-3" th:src="@{/assets/img/progress-3.svg}"src="assets/img/progress-3.svg" alt="">
+            <img class="progress-4" th:src="@{/assets/img/progress-4.svg}"src="assets/img/progress-4.svg" alt="">
+            <img class="progress-5" th:src="@{/assets/img/progress-5.svg}"src="assets/img/progress-5.svg" alt="">
+            <img class="progress-6" th:src="@{/assets/img/progress-6.svg}"src="assets/img/progress-6.svg" alt="">
+            <img class="progress-7" th:src="@{/assets/img/progress-7.svg}"src="assets/img/progress-7.svg" alt="">
+            <img class="progress-8" th:src="@{/assets/img/progress-8.svg}"src="assets/img/progress-8.svg" alt="">
+            <img class="progress-9" th:src="@{/assets/img/progress-9.svg}"src="assets/img/progress-9.svg" alt="">
+            <img class="progress-10" th:src="@{/assets/img/progress-10.svg}"src="assets/img/progress-10.svg" alt="">
+        </div>
+        <!-- 탭 버튼 -->
+        <!--
+        <div onclick="javascript:goToNext(); return false;" class="button-tab-next"><img th:src="@{/assets/img/button_next.svg}" src="" alt=""></div>
+        -->
+    </div>
+
+    <div id="modal_noti" class="popup popup-join-success "> <!-- 팝업 활성화 class "active" -->
+        <div class="popup-inner">
+            <div class="popup-header">
+                <div class="popup-title">가이드</div>
+                <!--
+                <div class="btn-close_popup"><img th:src="@{/assets/img/icon-close.svg}" src="" alt=""></div>
+                -->
+            </div>
+            <div class="popup-body">
+                <div class="form-insert">
+                    <div class="item-input">
+                        <div class="input-text">차량이미지</div>
+                    </div>
+                    <div class="item-input">
+                        <div id="modal_body" class="input-text"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <a id="btnSubmit" onclick="javascript:closeModal();" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup popup-my_info "> <!-- 팝업 활성화 class "active" -->
+        <div class="popup-inner">
+            <div class="popup-header">
+                <div class="popup-title">가이드 신청 완료</div>
+                <!--
+                <div class="btn-close_popup"><img th:src="@{/assets/img/icon-close.svg}" src="" alt=""></div>
+                -->
+            </div>
+            <div class="popup-body">
+                <div class="form-insert">
+                    <div class="item-input">
+                        <div class="input-text">가이드 신청이 완료되었습니다.</div>
+                    </div>
+                    <div class="item-input">
+                        <div class="input-text">관리자 확인 후 빠르게 처리하여 드리겠습니다.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <a onclick="javascript:guideFinish();" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script>
+    let guideTempId = "";
+    let imgCnt = 0;
+    let files = [];
+
+    function guideFinish() {
+        $('#overlay').removeClass('active');
+        $('.popup-my_info').removeClass('active');
+        Common.goPage("/user/guide");
+    }
+
+    function showModal() {
+        $('#overlay').addClass('active');
+        $('#modal_noti').addClass('active');
+    }
+    function closeModal() {
+        $('#overlay').removeClass('active');
+        $('#modal_noti').removeClass('active');
+    }
+    function requestGuide() {
+
+        if(imgCnt <= 0) {
+            loadingClose();
+            Service.requestGuide();
+            return;
+        }
+        /*
+        if(imgCnt != 5) {
+            $('#modal_body').text('모든 이미지를 첨부해주세요');
+            $('#overlay').addClass('active');
+            $('#modal_noti').addClass('active');
+            return;
+        }
+         */
+        let form = $('#fileUpload')[0];
+        let data = new FormData(form);
+        loading();
+
+        $("#btnSubmit").prop("disabled", true);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/api/user/v1/guide/car_image",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+                loadingClose();
+                Service.requestGuide();
+                $("#btnSubmit").prop("disabled", false);
+            },
+            error: function (e) {
+                loadingClose();
+                console.log("ERROR : ", e);
+                $("#btnSubmit").prop("disabled", false);
+                alert("이미지 등록 실패하였습니다. 다시 시도하여 주세요.");
+            }
+        });
+
+    }
+    function goToNext() {
+        guideTempId = $('#guideTempId').val();
+
+        let carTrimId = "";
+        $('.select_item-list').children().each(function (item, index) {
+           if($(this).hasClass('active')) {
+               carTrimId = $(this).attr('id');
+           }
+        });
+        if(!carTrimId) {
+            $('#modal_body').text('트림을 선택해 주세요');
+            showModal();
+            return false;
+        }
+
+        let url = `/user/guide/car_made?guideTempId=${guideTempId}`;
+        url += `&carTrimId=${carTrimId}`
+        Common.goPage(url);
+    }
+
+
+    $(function(){
+        $('.input-file').on('change', handleImgFileSelect);
+        //$('.delete-img').on('click', deleteImgFile);
+        $('.delete-img').click(function () {
+            let targetId = $(this).attr('id');
+            console.log(targetId);
+            if(targetId == 'delete-img-1') {
+                $('#img-1').parent().parent().addClass('btn-file_add');
+                $('#img-1').attr('src', '');
+                imgCnt--;
+            } else if(targetId == 'delete-img-2') {
+                $('#img-2').parent().parent().addClass('btn-file_add');
+                $('#img-2').attr('src', '');
+                imgCnt--;
+            } else if(targetId == 'delete-img-3') {
+                $('#img-3').parent().parent().addClass('btn-file_add');
+                $('#img-3').attr('src', '');
+                imgCnt--;
+            } else if(targetId == 'delete-img-4') {
+                $('#img-4').parent().parent().addClass('btn-file_add');
+                $('#img-4').attr('src', '');
+                imgCnt--;
+            } else {
+                $('#img-5').parent().parent().addClass('btn-file_add');
+                $('#img-5').attr('src', '');
+                imgCnt--;
+            }
+        });
+    });
+
+    function handleImgFileSelect(e) {
+        console.log(e.target.id);
+        let targetId = e.target.id;
+        let files = e.target.files;
+        let filesArr = Array.prototype.slice.call(files);
+
+        filesArr.forEach(function (f) {
+            if(!f.type.match("image.*")) {
+                alert('이미지 파일만 등록 가능합니다.');
+                return;
+            }
+            sel_file = f;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                //
+                if(targetId == 'image-1') {
+                    $('#img-1').parent().parent().removeClass('btn-file_add');
+                    $('#img-1').attr('src', e.target.result);
+                    imgCnt++;
+                } else if(targetId == 'image-2') {
+                    $('#img-2').parent().parent().removeClass('btn-file_add');
+                    $('#img-2').attr('src', e.target.result);
+                    imgCnt++;
+                } else if(targetId == 'image-3') {
+                    $('#img-3').parent().parent().removeClass('btn-file_add');
+                    $('#img-3').attr('src', e.target.result);
+                    imgCnt++;
+                } else if(targetId == 'image-4') {
+                    $('#img-4').parent().parent().removeClass('btn-file_add');
+                    $('#img-4').attr('src', e.target.result);
+                    imgCnt++;
+                } else {
+                    $('#img-5').parent().parent().removeClass('btn-file_add');
+                    $('#img-5').attr('src', e.target.result);
+                    imgCnt++;
+                }
+            }
+            reader.readAsDataURL(f);
+        })
+    }
+
+    function deleteImgFile(e) {
+        let targetId =  e.target.id;
+        console.log(targetId);
+        if(targetId == 'delete-image-1') {
+            $('#img-1').parent().parent().addClass('btn-file_add');
+            $('#img-1').attr('src', '');
+        } else if(targetId == 'delete-image-2') {
+            $('#img-2').parent().parent().addClass('btn-file_add');
+            $('#img-2').attr('src', '');
+        } else if(targetId == 'delete-image-3') {
+            $('#img-3').parent().parent().addClass('btn-file_add');
+            $('#img-3').attr('src', '');
+        } else if(targetId == 'delete-image-4') {
+            $('#img-4').parent().parent().addClass('btn-file_add');
+            $('#img-4').attr('src', '');
+        } else {
+            $('#img-5').parent().parent().addClass('btn-file_add');
+            $('#img-5').attr('src', '');
+        }
+    }
+    function readImage(input) {
+        console.log(input.id);
+        if(input.files && input.files[0]) {
+            // 이미지 파일인지 검사 (생략)
+            // FileReader 인스턴스 생성
+            const reader = new FileReader()
+            // 이미지가 로드가 된 경우
+            reader.onload = e => {
+                const previewImage = document.getElementById("preview-image")
+                previewImage.src = e.target.result
+            }
+            // reader가 이미지 읽도록 하기
+            reader.readAsDataURL(input.files[0])
+        }
+    }
+
+    let Service = {
+        requestGuide : function () {
+            let obj = {};
+            obj.guideTempId = $('#guideTempId').val();
+
+            var url = "/api/user/v1/guide";
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    $('#overlay').addClass('active');
+                    $('.popup-my_info').addClass('active');
+                }
+                return;
+            });
+        }
+
+    }
+
+
+</script>

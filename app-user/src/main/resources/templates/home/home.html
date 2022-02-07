@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:insert="~{layout/common :: head}"></th:block>
+</head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+<th:block th:insert="~{layout/common :: script}"></th:block>
+<div class="wrap" id="p06">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+        <div id="header" class="none-fixed">
+            <div class="header-button">
+                <!-- <a class="button-back"><img src="assets/img/icon-arrow_left.svg" alt=""></a> -->
+            </div>
+        </div>
+
+        <!-- 바디 -->
+        <div id="body" class="home">
+            <div class="inner">
+                <!-- 앱 타이틀 -->
+                <div class="app-title">
+                    <div class="fz30 fw600 color-black">
+                        <span class="em"><span class="em-text">차량 브랜드</span><span class="em-underline"></span></span>를 <br>선택해주세요!
+                    </div>
+                </div>
+
+                <!-- 앱 내용 -->
+                <div class="app-content">
+                    <div class="choice-brand">
+                        <button id="btnDomestic" class="button-brand toggle-select active">국산</button>
+                        <button id="btnInternational" class="button-brand toggle-select">수입</button>
+                    </div>
+
+                    <div class="brand-next-button flex-align-right mt-35">
+                        <a onclick="javascript:nextStep(); return false;" class="button-next fz16 fw600 flex-align-left">다음<img th:src="@{/assets/img/icon-arrow_right.svg}" src="" alt=""></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="home-illust"><img th:src="@{/assets/img/img-home_illust@3x.png}" src="" alt=""></div>
+
+        <!-- 푸터 -->
+        <th:block th:insert="~{layout/common :: footer}"></th:block>
+    </div>
+
+    <!-- 팝업 -->
+    <div class="popup"></div>
+</div>
+<script>
+    let countyType = "";
+
+    function nextStep() {
+        Common.goPage("/user/guide/brand?countryType=" + countyType);
+    }
+    $(function(){
+        countyType = "DOMESTIC";
+        $('#btnDomestic').click(function () {
+            $(this).addClass("active");
+            $("#btnInternational").removeClass("active");
+            countyType = "DOMESTIC";
+        });
+        $('#btnInternational').click(function () {
+            $(this).addClass("active");
+            $("#btnDomestic").removeClass("active");
+            countyType = "INTERNATIONAL";
+        });
+    });
+
+    let Service = {
+        createNotice : function () {
+            let obj = {};
+            obj.title = $('#title').val();
+            obj.body = $('#summernote').val();
+            var url = "/api/admin/v1/notice";
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    alert(data.message);
+                    closeLayer();
+                    $('.modal-registry_post').removeClass('active');
+                    Common.reloadPage();
+                }
+                return;
+            });
+        }
+
+    }
+
+
+</script>

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a11">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <th:block th:insert="~{layout/common :: navbar}"></th:block>
+    
+        <!-- 메인 -->
+        <div id="main">
+
+            <div id="loading"><div class="round spinner"></div></div>
+
+            <!-- 헤더 -->
+            <th:block th:insert="~{layout/common :: header}"></th:block>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                            <!--
+                            <span class="ct-text">차량 <span class="search-count"th:text="${#numbers.formatInteger(page.totalElements , 0 , 'COMMA')}" >999,999,999</span>건이 검색되었습니다.</span>
+                            -->
+                        </div>
+                        <div class="breadcrumb">
+                            <a th:href="@{/}" class="bc-item">Home</a>
+                            <a class="bc-item">설정</a>
+                            <a th:href="@{/admin/config/inspect}" class="bc-item">체크리스트 설정</a>
+                        </div>
+                    </div>
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1920">
+                        <!-- 테이블 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header">
+                                <div class="header-option">
+                                    <div class="search-option">
+                                        <span class="option-title">검색어</span>
+                                        <input th:value="${param.search}" id="searchText" class="so_input" type="text" placeholder="문항내용을 입력하세요..">
+                                    </div>
+                                    <button id="btnSearch" class="ho_button btn-search hover01 ml-10">검색</button>
+                                </div>
+                                <div class="button-list">
+                                    <button class="ho_button btn-baseprice hover01">차량기준가</button>
+                                    <button class="ho_button btn-checklist hover01">체크리스트 추가</button>
+                                </div>
+                                <div class="etc-option toggle-target">
+                                    <div class="eo-icon hover01"><i class="xi-ellipsis-h"></i></div>
+                                    <div class="eo-menus">
+                                        <div onclick="javascript:excelDownload(); return false;" class="btn-download_excel">엑셀 다운로드</div>
+                                        <div class="view-option">
+                                            <div class="vo-item toggle-select" onclick="javascript:searchSize(15); return false;">15개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchSize(30); return false;">30개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchSize(60); return false;">60개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchSize(120); return false;">120개씩 보기</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-item-body">
+                                <div class="table-wrapper">
+                                    <div class="table overflow-scroll">
+                                        <div class="table-body">
+                                            <div class="item-list ti-header">
+                                                <div class="t-item">
+                                                    <div class="td center-align toggle-target" data-width="5">번호</div>
+                                                    <div class="td center-align toggle-target" data-width="5">순서</div>
+                                                    <div class="td center-align toggle-target" data-width="35">문항내용</div>
+                                                    <div class="td center-align toggle-target" data-width="10">금액(원)</div>
+                                                    <div class="td center-align toggle-target" data-width="30">작성자(아이디)</div>
+                                                    <div class="td center-align toggle-target" data-width="15">기타</div>
+                                                </div>
+                                            </div>
+                                            <div class="item-list ti-standard">
+                                                <div th:each="item, stat : ${content}" th:id="${item.id}" class="t-item">
+                                                    <div th:text="${#numbers.formatInteger(item.id , 0 , 'COMMA')}" th:attr="data-id=${item.id}" class="td center-align t-col">00000000</div>
+                                                    <div th:text="${#numbers.formatInteger(item.orderIndex , 0 , 'COMMA')}" th:attr="data-id=${item.id}" class="td center-align t-col">00000000</div>
+                                                    <div th:text="${item.question}" th:attr="data-id=${item.id}" class="td center-align t-col"></div>
+                                                    <div th:text="${item.price}" th:attr="data-id=${item.id}" class="td center-align t-col"></div>
+                                                    <div th:text="${item.writerLoginId}" th:attr="data-id=${item.id}" class="td center-align t-col"></div>
+                                                    <div class="td center-align">
+                                                        <button th:classappend="${item.published == false ? 'active' : ''}" th:attr="data-id=${item.id}" class="btn-hide toggle-target"></button>
+                                                        <button th:attr="data-id=${item.id}" class="btn-up"></button>
+                                                        <button th:attr="data-id=${item.id}" class="btn-down"></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="page" th:value="${page.page}">
+                                    <input type="hidden" id="size" th:value="${page.size}">
+                                    <input type="hidden" id="sort" th:value="${page.sort}">
+                                    <input type="hidden" id="direction" th:value="${page.direction}">
+                                    <input type="hidden" id="search" th:value="${search}">
+                                    <div th:if="${page.totalPages > 0}" class="table-pagination">
+                                        <!--
+                                        <a th:if="${page.page != 1}" th:href="@{/admin/member(page=${page.page - 1}, size=${page.size})}"
+                                           class="tp-first"><img th:src="@{/assets/img/icon-arrow_left2.png}"  alt=""></a>
+                                        -->
+                                        <a th:if="${page.isFirst == false}"
+                                           th:href="@{/admin/config/inspect(page=${page.page - 1}, size=${page.size}, search=${param.search})}"
+                                           class="tp-prev"><img th:src="@{/assets/img/icon-arrow_left.png}"  alt=""></i></a>
+
+                                        <div class="tp-nav">
+                                            <a th:each="item, stat : ${ #numbers.sequence(page.startPage, page.endPage)}"
+                                               th:classappend="${item == page.page+1 ? 'active' : ''}"
+                                               th:href="@{/admin/config/inspect(page=${item-1}, size=${page.size}, search=${param.search})}"
+                                               th:text="${item}"
+                                               class="pg_num">1</a>
+                                        </div>
+                                        <a th:if="${page.isLast == false}"
+                                           th:href="@{/admin/config/inspect(page=${page.page + 1}, size=${page.size}, search=${param.search})}"
+                                           class="tp-next"><img th:src="@{/assets/img/icon-arrow_right.png}" alt=""></i></a>
+                                        <!--
+                                        <a class="tp-last"><img th:src="@{/assets/img/icon-arrow_right2.png}"  alt=""></i></a>
+                                        -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <th:block th:insert="~{layout/common :: footer}"></th:block>
+        </div>
+    </div>
+
+    <!-- 팝업 -->
+    <div class="modal">
+        <!-- 차량 기준가 모달 -->
+        <div class="modal-wrapper main-modal modal-base_price width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">차량 기준가</span>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">기준 금액(원)</div>
+                        <div class="modal-item_content border-box">
+                            <input id="modal_base_price" class="mi_input" type="number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="btnSaveBasePrice" class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+        <!-- 체크리스트 추가 모달 -->
+        <div class="modal-wrapper main-modal modal-check_list width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">체크리스트</span>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <input id="check_list_id" class="mi_input" type="hidden">
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">문의 내용</div>
+                        <div class="modal-item_content border-box">
+                            <input id="modal_question" class="mi_input" type="text" placeholder="신규문항 내용 입력">
+                        </div>
+                    </div>
+
+                    <div class="modal-item mt-25">
+                        <div class="modal-item_title">금액(원)</div>
+                        <div class="modal-item_content border-box">
+                            <input id="modal_price" class="mi_input" type="number">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="btnSaveCheckList" class="mf_button btn-save hover01">저장</button>
+                <button id="btnModifyCheckList" class="mf_button btn-save hover01">수정</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+    let search = "";
+    let page = "";
+    let size = "";
+    let servletPath = `/admin/config/inspect`;
+
+    $(function(){
+        $('#a11 .btn-baseprice').on('click', activeModal_BasePrice);
+        $('#a11 .btn-checklist').on('click', showCreateCheckListModal);
+        $('.table-body .ti-standard .t-item .t-col').on('click', getCheckListDetail);
+
+        $('#btnSearch').click(function () {
+            search = $('#searchText').val();
+            searchValue();
+        });
+
+        $('#btnSaveCheckList').click(function (){
+            if(!$.notnull($('#modal_question') , '문항'))
+                return false;
+            if(!$.notnull($('#modal_price') , '금액'))
+                return false;
+            Service.createCheckList($('#modal_question').val(), $('#modal_price').val(), function (data) {
+                initCheckListModalData();
+                closeCheckListModal();
+                Common.reloadPage();
+            });
+        });
+
+        $('#btnModifyCheckList').click(function (){
+            if(!$.notnull($('#modal_question') , '문항'))
+                return false;
+            if(!$.notnull($('#modal_price') , '금액'))
+                return false;
+
+            Service.modifyCheckList($('#check_list_id').val(), $('#modal_question').val(), $('#modal_price').val(), function (data) {
+                initCheckListModalData();
+                closeCheckListModal();
+                Common.reloadPage();
+            });
+        });
+
+        $('#btnSaveBasePrice').click(function (){
+            if(!$.notnull($('#modal_base_price') , '기준금액'))
+                return false;
+            Service.saveBasePrice($('#modal_base_price').val() , function (data) {
+                closeBasePriceModal();
+            });
+        });
+
+        $('.btn-close_modal').click(function () {
+            Common.reloadPage();
+        });
+
+        $('.btn-hide').click(function () {
+            let id = $(this).attr('data-id');
+            let published = true;
+            if($(this).hasClass('active')) {
+                published = false;
+            } else {
+                published = true;
+            }
+            Service.publishCheckList(id, published, function (data) {
+               Common.reloadPage();
+            });
+        });
+
+        $('.btn-up').click(function () {
+            let id = $(this).attr('data-id');
+            Service.orderUpCheckList(id, function (data) {
+                Common.reloadPage();
+            });
+        });
+
+        $('.btn-down').click(function () {
+            let id = $(this).attr('data-id');
+            Service.orderDownCheckList(id, function (data) {
+                Common.reloadPage();
+            });
+        });
+
+
+        $('input:radio[name=domestic]').change(function (){
+            $('input:radio[name=international]').prop('checked', false);
+            Service.initFixBrandView();
+        });
+
+        $('input:radio[name=international]').change(function (){
+            $('input:radio[name=domestic]').prop('checked', false);
+            Service.initFixBrandView();
+        });
+
+    });
+
+    function activeModal_BasePrice(){
+        Service.getBasePrice(function (data) {
+            if(data) {
+                $('#modal_base_price').val(data);
+            } else {
+                $('#modal_base_price').val('');
+            }
+            openLayer();
+            $('.modal-base_price').addClass('active');
+        });
+    }
+    function closeBasePriceModal() {
+        closeLayer();
+        $('.modal-base_price').removeClass('active');
+    }
+
+    function activeModal_CheckList(){
+        openLayer();
+        $('.modal-check_list').addClass('active');
+    }
+    function showCreateCheckListModal() {
+        $('#btnSaveCheckList').show();
+        $('#btnModifyCheckList').hide();
+        activeModal_CheckList();
+    }
+    function showModifyCheckListModal() {
+        $('#btnSaveCheckList').hide();
+        $('#btnModifyCheckList').show();
+        activeModal_CheckList();
+    }
+
+    function getCheckListDetail() {
+        let id = $(this).attr('data-id');
+        Service.getCheckListDetail(id, function (data) {
+            $('#modal_question').val(data.question);
+            $('#modal_price').val(data.price);
+            $('#check_list_id').val(data.id);
+            showModifyCheckListModal();
+        });
+    }
+
+    function searchSize(innserSize) {
+        size = innserSize;
+        page = $('#page').val();
+        searchPage();
+    }
+
+    function searchValue(search) {
+        search = search;
+        page = $('#page').val();
+        size = $('#size').val();
+        searchPage();
+    }
+    function searchPage() {
+        let url = `/admin/config/inspect?page=${page}&size=${size}&search=${search}`;
+        Common.goPage(url);
+    }
+
+    function excelDownload() {
+        let url = `/admin/config/check_list/excel/download?page=` + $('#page').val() + `&size=`+ $('#size').val();
+        if($('#search').val()) {
+            url += '&search=' + $('#search').val();
+        }
+        Common.goPage(url);
+    }
+    function initCheckListModalData() {
+        $('#modal_question').val('');
+        $('#modal_price').val('');
+        $('#check_list_id').val('');
+    }
+    function closeCheckListModal() {
+        $('.modal-check_list').removeClass('active');
+    }
+    let Service = {
+        getBasePrice: function (_func) {
+            var url = `/api/admin/v1/config/check_list/base_price`;
+            let obj = {};
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    _func(undefined);
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        saveBasePrice: function (price, _func) {
+            var url = `/api/admin/v1/config`;
+            let obj = {};
+            obj.configType = "CHECK_LIST_BASE_PRICE";
+            obj.value = price;
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        orderDownCheckList: function (id, _func) {
+            var url = `/api/admin/v1/check_list/${id}/order/down`;
+            let obj = {};
+            var ajaxParam = {
+                "url": url,
+                "type": "PUT",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        orderUpCheckList: function (id, _func) {
+            var url = `/api/admin/v1/check_list/${id}/order/up`;
+            let obj = {};
+            var ajaxParam = {
+                "url": url,
+                "type": "PUT",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        publishCheckList: function (id, published, _func) {
+            var url = `/api/admin/v1/check_list/${id}/published`;
+            let obj = {};
+            obj.published = published;
+            var ajaxParam = {
+                "url": url,
+                "type": "PUT",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        getCheckListDetail: function (id, _func) {
+            var url = `/api/admin/v1/check_list/${id}`;
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        modifyCheckList: function (id, question, price, _func){
+            let obj = {};
+            obj.question = question;
+            obj.price = price;
+            var url = `/api/admin/v1/check_list/${id}`;
+            var ajaxParam = {
+                "url": url,
+                "type": "PUT",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        createCheckList: function (question, price, _func){
+            let obj = {};
+            obj.question = question;
+            obj.price = price;
+            var url = "/api/admin/v1/check_list";
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        createCarColor: function (color) {
+            let obj = {};
+            var url = "/api/admin/v1/car_color";
+            obj.color = color;
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    let innerHtml = "";
+                    innerHtml += `<div class="tag" name="carColor" color-id="${data.data.id}">${data.data.color}</div>`;
+                    $('#car_color').append(innerHtml);
+                    $('#in_car_color').val('');
+                }
+                return;
+            });
+        },
+        getCarColors: function () {
+            let obj = {};
+            var url = "/api/admin/v1/car_color";
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+
+                    $('#car_color').empty();
+                    for (let i = 0; i < data.data.length; i++) {
+                        let inner = data.data[i];
+                        let innerHtml = "";
+                        innerHtml += `<div class="tag" name="carColor" color-id="${inner.id}">${inner.color}</div>`;
+                        $('#car_color').append(innerHtml);
+                    }
+                    openLayer();
+                    $('.modal-setting_color').addClass('active');
+                }
+                return;
+            });
+        },
+
+
+    }
+
+
+</script>

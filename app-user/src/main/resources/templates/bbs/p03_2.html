@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="p04">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+        <div id="header" class="">
+            <div class="header-button">
+                <a class="button-back"><img src="assets/img/icon-arrow_left.svg" alt=""></a>
+            </div>
+        </div>
+
+        <!-- 바디 -->
+        <div id="body" class="onboarding">
+            <div class="inner">
+                <!-- 앱 타이틀 -->
+                <div class="app-title mt-20">
+                    <div class="fz24 fw600 color-black">Join Us</div>
+                </div>
+
+                <!-- 앱 내용 -->
+                <div class="app-content">
+                    <div class="form-insert">
+                        <div class="item-input">
+                            <div class="input-text">이메일</div>
+                            <input class="" type="text" placeholder="이메일 주소를 입력해주세요.">
+                            <div class="text-notice error active">맞는 형식의 아이디가 아닙니다.</div>
+                        </div>
+                        <div class="item-input">
+                            <div class="input-text">비밀번호</div>
+                            <input class="" type="password" placeholder="비밀번호를 입력해주세요.">
+                        </div>
+                        <div class="item-input">
+                            <div class="input-text">비밀번호 확인</div>
+                            <input class="" type="password" placeholder="비밀번호를 한 번 더 입력해주세요.">
+                            <div class="text-notice error active">비밀번호가 다릅니다.</div>
+                        </div>
+                    </div>
+                    <div class="form-submit">
+                        <div class="item-checkbox mt-45">
+                            <input type="checkbox" id="cb1">
+                            <label for="cb1"><span>[필수] <a class="underline">개인정보 취급 방침 동의</a></span></label>
+                        </div>
+                        <div class="text-notice error active mt-10">필수 동의가 필요합니다.</div>
+                        <div class="login-button mt-15">
+                            <a class="button bg-color-primary"><span class="color-white">확인</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+</script>

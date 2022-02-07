@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a01">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <th:block th:insert="~{layout/common :: navbar}"></th:block>
+    
+        <!-- 메인 -->
+        <div id="main">
+
+            <div id="loading"><div class="round spinner"></div></div>
+
+            <!-- 헤더 -->
+            <th:block th:insert="~{layout/common :: header}"></th:block>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                            <span class="ct-text">회원 <span class="search-count" th:text="${#numbers.formatInteger(page.totalElements , 0 , 'COMMA')}"></span>명이 검색되었습니다.</span>
+                        </div>
+                        <div class="breadcrumb">
+                            <a th:href="@{/}" class="bc-item">Home</a>
+                            <a th:href="@{/admin/member}" class="bc-item">회원</a>
+                        </div>
+                    </div>
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1920">
+                        <!-- 테이블 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header flex-between">
+                                <div class="header-option">
+                                    <div class="search-option">
+                                        <span class="option-title">검색어</span>
+                                        <input th:value="${param.search}" id="searchText" class="so_input" type="text" placeholder="회원번호, 이름, 연락처를 입력하세요.">
+                                    </div>
+                                    <button id="btnSearch" class="ho_button btn-search hover01 ml-10">검색</button>
+                                    <button sec:authorize="hasAnyRole('MASTER')" id="btnCreateAdmin" class="ho_button btn-search hover01 ml-10">관리자계정 생성</button>
+                                </div>
+                                <div class="etc-option toggle-target">
+                                    <div class="eo-icon hover01"><i class="xi-ellipsis-h"></i></div>
+                                    <div class="eo-menus">
+                                        <div onclick="javascript:excelDownload(); return false;" class="btn-download_excel">엑셀 다운로드</div>
+                                        <div class="view-option">
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(15); return false;">15개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(30); return false;">30개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(60); return false;">60개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(120); return false;">120개씩 보기</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-item-body">
+                                <div class="table-wrapper">
+                                    <div class="table overflow-scroll">
+                                        <div class="table-body">
+                                            <div class="item-list ti-header">
+                                                <div class="t-item">
+                                                    <div class="td center-align toggle-target" data-width="13">회원번호</div>
+                                                    <div class="td center-align toggle-target" data-width="32">아이디</div>
+                                                    <div class="td center-align toggle-target" data-width="8">이름<button class="button-sort"></button></div>
+                                                    <div class="td center-align toggle-target" data-width="11">연락처<button class="button-sort"></button></span></div>
+                                                    <div class="td center-align toggle-target" data-width="9">요청건수<button class="button-sort"></button></span></div>
+                                                    <div class="td center-align toggle-target" data-width="10">권한</div>
+                                                    <div class="td center-align toggle-target" data-width="17">비고</div>
+                                                </div>
+                                            </div>
+                                            <div class="item-list ti-standard">
+                                                <div th:each="item, stat : ${content}" th:id="${item.id}" class="t-item">
+                                                    <div class="td center-align" th:text="${#numbers.formatInteger(item.id , 0 , 'COMMA')}">999,999,999</div>
+                                                    <div class="td center-align" th:text="${item.emailAddress}">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align" th:text="${item.name}">홍길동</div>
+                                                    <div class="td center-align" th:text="${item.phone}">010-1234-5678</div>
+                                                    <div class="td center-align" th:if="${item.guideCount == null}">0</div>
+                                                    <div class="td center-align" th:unless="${item.guideCount == null}" th:text="${#numbers.formatInteger(item.guideCount , 0 , 'COMMA')}">4</div>
+                                                    <div class="td center-align" th:if="${item.roles != null and #lists.size(item.roles) > 0}" th:with="role=${item.roles[0].description}" th:text="${role}">마스터</div>
+                                                    <div class="td center-align" th:if="${item.roles == null or #lists.size(item.roles) == 0}"></div>
+                                                    <div class="td center-align" th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd')}">2021-06-10</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" id="page" th:value="${page.page}">
+                                    <input type="hidden" id="size" th:value="${page.size}">
+                                    <input type="hidden" id="sort" th:value="${page.sort}">
+                                    <input type="hidden" id="direction" th:value="${page.direction}">
+                                    <input type="hidden" id="search" th:value="${search}">
+                                    <div th:if="${page.totalPages > 0}" class="table-pagination">
+                                        <!--
+                                        <a th:if="${page.page != 1}" th:href="@{/admin/member(page=${page.page - 1}, size=${page.size})}"
+                                           class="tp-first"><img th:src="@{/assets/img/icon-arrow_left2.png}"  alt=""></a>
+                                        -->
+
+                                        <a th:if="${page.isFirst == false}"
+                                           th:href="@{/admin/member(page=${page.page - 1}, size=${page.size}, search=${param.search})}"
+                                                class="tp-prev"><img th:src="@{/assets/img/icon-arrow_left.png}"  alt=""></i></a>
+
+                                        <div class="tp-nav">
+                                            <a th:each="item, stat : ${ #numbers.sequence(page.startPage, page.endPage)}"
+                                               th:classappend="${item == page.page+1 ? 'active' : ''}"
+                                               th:href="@{/admin/member(page=${item-1}, size=${page.size}, search=${param.search})}"
+                                               th:text="${item}"
+                                               class="pg_num">1</a>
+                                        </div>
+                                        <a th:if="${page.isLast == false}"
+                                           th:href="@{/admin/member(page=${page.page + 1}, size=${page.size}, search=${param.search})}"
+                                           class="tp-next"><img th:src="@{/assets/img/icon-arrow_right.png}" alt=""></i></a>
+                                        <!--
+                                        <a class="tp-last"><img th:src="@{/assets/img/icon-arrow_right2.png}"  alt=""></i></a>
+                                        -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <th:block th:insert="~{layout/common :: footer}"></th:block>
+        </div>
+    </div>
+
+    <!-- 팝업 -->
+    <div class="modal">
+        <div class="modal-wrapper main-modal modal-member_detail width-800">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">회원 상세정보</span>
+                </div>
+                <div class="breadcrumb">
+                    <a class="bc-item">Home</a>
+                    <a class="bc-item">회원</a>
+                    <a class="bc-item">상세</a>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-item flex-row-3">
+                    <div class="modal-item">
+                        <div class="modal-item_title">아이디</div>
+                        <div class="modal-item_content">
+                            <input id="modal_id" class="mi_input" type="hidden" >
+                            <input id="modal_email" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">이름</div>
+                        <div class="modal-item_content">
+                            <input id="modal_name" class="mi_input" type="text" >
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">계정타입</div>
+                        <div class="modal-item_content">
+                            <input id="modal_account_type" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">생년월일</div>
+                        <div class="modal-item_content">
+                            <input id="modal_birth_date" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">연락처</div>
+                        <div class="modal-item_content">
+                            <input id="modal_phone" class="mi_input" type="text" >
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">가입일시</div>
+                        <div class="modal-item_content">
+                            <input id="modal_createdAt" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">성별</div>
+                        <div class="modal-item_content">
+                            <input id="modal_gender" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">가이드 (전체/완료/진행중)</div>
+                        <div class="modal-item_content">
+                            <input id="modal_guide_status" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">권한</div>
+                        <div class="modal-item_content">
+                            <select id="modal_role" class="mi_select" name="" >
+                                <option value="">없음</option>
+                                <option sec:authorize="hasAnyRole('MASTER')" value="MASTER">마스터</option>
+                                <option sec:authorize="hasAnyRole('MASTER', 'ADMIN')" value="ADMIN">관리자</option>
+                                <option sec:authorize="hasAnyRole('MASTER', 'ADMIN')" value="DEALER">신차딜러</option>
+                                <option sec:authorize="hasAnyRole('MASTER', 'ADMIN')" value="NEW">신규회원</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">매입 (건/금액)</div>
+                        <div class="modal-item_content">
+                            <input id="modal_buy_status" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">판매중 (건/금액)</div>
+                        <div class="modal-item_content">
+                            <input id="modal_selling_status" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">매각 (건/금액)</div>
+                        <div class="modal-item_content">
+                            <input id="modal_sell_status" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">포인트</div>
+                        <div class="modal-item_content border-box">
+                            <input id="modal_point"class="mi_input" type="text">
+                            <div class="modal-item-button btn-setting_point hover03">포인트 수정</div>
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">관리지점</div>
+                        <div class="modal-item_content">
+                            <select id="modal_manage_branch" class="mi_select" name="" >
+                                <option value="" selected>없음</option>
+                                <option th:each="item, stat : ${branch_list}" th:value="${item.branch}" th:text="${item.branch}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="content-title mt-20">
+                    <span class="ct-title">소속정보</span>
+                </div>
+
+                <div class="content-item flex-row-3 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">소속</div>
+                        <div class="modal-item_content">
+                            <input id="modal_groupName" class="mi_input" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">지점</div>
+                        <div class="modal-item_content">
+                            <input id="modal_branch" class="mi_input" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">직위</div>
+                        <div class="modal-item_content">
+                            <input id="modal_position" class="mi_input" type="text">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item flex-row-3 w100p pt-10 pb-10">
+                    <div class="modal-item flex left-align">
+                        <div class="modal-item_title">접속허용</div>
+                        <div id="modal_access_yn"class="toggle-button toggle-target ml-10"></div>
+                    </div>
+                    <div class="modal-item flex left-align">
+                        <div class="modal-item_title">카톡수신거부</div>
+                        <div id="modal_kakao_talk_yn"class="toggle-button toggle-target ml-10"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">댓글 내역</span>
+                </div>
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title"></div>
+                        <div class="modal-item_content flex">
+                            <input id="modal_comment" class="mi_input" type="text" placeholder="내용을 입력하세요.">
+                            <button id="btnCreateComment" class="mf_button btn-submit hover01 ml-10">댓글 등록</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div  class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">댓글</span>
+                </div>
+                <div id="commentArea">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+
+                <button id="btnUpdateMember"class="mf_button btn-save hover01">저장</button>
+                <button id="btnPasswordMember"class="mf_button btn-save hover01">비밀번호변경</button>
+                <button id="btnDeactivateMember"class="mf_button btn-resign hover01">회원탈퇴</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+        <div class="modal-wrapper sub-modal modal-member_point width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">포인트 수정</span>
+                </div>
+                <div class="breadcrumb">
+                    <a class="bc-item">Home</a>
+                    <a class="bc-item">회원</a>
+                    <a class="bc-item">상세</a>
+                    <a class="bc-item">포인트</a>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">포인트</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">사용 가능 포인트</div>
+                        <div class="modal-item_content border-box">
+                            <input id="member_point" class="mi_input" type="text" readonly="readonly">
+                            <span class="bb-text">P</span>
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">사용 포인트</div>
+                        <div class="modal-item_content border-box">
+                            <input id="minus_point" class="mi_input" type="number">
+                            <span class="bb-text">P</span>
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">추가 포인트</div>
+                        <div class="modal-item_content border-box">
+                            <input id="plus_point" class="mi_input" type="number">
+                            <span class="bb-text">P</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnSavePoint" class="mf_button btn-close_modal hover02">수정하기</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+        </div>
+
+
+        <div id="modal_password" class="modal-wrapper sub-modal modal-member_password width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">비밀번호 변경</span>
+                </div>
+                <div class="breadcrumb">
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">비밀번호 변경</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">변경 비밀번호</div>
+                        <div class="modal-item_content border-box">
+                            <input id="member_password" class="mi_input" type="password" >
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">변경 비밀번호 재입력</div>
+                        <div class="modal-item_content border-box">
+                            <input id="member_password_again" class="mi_input" type="password">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnSavePassword" class="mf_button btn-close_modal hover02">수정하기</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+        </div>
+
+
+        <div id="modal_create_admin" class="modal-wrapper sub-modal modal-member_password width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">관리자계정 생성</span>
+                </div>
+                <div class="breadcrumb">
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">계정정보</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">아이디 (email)</div>
+                        <div class="modal-item_content border-box">
+                            <input id="admin_email" class="mi_input" type="text" >
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">비밀번호</div>
+                        <div class="modal-item_content border-box">
+                            <input id="admin_password" class="mi_input" type="password">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">이름</div>
+                        <div class="modal-item_content border-box">
+                            <input id="admin_name" class="mi_input" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">연락처</div>
+                        <div class="modal-item_content border-box">
+                            <input id="admin_phone" class="mi_input" type="number">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">성별</div>
+                        <div class="modal-item_content border-box">
+                            <select id="admin_gender" class="mi_select" name="" >
+                                <option value="MALE"  >남성</option>
+                                <option value="FEMALE">여성</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">소속</div>
+                        <div class="modal-item_content border-box">
+                            <input id="admin_group" class="mi_input" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">지점</div>
+                        <div class="modal-item_content border-box">
+                            <input id="admin_branch" class="mi_input" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">직위</div>
+                        <div class="modal-item_content border-box">
+                            <input id="admin_position" class="mi_input" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnSaveAdmin" class="mf_button btn-close_modal hover02">생성하기</button>
+                <button id="btnCloseAdmin" class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    let search = ""
+    $(function(){
+        $('.table-body .ti-standard .t-item').on('click', activeModal_MemberDetail);
+        $('.btn-setting_point').on('click', activeModal_MemberPoint);
+        $('#btnPasswordMember').on('click', activeModal_MemberPassword);
+        /*
+        Common.showLoading();
+        setTimeout(function () {
+            Common.dismissLoading();
+        }, 3000);
+         */
+        search = $('#searchText').val();
+        $('#btnSearch').click(function () {
+           if(!$('#searchText').val()) {
+               alert("검색어를 입력해 주세요.");
+               return;
+           }
+           Common.goPage('/admin/member?search=' + $('#searchText').val());
+        });
+
+        $('#btnSavePoint').click(function () {
+           let result = confirm('포인트를 수정하시겠습니까?');
+           if(result) {
+               let minus = $('#minus_point').val();
+               let plus = $('#plus_point').val();
+               if(minus && plus) {
+                   alert('사용 포인트 추가 포인트 중 한 가지만 수정이 가능합니다.');
+                   return;
+               }
+               let point = 0;
+               if(minus) {
+                   point = minus * -1;
+               }
+               if(plus) {
+                   point = plus;
+               }
+               Service.updatePoint(point);
+           }
+        });
+        
+        $('#btnSavePassword').click(function () {
+            let result = confirm('비밀번호를 수정하시겠습니까?');
+            if(result) {
+                let password = $('#member_password').val();
+                let password_again = $('#member_password_again').val();
+                if(!password || !password_again) {
+                    alert('비밀번호를 입력해주세요.');
+                    return;
+                }
+                if(password != password_again) {
+                    alert('비밀번호가 동일하지 않습니다.');
+                    return;
+                }
+                Service.changePassword($('#modal_id').val(), password);
+            }
+        });
+
+        $('#btnCreateComment').click(function (){
+            if(!$.notnull($('#modal_comment') , '댓글'))
+                return false;
+            let result = confirm('댓글을 등록하시겠습니까?');
+            if(result) {
+                Service.createComment();
+            }
+        });
+
+        $('#btnUpdateMember').click(function (){
+            let result = confirm('회원정보를 수정하시겠습니까?');
+            if(result) {
+                Service.updateMember();
+            }
+        });
+
+        $('#btnDeactivateMember').click(function (){
+            let result = confirm('회원탈퇴 처리 하시겠습니까?');
+            if(result) {
+                Service.deactivateMember();
+            }
+        });
+
+        $('#btnCreateAdmin').click(function (){
+            $('#admin_email').val('');
+            $('#admin_password').val('');
+            $('#admin_name').val('');
+            $('#admin_phone').val('');
+            $('#admin_group').val('');
+            $('#admin_branch').val('');
+            $('#admin_position').val('');
+
+            $('#overlay').addClass('active');
+            $('#modal_create_admin').addClass('active');
+        });
+        $('#btnCloseAdmin').click(function () {
+            $('#overlay').removeClass('active');
+            $('#modal_create_admin').removeClass('active');
+        });
+
+        $('#btnSaveAdmin').click(function () {
+            if(!$.notnull($('#admin_email') , '아이디'))
+                return false;
+            if(!$.notnull($('#admin_password') , '비밀번호'))
+                return false;
+            if(!$.notnull($('#admin_name') , '이름'))
+                return false;
+            if(!$.notnull($('#admin_phone') , '연락처'))
+                return false;
+            if(!$.notnull($('#admin_group') , '소속'))
+                return false;
+            if(!$.notnull($('#admin_branch') , '지점'))
+                return false;
+            if(!$.notnull($('#admin_position') , '직위'))
+                return false;
+            Service.createAdmin();
+        });
+
+    });
+
+    function searchValue(size) {
+        let url = `/admin/member?page=0&size=`+ size;
+        if($('#search').val()) {
+            url += '&search=' + $('#search').val();
+        }
+        Common.goPage(url);
+    }
+
+    function activeModal_MemberDetail(){
+        openLayer();
+        Service.getMemberDetail($(this).attr('id'));
+    }
+
+    function activeModal_MemberPoint(){
+        $('.main-modal').css('z-index', '100');
+        $('#minus_point').val('');
+        $('#plus_point').val('');
+        $('#member_point').val($('#modal_point').val());
+        $('.modal-member_point').addClass('active');
+    }
+
+    function activeModal_MemberPassword() {
+        $('.main-modal').css('z-index', '100');
+        $('#member_password').val('');
+        $('#member_password_again').val('');
+        $('#modal_password').addClass('active');
+    }
+
+    function excelDownload() {
+
+        let url = `/admin/member/excel/download?page=` + $('#page').val() + `&size=`+ $('#size').val();
+        if($('#search').val()) {
+            url += '&search=' + $('#search').val();
+        }
+        Common.goPage(url);
+    }
+
+    function createCommentHtml(commentId, body) {
+        let commentHtml = ``;
+        commentHtml += `<div name="${commentId}" class="content-item w100p pb-20">`;
+        commentHtml += `<div class="modal-item mt-15">`;
+        commentHtml += `<div class="modal-item_title"></div>`;
+        commentHtml += `<div class="modal-item_content flex">`;
+        commentHtml += `<input value="${body}" readonly="readonly" class="mi_input" type="text">`;
+        commentHtml += `<button onclick="Service.removeComment('${commentId}')" class="mf_button btn-submit hover01 ml-10">댓글 삭제</button>`;
+        commentHtml += `</div>`;
+        commentHtml += `</div>`;
+        commentHtml += `</div>`;
+        return commentHtml;
+    }
+
+    let Service = {
+        createAdmin: function () {
+            let obj = {};
+            obj.emailAddress = $('#admin_email').val();
+            obj.password = $('#admin_password').val();
+            obj.name = $('#admin_name').val();
+            obj.phone = $('#admin_phone').val();
+            obj.groupName = $('#admin_group').val();
+            obj.branch = $('#admin_branch').val();
+            obj.position = $('#admin_position').val();
+            obj.gender = $('#admin_gender option:selected').val();
+            var url = "/api/admin/v1/member/admin";
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    alert(data.message);
+                    $('#overlay').removeClass('active');
+                    $('#modal_create_admin').removeClass('active');
+                    Common.reloadPage();
+                }
+                return;
+            });
+        },
+        getMemberDetail: function (memberId) {
+            var url = "/api/admin/v1/member/" + memberId;
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    $('#modal_id').val(memberId);
+                    $('#modal_email').val(data.data.member.emailAddress);
+                    $('#modal_name').val(data.data.member.name);
+                    $('#modal_account_type').val(data.data.member.accountType);
+                    $('#modal_birth_date').val(data.data.member.birthDate);
+                    $('#modal_phone').val(data.data.member.phone);
+                    $('#modal_createdAt').val(data.data.member.createdAt);
+                    let gender = "남성";
+                    if(data.data.member.gender == 'FEMALE') {
+                        gender = "여성";
+                    }
+                    $('#modal_gender').val(gender);
+
+                    let guideStatus = Common.comma(data.data.totalGuideCnt) + "/";
+                    guideStatus += Common.comma(data.data.finishGuideCnt) + "/";
+                    guideStatus += Common.comma(data.data.ingGuideCnt) ;
+
+                    $('#modal_guide_status').val(guideStatus);
+                    
+                    console.log(data.data.member.roles);
+                    //$('#modal_role').val(guideCount);
+                    $('#modal_role').val('');
+                    for (let i = 0; i < data.data.member.roles.length; i++) {
+                        let inner = data.data.member.roles[i];
+                        $('#modal_role').val(inner);
+                        console.log(inner);
+                    }
+
+                    let buyStatus = Common.comma(data.data.buyGuideCnt) + "/";
+                    buyStatus += Common.comma(data.data.buyGuideMoney) ;
+                    $('#modal_buy_status').val(buyStatus);
+
+                    let sellingStatus = Common.comma(data.data.sellingGuideCnt) + "/";
+                    sellingStatus += Common.comma(data.data.sellingGuideMoney) ;
+                    $('#modal_selling_status').val(sellingStatus);
+
+                    let sellStatus = Common.comma(data.data.sellGuideCnt) + "/";
+                    sellStatus += Common.comma(data.data.sellGuideMoney) ;
+                    $('#modal_sell_status').val(sellStatus);
+
+                    $('#modal_point').val(Common.comma(data.data.member.point));
+
+                    $('#modal_groupName').val(data.data.member.groupName);
+
+                    $('#modal_branch').val(data.data.member.branch);
+                    $('#modal_position').val(data.data.member.position);
+
+                    if(data.data.member.accessYn == true) {
+                        $('#modal_access_yn').addClass('active');
+                    } else {
+                        $('#modal_access_yn').removeClass('active');
+                    }
+
+                    if(data.data.member.kakaoTalkYn == true) {
+                        $('#modal_kakao_talk_yn').removeClass('active');
+                    } else {
+                        $('#modal_kakao_talk_yn').addClass('active');
+                    }
+                    if(data.data.member.manageBranch) {
+                        $('#modal_manage_branch').val(data.data.member.manageBranch);
+                    } else {
+                        $('#modal_manage_branch').val('');
+                    }
+
+                    $('#commentArea').children().remove();
+                    for (let i = 0; i < data.data.member.commentList.length; i++) {
+                        let comment = data.data.member.commentList[i];
+                        $('#commentArea').append(createCommentHtml(comment.id, comment.body));
+                    }
+                    $('.modal-member_detail').addClass('active');
+                }
+                return;
+            });
+        },
+
+        changePassword: function (memberId, password) {
+            let obj = {};
+            obj.password = password;
+            var url = "/api/admin/v1/member/" + memberId + "/password";
+            var ajaxParam = {
+                "url": url,
+                "type": "PUT",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    alert(data.message);
+                    $('#modal_password').removeClass('active');
+                }
+                return;
+            });
+        },
+        
+        updatePoint: function (point) {
+            let memberId = $('#modal_id').val();
+            let obj = {};
+            obj.point = point;
+            var url = "/api/admin/v1/member/" + memberId + "/point";
+            var ajaxParam = {
+                "url": url,
+                "type": "PUT",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    alert(data.message);
+                    $('#modal_point').val(Common.comma(data.data.point));
+                    $('.modal-member_point').removeClass('active');
+                }
+                return;
+            });
+
+        },
+
+        createComment : function() {
+            let memberId = $('#modal_id').val();
+            let obj = {};
+            obj.body = $('#modal_comment').val();
+            var url = "/api/admin/v1/member/" + memberId + "/comment";
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    alert(data.message);
+                    $('#modal_comment').val('');
+                    console.log(data.data.id + " " + data.data.body);
+                    $('#commentArea').append(createCommentHtml(data.data.id, data.data.body));
+                }
+                return;
+            });
+        },
+
+        removeComment : function (commentId) {
+            let memberId = $('#modal_id').val();
+            let obj = {};
+            obj.body = $('#modal_comment').val();
+            var url = "/api/admin/v1/member/" + memberId + "/comment/" + commentId;
+            var ajaxParam = {
+                "url": url,
+                "type": "DELETE",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    alert(data.message);
+                    $('#modal_comment').val('');
+                    $('#commentArea').find('div[name='+commentId+']').remove();
+                    //$('#commentArea').append(createCommentHtml(data.data.id, data.data.body));
+                }
+                return;
+            });
+        },
+
+        deactivateMember: function () {
+            let memberId = $('#modal_id').val();
+            var url = "/api/admin/v1/member/" + memberId + "/deactivate";
+            let obj = {};
+
+            var ajaxParam = {
+                "url": url,
+                "type": "PUT",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    alert(data.message);
+                    closeLayer();
+                    Common.reloadPage();
+                }
+                return;
+            });
+        },
+
+        updateMember : function () {
+            let memberId = $('#modal_id').val();
+            var url = "/api/admin/v1/member/" + memberId + "/update";
+            let obj = {};
+            let roles = [];
+            roles.push($('#modal_role option:selected').val());
+            obj.roles = roles;
+
+            obj.name = $('#modal_name').val();
+            obj.phone = $('#modal_phone').val();
+
+            obj.groupName = $('#modal_groupName').val();
+            obj.branch = $('#modal_branch').val();
+            obj.manageBranch = $('#modal_manage_branch').val();
+
+            obj.position = $('#modal_position').val();
+            obj.accessYn = $('#modal_access_yn').hasClass('active');
+            if($('#modal_kakao_talk_yn').hasClass('active')) {
+                obj.kakaoTalkYn = false;
+            } else {
+                obj.kakaoTalkYn = true;
+            }
+
+            var ajaxParam = {
+                "url": url,
+                "type": "PUT",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    alert(data.message);
+                    closeLayer();
+                    Common.reloadPage();
+                }
+                return;
+            });
+        }
+    }
+
+</script>

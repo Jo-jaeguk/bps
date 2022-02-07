@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+        <script th:src="@{/naver/js/naverLogin_implicit-1.0.3.js}"></script>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+    <th:block th:insert="~{layout/common :: script}"></th:block>
+    <div class="wrap bg-color-secondary" id="p01">
+
+        <div id="overlay"></div>
+
+        <input type="hidden" id="error" th:value="${error}"/>
+        <input type="hidden" id="success" th:value="${success}"/>
+        <input type="hidden" id="naver_client_id" th:value="${naverClientId}"/>
+        <input type="hidden" id="naver_redirect_url" th:value="${naverRedirectUrl}"/>
+        <input type="hidden" id="kakao_redirect_url" th:value="${kakaoRedirectUrl}"/>
+        <input type="hidden" id="naver_state" th:value="${naver_state}"/>
+        <input type="hidden" id="input_memberId" th:value="${member_email}"/>
+        <input type="hidden" id="input_memberPwd" th:value="${member_password}"/>
+
+        <!-- 메인 -->
+        <div id="main">
+            <div id="loading"><div class="round spinner"></div></div>
+            <!-- 로딩 페이지 -->
+            <div id="body" class="loading active"> <!-- 하위 팝업 노출 class "active" -->
+                <!-- 메인 로고 -->
+                <div class="app-loading">
+                    <div class="main-logo">
+                        <img th:src="@{/assets/img/group-2@3x.png}" src="" alt="loading-image"/>
+                    </div>
+                </div>
+
+                <!-- 온보딩 - 회원가입-->
+                <div class="toast-onboarding">
+                    <div class="onboarding-button">
+                        <a class="button bg-color-kakao" onclick="javascript:login('kakao'); return false;">
+                            <img th:src="@{/assets/img/icon-brand_kakao.svg}" src="" alt=""/><span class="color-black">카카오 계정으로 로그인</span></a>
+                        <div id="naver_login" class="button bg-color-naver">
+                            <img th:src="@{/assets/img/icon-brand_naver.svg}" src="" alt=""/><span class="color-white">네이버 계정으로 로그인</span>
+                        </div>
+                        <div id="appleid-signin" data-color="black" data-border="true" data-type="sign-in" class="button bg-color-black">
+                            <a onclick="javascript:appleLogin(); return false;" class="button bg-color-black">
+                                <img style="left: 70px;" th:src="@{/assets/img/icon-brand-apple.svg}" alt=""/><span class="color-white">Apple로 로그인</span>
+                            </a>
+                        </div>
+
+                        <a class="button bg-color-primary" onclick="javascript:login('email'); return false;"><img th:src="@{/assets/img/icon-email.svg}" src="" alt=""/><span class="color-white">이메일 계정으로 로그인</span></a>
+
+                        <a class="button bg-color-white" onclick="javascript:join(); return false;"><span class="color-primary border-bottom border-color-primary">회원가입</span></a>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="popup popup-my_info "> <!-- 팝업 활성화 class "active" -->
+            <div class="popup-inner">
+                <div class="popup-header">
+                    <div class="popup-title">로그인실패</div>
+                    <!--
+                    <div class="btn-close_popup"><img th:src="@{/assets/img/icon-close.svg}" src="" alt=""></div>
+                    -->
+                </div>
+                <div class="popup-body">
+                    <div class="form-insert">
+                        <div class="item-input">
+                            <div id="modal_title" class="input-text"></div>
+                        </div>
+                        <div class="item-input">
+                            <div id="modal_body" class="input-text">이미 가입되어 있습니다. 로그인을 해주세요.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-footer">
+                    <a onclick="javascript:goToLoginPage();" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+
+    <script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
+
+
+
+<script>
+
+    Kakao.init('628e3644dfe4c9c9baea57b0c79a4d58');
+    // SDK 초기화 여부를 판단합니다.
+    console.log(Kakao.isInitialized());
+
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+        apiKey: "AIzaSyBlnu0l0N1smPIH663sE0daXnaIb5rmrnM",
+        authDomain: "buyingcar-376f3.firebaseapp.com",
+        projectId: "buyingcar-376f3",
+        storageBucket: "buyingcar-376f3.appspot.com",
+        messagingSenderId: "476214850398",
+        appId: "1:476214850398:web:02e7f7c12b82a9b85655cf",
+        measurementId: "G-60HDT0D1L3"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    function appleLogin() {
+        var provider = new firebase.auth.OAuthProvider('apple.com');
+        provider.addScope('email');
+        provider.addScope('name');
+        provider.setCustomParameters({
+            // Localize the Apple authentication screen in French.
+            locale: 'ko_KR'
+        });
+        firebase.auth().signInWithRedirect(provider);
+    }
+    
+    function login(loginType) {
+        if(loginType == 'email') {
+            Common.goPage("/login/email");
+        } else if(loginType == 'kakao') {
+            let redirectUrl = $('#kakao_redirect_url').val();
+            Kakao.Auth.authorize({
+                redirectUri: redirectUrl,
+                prompts: 'login'
+            });
+        } else if(loginType == 'naver') {
+
+        }
+    }
+    function join() {
+        Common.goPage("/join");
+    }
+    function goToLoginPage() {
+        $('#overlay').removeClass('active');
+        $('.popup-my_info').removeClass('active');
+        Common.goPage("/user/login");
+    }
+
+
+    function loginProcess() {
+        var paramId = $('#input_memberId').val();
+        var paramPwd = $('#input_memberPwd').val();
+
+        var newForm = document.createElement('form');
+        newForm.name = 'newForm';
+        newForm.method = 'post';
+        newForm.action = '/loginProcess';
+
+        var id = document.createElement('input');
+        var pw = document.createElement('input');
+        var rememberMe = document.createElement('input');
+
+        id.setAttribute('type' , 'hidden');
+        id.setAttribute('name' , 'id');
+        id.setAttribute('value' , paramId);
+
+        pw.setAttribute('type' , 'hidden');
+        pw.setAttribute('name' , 'pw');
+        pw.setAttribute('value' , paramPwd);
+        var check = 'on';
+        rememberMe.setAttribute('type' , 'hidden');
+        rememberMe.setAttribute('name' , 'remember-me');
+        rememberMe.setAttribute('value' , check);
+
+        newForm.appendChild(id);
+        newForm.appendChild(pw);
+        newForm.appendChild(rememberMe);
+
+        document.body.appendChild(newForm);
+
+        newForm.submit();
+    }
+
+
+    $(function(){
+
+        // 2021-06-16 로딩 애니메이션
+        $('#body').addClass('loading-bg');
+        $('#loading').addClass('active');
+        // 2021-06-16 로딩 애니메이션 끝
+
+        firebase
+            .auth()
+            .getRedirectResult()
+            .then((result) => {
+                if (result.credential) {
+                    /** @type {firebase.auth.OAuthCredential} */
+                    var credential = result.credential;
+
+                    // You can get the Apple OAuth Access and ID Tokens.
+                    var accessToken = credential.accessToken;
+                    var idToken = credential.idToken;
+                    console.log('accessToken ' + accessToken);
+                    console.log('idToken ' + idToken);
+
+                }
+                // The signed-in user info.
+                var user = result.user;
+                console.log('user ' + user.uid);
+                console.log('user ' + user.name);
+                console.log('user ' + user.displayName);
+                console.log('user ' + user.email);
+
+                Common.goPage("/apple/oauth/user/login?uid=" + user.uid);
+
+            })
+            .catch((error) => {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // The email of the user's account used.
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
+                console.log('errorCode ' + errorCode);
+                console.log('errorMessage ' + errorMessage);
+                // ...
+            });
+
+        // 2021-06-16 로딩 애니메이션
+        $('#body').removeClass('loading-bg');
+        $('#loading').removeClass('active');
+        // 2021-06-16 로딩 애니메이션 끝
+
+        var error = $('#error').val();
+        if(error) {
+            $('#modal_title').text('로그인 실패');
+            let body = "로그인이 실패하였습니다. 관리자에게 문의 바랍니다.";
+            if(error == 'no permission') {
+                body = "회원가입 승인이 이루어져야 로그인이 가능합니다.";
+            } else if(error.startsWith('not found')) {
+                body = "회원 정보가 없습니다.";
+            } else {
+
+            }
+            $('#modal_body').text(body);
+            $('#overlay').addClass('active');
+            $('.popup-my_info').addClass('active');
+        }
+        var success = $('#success').val();
+        if(success) {
+            $('#overlay').addClass('active');
+            $('.popup-join-success').addClass('active');
+        }
+
+
+        let snsMemberId = $('#input_memberId').val();
+        let snsMemberPwd = $('#input_memberPwd').val();
+        if(snsMemberId && snsMemberPwd) {
+            loginProcess();
+        }
+
+        $('#naver_login').click(function () {
+            console.log("naver login");
+            let naverClientId = $('#naver_client_id').val();
+            let naverRedirectUrl = $('#naver_redirect_url').val();
+            let naver_state = $('#naver_state').val();
+
+            let url = `https://nid.naver.com/oauth2.0/authorize`;
+            url += `?response_type=code`;
+            url += `&client_id=${naverClientId}`;
+            url += `&redirect_uri=${naverRedirectUrl}`;
+            url += `&state=${naver_state}`;
+            Common.goPage(url);
+        });
+
+
+
+
+    });
+
+    let Service = {
+        createNotice : function () {
+            let obj = {};
+            obj.title = $('#title').val();
+            obj.body = $('#summernote').val();
+            var url = "/api/admin/v1/notice";
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    alert(data.message);
+                    closeLayer();
+                    $('.modal-registry_post').removeClass('active');
+                    Common.reloadPage();
+                }
+                return;
+            });
+        }
+
+    }
+
+
+</script>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+    <th:block th:insert="~{layout/common :: script}"></th:block>
+    <div class="wrap" id="p04">
+        <!-- 오버레이 처리 -->
+        <div id="overlay"></div>
+
+        <!-- 메인 -->
+        <div id="main">
+            <div id="header" class="">
+                <div class="header-button">
+                    <a onclick="javascript:back(); return false;" class="button-back"><img th:src="@{/assets/img/icon-arrow_left.svg}" src="" alt=""></a>
+                </div>
+            </div>
+
+            <!-- 바디 -->
+            <div id="body" class="onboarding">
+                <div class="inner">
+                    <!-- 앱 타이틀 -->
+                    <div class="app-title mt-20">
+                        <div class="fz24 fw600 color-black">Join Us</div>
+                    </div>
+
+                    <!-- 앱 내용 -->
+                    <div class="app-content">
+                        <div class="form-insert">
+                            <div class="item-input">
+                                <div class="input-text">이메일</div>
+                                <input id="email" class="" type="text" placeholder="이메일 주소를 입력해주세요.">
+                                <div id="check_email" class="text-notice error">맞는 형식의 아이디가 아닙니다.</div>
+                            </div>
+                            <div class="item-input">
+                                <div class="input-text">비밀번호</div>
+                                <input id="password" class="" type="password" placeholder="비밀번호를 입력해주세요.">
+                            </div>
+                            <div class="item-input">
+                                <div class="input-text">비밀번호 확인</div>
+                                <input id="password_again" class="" type="password" placeholder="비밀번호를 한 번 더 입력해주세요.">
+                                <div id="check_password" class="text-notice error ">비밀번호가 다릅니다.</div>
+                            </div>
+                        </div>
+                        <div class="form-submit">
+                            <div class="item-checkbox mt-45">
+                                <input type="checkbox" id="cb1">
+                                <label for="cb1"><span>[필수] <a th:href="@{/join/term}" class="underline">개인정보 취급 방침 동의</a></span></label>
+                            </div>
+                            <div id="check_term" class="text-notice error  mt-10">필수 동의가 필요합니다.</div>
+                            <div class="login-button mt-15">
+                                <a onclick="javascript:joinMember(); return false;" class="button bg-color-primary"><span class="color-white">가입하기</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="popup popup-my_info "> <!-- 팝업 활성화 class "active" -->
+            <div class="popup-inner">
+                <div class="popup-header">
+                    <div class="popup-title">회원가입 신청 완료</div>
+                    <!--
+                    <div class="btn-close_popup"><img th:src="@{/assets/img/icon-close.svg}" src="" alt=""></div>
+                    -->
+                </div>
+                <div class="popup-body">
+                    <div class="form-insert">
+                        <div class="item-input">
+                            <div class="input-text">회원가입 신청이 완료되었습니다.</div>
+                        </div>
+                        <div class="item-input">
+                            <div class="input-text">관리자 확인 후 빠르게 처리하여 드리겠습니다.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-footer">
+                    <a onclick="javascript:closeModal();" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal_error" class="popup modal_error"> <!-- 팝업 활성화 class "active" -->
+            <div class="popup-inner">
+                <div class="popup-header">
+                    <div class="popup-title">회원가입 신청</div>
+                    <!--
+                    <div class="btn-close_popup"><img th:src="@{/assets/img/icon-close.svg}" src="" alt=""></div>
+                    -->
+                </div>
+                <div class="popup-body">
+                    <div class="form-insert">
+                        <div class="item-input">
+                            <div class="input-text">회원가입 신청이 실패하였습니다.</div>
+                        </div>
+                        <div class="item-input">
+                            <div id="error_message" class="input-text">관리자 확인 후 빠르게 처리하여 드리겠습니다.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-footer">
+                    <a onclick="javascript:closeErrorModal();" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    function closeErrorModal() {
+        $('#overlay').removeClass('active');
+        $('#modal_error').removeClass('active');
+    }
+    function closeModal() {
+        $('#overlay').removeClass('active');
+        $('.popup-my_info').removeClass('active');
+        Common.goPage("/");
+    }
+    function joinMember() {
+        $('#check_email').removeClass('active');
+        $('#check_password').removeClass('active');
+        $('#check_term').removeClass('active');
+
+        let email = $('#email').val();
+        if(!Common.validateEmail(email)) {
+            $('#check_email').addClass('active');
+            return false;
+        }
+
+        let password = $('#password').val();
+        let password_again = $('#password_again').val();
+        if(password != password_again) {
+            $('#check_password').addClass('active');
+            return false;
+        }
+        if(!password || !password_again) {
+            $('#check_password').addClass('active');
+            return false;
+        }
+
+        if(!$('#cb1').is(':checked')) {
+            $('#check_term').addClass('active');
+            return false;
+        }
+        Service.joinMember(email, password);
+    }
+
+    $(function(){
+
+    });
+
+    let Service = {
+        joinMember : function (email, password) {
+            let obj = {};
+            obj.emailAddress = email;
+            obj.password = password;
+            obj.accountType = 'EMAIL';
+            var url = "/api/user/v1/member/join";
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    $('#error_message').text(data.message);
+                    $('#overlay').addClass('active');
+                    $('#modal_error').addClass('active');
+                    //alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    let url = `/nice/auth?accountType=EMAIL&id=${data.data}`;
+                    Common.goPage(url);
+                    /*
+                    $('#overlay').addClass('active');
+                    $('.popup-my_info').addClass('active');
+                     */
+                }
+                return;
+            });
+        }
+
+    }
+
+
+</script>

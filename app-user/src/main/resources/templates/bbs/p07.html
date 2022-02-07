@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="p06">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+        <div id="header" class="none-fixed">
+            <div class="header-button">
+                <!-- <a class="button-back"><img src="assets/img/icon-arrow_left.svg" alt=""></a> -->
+            </div>
+        </div>
+
+        <!-- 바디 -->
+        <div id="body" class="guide">
+            <div class="inner">
+                <!-- 앱 타이틀 -->
+                <div class="app-title">
+                    <div class="fz30 fw600 color-black">
+                        <span class="em"><span class="em-text">가이드</span><span class="em-underline"></span></span>를 <br>선택해주세요!
+                    </div>
+                </div>
+
+                <!-- 앱 내용 -->
+                <div class="app-content">
+                    <div class="guide_item-container">
+                        <div class="guide_item-header">
+                            <a class="gih-title active">전체</a>
+                            <a class="gih-title">진행중</a>
+                            <a class="gih-title">완료</a>
+                            <a class="gih-title">매각</a>
+                        </div>
+                        <div class="guide_item-list">
+                            <div class="item status1"> <!-- 진행중인 아이템 class "status1" -->
+                                <div class="item-header">
+                                    <div class="num-code">
+                                        <div class="qn">Quote No(QN#)</div>
+                                        <div class="sn">BC20210500002</div>
+                                    </div>
+                                    <div class="status"></div>
+                                </div>
+                                <div class="item-body">
+                                    <div class="ib-main">
+                                        <div class="car-number">123가 1234</div>
+                                        <div class="car-model">2020 제네시스 EQ 리무진</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item status2"> <!-- 매각중인 아이템 class "status2" -->
+                                <div class="item-header">
+                                    <div class="num-code">
+                                        <div class="qn">Quote No(QN#)</div>
+                                        <div class="sn">BC20210500002</div>
+                                    </div>
+                                    <div class="status"></div>
+                                </div>
+                                <div class="item-body">
+                                    <div class="ib-main">
+                                        <div class="car-number">123가 1234</div>
+                                        <div class="car-model">2020 제네시스 EQ 리무진</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item status3"> <!-- 완료한 아이템 class "status3" -->
+                                <div class="item-header">
+                                    <div class="num-code">
+                                        <div class="qn">Quote No(QN#)</div>
+                                        <div class="sn">BC20210500002</div>
+                                    </div>
+                                    <div class="status"></div>
+                                </div>
+                                <div class="item-body">
+                                    <div class="ib-main">
+                                        <div class="car-number">123가 1234</div>
+                                        <div class="car-model">2020 제네시스 EQ 리무진</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item status3"> <!-- 완료한 아이템 class "status3" -->
+                                <div class="item-header">
+                                    <div class="num-code">
+                                        <div class="qn">Quote No(QN#)</div>
+                                        <div class="sn">BC20210500002</div>
+                                    </div>
+                                    <div class="status"></div>
+                                </div>
+                                <div class="item-body">
+                                    <div class="ib-main">
+                                        <div class="car-number">123가 1234</div>
+                                        <div class="car-model">2020 제네시스 EQ 리무진</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 더보기 버튼 -->
+                        <div class="more-button mt-40">
+                            <a class="button bg-color-primary"><span class="color-white">더보기</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 푸터 -->
+        <div id="footer">
+            <a class="menu">
+                <div class="menu-icon">
+                    <img src="assets/img/icon-home.svg" alt="">
+                    <img src="assets/img/icon-home_active.svg" alt="">
+                </div>
+                <div class="menu-text">홈</div>
+            </a>
+            <a class="menu active">
+                <div class="menu-icon">
+                    <img src="assets/img/icon-file.svg" alt="">
+                    <img src="assets/img/icon-file_active.svg" alt="">
+                </div>
+                <div class="menu-text">요청리스트</div>
+            </a>
+            <a class="menu">
+                <div class="menu-icon">
+                    <img src="assets/img/icon-person.svg" alt="">
+                    <img src="assets/img/icon-person_active.svg" alt="">
+                </div>
+                <div class="menu-text">마이</div>
+            </a>
+            <a class="menu">
+                <div class="menu-icon">
+                    <img src="assets/img/icon-bell.svg" alt="">
+                    <img src="assets/img/icon-bell_active.svg" alt="">
+                </div>
+                <div class="menu-text">알림</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- 팝업 -->
+    <div class="popup"></div>
+</div>
+
+<script>
+    $(function(){
+        // 초기화
+        // $('#footer').load("layout/footer.html");
+    });
+</script>

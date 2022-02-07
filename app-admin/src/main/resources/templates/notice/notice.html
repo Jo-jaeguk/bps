@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a01">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <th:block th:insert="~{layout/common :: navbar}"></th:block>
+    
+        <!-- 메인 -->
+        <div id="main">
+
+            <div id="loading"><div class="round spinner"></div></div>
+
+            <!-- 헤더 -->
+            <th:block th:insert="~{layout/common :: header}"></th:block>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                            <span class="ct-text">공지사항 <span class="search-count" th:text="${#numbers.formatInteger(page.totalElements , 0 , 'COMMA')}">999,999,999</span>건이 검색되었습니다.</span>
+                        </div>
+                        <div class="breadcrumb">
+                            <a th:href="@{/}" class="bc-item">Home</a>
+                            <a th:href="@{/admin/notice}" class="bc-item">공지사항</a>
+                        </div>
+                    </div>
+
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1920">
+                        <!-- 테이블 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header flex-between">
+                                <div class="header-option">
+                                    <div class="search-option">
+                                        <span class="option-title">검색어</span>
+                                        <input th:value="${param.search}" id="searchText" class="so_input" type="text" placeholder="회원번호, 이름, 연락처를 입력하세요.">
+                                    </div>
+                                    <button id="btnSearch" class="ho_button btn-search hover01 ml-10">검색</button>
+                                </div>
+                                <div class="etc-option toggle-target">
+                                    <div class="eo-icon hover01"><i class="xi-ellipsis-h"></i></div>
+                                    <div class="eo-menus">
+                                        <div onclick="javascript:excelDownload(); return false;" class="btn-download_excel">엑셀 다운로드</div>
+                                        <div class="btn-regi_post">공지사항 등록</div>
+                                        <div class="view-option">
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(15); return false;">15개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(30); return false;">30개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(60); return false;">60개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(120); return false;">120개씩 보기</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-item-body">
+                                <div class="table-wrapper">
+                                    <div class="table overflow-scroll">
+                                        <div class="table-body">
+                                            <div class="item-list ti-header">
+                                                <div class="t-item">
+                                                    <div class="td center-align toggle-target" data-width="13">공지번호</div>
+                                                    <div class="td center-align toggle-target" data-width="57">제목</div>
+                                                    <div class="td center-align toggle-target" data-width="15">등록일시</div>
+                                                    <div class="td center-align toggle-target" data-width="15">비고</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="item-list ti-standard">
+                                                <div th:each="item, stat : ${content}" th:id="${item.id}" class="t-item">
+                                                    <div th:text="${#numbers.formatInteger(item.id , 0 , 'COMMA')}" class="td center-align">00000000</div>
+                                                    <div th:text="${item.title}" class="td center-align">공지사항 제목입니다.</div>
+                                                    <div th:text="${#temporals.format(item.createdAt, 'yyyy-MM-dd HH:mm:ss')}" class="td center-align">2021-06-03 10:10</div>
+                                                    <div class="td center-align">비고</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="page" th:value="${page.page}">
+                                    <input type="hidden" id="size" th:value="${page.size}">
+                                    <input type="hidden" id="sort" th:value="${page.sort}">
+                                    <input type="hidden" id="direction" th:value="${page.direction}">
+                                    <input type="hidden" id="search" th:value="${search}">
+                                    <div th:if="${page.totalPages > 0}" class="table-pagination">
+                                        <!--
+                                        <a th:if="${page.page != 1}" th:href="@{/admin/member(page=${page.page - 1}, size=${page.size})}"
+                                           class="tp-first"><img th:src="@{/assets/img/icon-arrow_left2.png}"  alt=""></a>
+                                        -->
+
+                                        <a th:if="${page.isFirst == false}"
+                                           th:href="@{/admin/notice(page=${page.page - 1}, size=${page.size}, search=${param.search})}"
+                                           class="tp-prev"><img th:src="@{/assets/img/icon-arrow_left.png}"  alt=""></i></a>
+
+                                        <div class="tp-nav">
+                                            <a th:each="item, stat : ${ #numbers.sequence(page.startPage, page.endPage)}"
+                                               th:classappend="${item == page.page+1 ? 'active' : ''}"
+                                               th:href="@{/admin/notice(page=${item-1}, size=${page.size}, search=${param.search})}"
+                                               th:text="${item}"
+                                               class="pg_num">1</a>
+                                        </div>
+                                        <a th:if="${page.isLast == false}"
+                                           th:href="@{/admin/notice(page=${page.page + 1}, size=${page.size}, search=${param.search})}"
+                                           class="tp-next"><img th:src="@{/assets/img/icon-arrow_right.png}" alt=""></i></a>
+                                        <!--
+                                        <a class="tp-last"><img th:src="@{/assets/img/icon-arrow_right2.png}"  alt=""></i></a>
+                                        -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <th:block th:insert="~{layout/common :: footer}"></th:block>
+        </div>
+    </div>
+
+    <!-- 팝업 -->
+    <div class="modal">
+        <div class="modal-wrapper main-modal modal-registry_post width-800">
+            <div class="modal-header">
+                <div class="modal-title">
+
+                </div>
+                <div class="breadcrumb">
+                    <a class="bc-item">Home</a>
+                    <a class="bc-item">공지사항</a>
+                    <a class="bc-item">공지사항 상세</a>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">공지사항</span>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_content">
+                            <input id="title" class="mi_input" type="text" placeholder="제목을 입력하세요.">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title"></div>
+                        <div class="modal-item_content border-none">
+                            <form method="post">
+                                <textarea id="summernote" name="editordata"></textarea>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <!--
+                <button class="mf_button btn-submit hover01">전송</button>
+                -->
+                <button id="btnSave" class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+    </div>
+
+
+    <div class="modal">
+        <div class="modal-wrapper main-modal modal-detail_post width-800">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <input id="modal_id" type="hidden"/>
+                    <span id="modal_id_text" class="mt-text">공지번호 (99999999)</span>
+                </div>
+                <div class="breadcrumb">
+                    <a class="bc-item">Home</a>
+                    <a class="bc-item">공지사항</a>
+                    <a class="bc-item">공지사항 상세</a>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">공지사항</span>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_content">
+                            <input id="modal_title" class="mi_input" type="text" placeholder="제목을 입력하세요.">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div id="modal_body" class="modal-item_content">
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="modal-footer">
+                <!--
+                <button class="mf_button btn-submit hover01">전송</button>
+                -->
+                <button id="btnDelete" class="mf_button btn-save hover01">삭제</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<script>
+    let search = ""
+
+    let attachMents = [];
+
+    $(function(){
+        $('.btn-regi_post').on('click', activeModal_RegistryPost);
+        $('.table-body .t-item').on('click', showNoticeModal);
+        $('#summernote').summernote({
+            placeholder: '공지사항 내용을 입력해주세요.',
+            height: 400,
+            lang: 'ko-KR',
+            callbacks: {
+              onImageUpload: function(files) {
+                  uploadSummernoteImageFile(files[0], this);
+              }
+            },
+            toolbar: [
+                // [groupName, [list of button]]
+                ['Font Style', ['fontname']],
+                ['style', ['bold', 'italic', 'underline']],
+                ['font', ['strikethrough']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['paragraph']],
+                ['height', ['height']],
+                ['Insert', ['picture']],
+                ['Insert', ['link']],
+                ['Misc', ['fullscreen']]
+            ]
+        });
+        search = $('#searchText').val();
+
+        $('#btnSearch').click(function () {
+           Common.goPage('/admin/notice?search=' + $('#searchText').val());
+        });
+
+        $('#btnSave').click(function() {
+            if(!$.notnull($('#title') , '제목'))
+                return false;
+            if(!$.notnull($('#summernote') , '내용'))
+                return false;
+            let result = confirm('공지사항을 등록하시겠습니까?');
+            if(result) {
+                Service.createNotice();
+            }
+        });
+
+        $('#btnDelete').click(function (){
+           let result = confirm('공지사항을 삭제하시겠습니까?');
+           if(result) {
+               Service.deleteNotice($('#modal_id').val());
+           }
+        });
+
+    });
+
+
+    function showNoticeModal(){
+        Service.getNoticeDetail($(this).attr('id'));
+    }
+
+    function activeModal_RegistryPost(){
+        openLayer();
+        attachMents = [];
+        $('.modal-registry_post').addClass('active');
+    }
+
+
+
+    function uploadSummernoteImageFile(file, el) {
+        console.log("uploadSummernoteImageFile");
+        data = new FormData();
+        data.append("imgFile", file);
+
+        $.ajax({
+            data: data,
+            type: "POST",
+            url: "/api/admin/v1/upload/image",
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            success: function (data) {
+                $(el).summernote('editor.insertImage', data.data.url);
+                console.log(data.url);
+                console.log(data.data.url);
+                console.log(data.data.path + "/" + data.data.fileName);
+                let upload = {};
+                upload.uploadId = data.data.id;
+                upload.url = data.data.url;
+                attachMents.push(upload);
+                console.log(attachMents);
+            }
+        });
+    }
+
+    function searchValue(size) {
+        let url = `/admin/notice?page=0&size=`+ size;
+        if($('#search').val()) {
+            url += '&search=' + $('#search').val();
+        }
+        Common.goPage(url);
+    }
+
+    function excelDownload() {
+        let url = `/admin/notice/excel/download?page=` + $('#page').val() + `&size=`+ $('#size').val();
+        if($('#search').val()) {
+            url += '&search=' + $('#search').val();
+        }
+        Common.goPage(url);
+    }
+
+    let Service = {
+        createNotice : function () {
+            let obj = {};
+            obj.title = $('#title').val();
+            obj.body = $('#summernote').val();
+            var url = "/api/admin/v1/notice";
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    alert(data.message);
+                    closeLayer();
+                    $('.modal-registry_post').removeClass('active');
+                    Common.reloadPage();
+                }
+                return;
+            });
+        },
+
+        getNoticeDetail : function (id) {
+            var obj = {};
+            var url = "/api/admin/v1/notice/" + id;
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    $('#modal_title').val(data.data.title);
+                    $('#modal_body').empty();
+                    $('#modal_body').append(data.data.body);
+                    $('#modal_id').val(data.data.id);
+                    $('#modal_id_text').text('공지번호 (' + data.data.id + ')');
+                    //$('#summernote').val(data.data.body);
+                    openLayer();
+                    $('.modal-detail_post').addClass('active');
+                }
+                return;
+            });
+        },
+        deleteNotice: function (id) {
+            var obj = {};
+            var url = "/api/admin/v1/notice/" + id;
+            var ajaxParam = {
+                "url": url,
+                "type": "DELETE",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    alert(data.message);
+                    //$('#summernote').val(data.data.body);
+                    closeLayer();
+                    $('.modal-detail_post').removeClass('active');
+                    Common.reloadPage();
+                }
+                return;
+            });
+        }
+    }
+
+
+</script>

@@ -1,0 +1,2162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a01">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <th:block th:insert="~{layout/common :: navbar}"></th:block>
+    
+        <!-- 메인 -->
+        <div id="main">
+
+            <div id="loading"><div class="round spinner"></div></div>
+
+            <!-- 헤더 -->
+            <th:block th:insert="~{layout/common :: header}"></th:block>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                            <span class="ct-text">차량 <span class="search-count"th:text="${#numbers.formatInteger(page.totalElements , 0 , 'COMMA')}" >999,999,999</span>건이 검색되었습니다.</span>
+                        </div>
+                        <div class="breadcrumb">
+                            <a th:href="@{/}" class="bc-item">Home</a>
+                            <a class="bc-item">설정</a>
+                            <a th:href="@{/admin/config/car}" class="bc-item">차량 설정</a>
+                        </div>
+                    </div>
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1920">
+                        <!-- 테이블 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header">
+                                <div class="header-option">
+                                    <div class="search-option">
+                                        <span class="option-title">검색어</span>
+                                        <input th:value="${param.search}" id="searchText" class="so_input" type="text" placeholder="브랜드, 모델명을 입력하세요.">
+                                    </div>
+                                    <button id="btnSearch" class="ho_button btn-search hover01 ml-10">검색</button>
+                                </div>
+                                <div class="button-list">
+                                    <!--
+                                    <button class="ho_button btn-setting_brand hover01">브랜드 설정</button>
+                                    -->
+                                    <button class="ho_button btn-setting_color hover01">색상 설정</button>
+                                    <button class="ho_button btn-setting_option hover01">옵션 설정</button>
+                                </div>
+                                <div class="etc-option toggle-target">
+                                    <div class="eo-icon hover01"><i class="xi-ellipsis-h"></i></div>
+                                    <div class="eo-menus">
+                                        <div onclick="javascript:excelDownload(); return false;" class="btn-download_excel">엑셀 다운로드</div>
+                                        <div id="btnCreateNew" class="btn-regi_model">신규모델등록</div>
+                                        <div class="view-option">
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(15); return false;">15개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(30); return false;">30개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(60); return false;">60개씩 보기</div>
+                                            <div class="vo-item toggle-select" onclick="javascript:searchValue(120); return false;">120개씩 보기</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-item-body">
+                                <div class="table-wrapper">
+                                    <div class="table overflow-scroll">
+                                        <div class="table-body">
+                                            <div class="item-list ti-header">
+                                                <div class="t-item">
+                                                    <div class="td center-align toggle-target" data-width="12">번호</div>
+                                                    <div class="td center-align toggle-target" data-width="44">브랜드</div>
+                                                    <div class="td center-align toggle-target" data-width="44">모델</div>
+                                                    <div class="td center-align toggle-target" data-width="44">세부</div>
+                                                    <div class="td center-align toggle-target" data-width="44">등급</div>
+                                                    <div class="td center-align toggle-target" data-width="44">배기량</div>
+                                                    <div class="td center-align toggle-target" data-width="44">인기</div>
+                                                </div>
+                                            </div>
+                                            <div class="item-list ti-standard">
+                                                <div th:each="item, stat : ${content}" th:id="${item.id}" class="t-item main-table-item">
+                                                    <div th:text="${#numbers.formatInteger(item.id , 0 , 'COMMA')}" class="td center-align">00000000</div>
+                                                    <div th:text="${item.carManufacturer}" class="td center-align">현대</div>
+                                                    <div th:text="${item.carModel}" class="td center-align">그랜저</div>
+                                                    <div th:text="${item.carModelDetail}" class="td center-align">그랜저</div>
+                                                    <div th:text="${item.carClass}" class="td center-align">그랜저</div>
+                                                    <div th:text="${item.carDisplacement}" class="td center-align">그랜저</div>
+                                                    <div th:text="${item.popularType.description}" class="td center-align"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="page" th:value="${page.page}">
+                                    <input type="hidden" id="size" th:value="${page.size}">
+                                    <input type="hidden" id="sort" th:value="${page.sort}">
+                                    <input type="hidden" id="direction" th:value="${page.direction}">
+                                    <input type="hidden" id="search" th:value="${search}">
+                                    <div th:if="${page.totalPages > 0}" class="table-pagination">
+                                        <!--
+                                        <a th:if="${page.page != 1}" th:href="@{/admin/member(page=${page.page - 1}, size=${page.size})}"
+                                           class="tp-first"><img th:src="@{/assets/img/icon-arrow_left2.png}"  alt=""></a>
+                                        -->
+                                        <a th:if="${page.isFirst == false}"
+                                           th:href="@{/admin/config/car(page=${page.page - 1}, size=${page.size}, search=${param.search})}"
+                                           class="tp-prev"><img th:src="@{/assets/img/icon-arrow_left.png}"  alt=""></i></a>
+
+                                        <div class="tp-nav">
+                                            <a th:each="item, stat : ${ #numbers.sequence(page.startPage, page.endPage)}"
+                                               th:classappend="${item == page.page+1 ? 'active' : ''}"
+                                               th:href="@{/admin/config/car(page=${item-1}, size=${page.size}, search=${param.search})}"
+                                               th:text="${item}"
+                                               class="pg_num">1</a>
+                                        </div>
+                                        <a th:if="${page.isLast == false}"
+                                           th:href="@{/admin/config/car(page=${page.page + 1}, size=${page.size}, search=${param.search})}"
+                                           class="tp-next"><img th:src="@{/assets/img/icon-arrow_right.png}" alt=""></i></a>
+                                        <!--
+                                        <a class="tp-last"><img th:src="@{/assets/img/icon-arrow_right2.png}"  alt=""></i></a>
+                                        -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <th:block th:insert="~{layout/common :: footer}"></th:block>
+        </div>
+    </div>
+
+    <!-- 팝업 -->
+    <div class="modal">
+
+        <div class="modal-wrapper main-modal modal-setting_brand width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">브랜드 설정</span>
+                </div>ㅕ
+                <div class="breadcrumb">
+                    <a class="bc-item">Home</a>
+                    <a class="bc-item">설정</a>
+                    <a class="bc-item">차량 설정</a>
+                    <a class="bc-item">브랜드</a>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">국산 브랜드</span>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">신규 국산 브랜드</div>
+                        <div class="modal-item_content border-box">
+                            <input id="domestic_brand" class="mi_input" type="text">
+                            <div id="btnCreateDomestic"class="modal-item-button btn-enroll_model hover03">등록</div>
+                        </div>
+                    </div>
+
+                    <div id="domestic_carmanufacturer" class="tag-list">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">수입 브랜드</span>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">신규 수입 브랜드</div>
+                        <div class="modal-item_content border-box">
+                            <input id="international_brand"class="mi_input" type="text">
+                            <div id="btnCreateInternational" class="modal-item-button btn-enroll_model hover03">등록</div>
+                        </div>
+                    </div>
+
+                    <div id="international_carmanufacturer" class="tag-list">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+
+                <button id="btnSaveBrand" class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+        <div class="modal-wrapper main-modal modal-setting_color width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">색상</span>
+                </div>
+                <div class="breadcrumb">
+                    <a class="bc-item">Home</a>
+                    <a class="bc-item">설정</a>
+                    <a class="bc-item">차량 설정</a>
+                    <a class="bc-item">색상</a>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">색상</span>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">색상</div>
+                        <div class="modal-item_content border-box">
+                            <input id="in_car_color" class="mi_input" type="text">
+                            <div id="btnCreateColor" class="modal-item-button btn-enroll_model hover03">등록</div>
+                        </div>
+                    </div>
+
+                    <div id="car_color" class="tag-list">
+                        <div class="tag">블루</div>
+                        <div class="tag">블랙</div>
+                        <div class="tag">화이트</div>
+                        <div class="tag">그린</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <!--
+                <button class="mf_button btn-save hover01">저장</button>
+                -->
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+
+        <div class="modal-wrapper main-modal modal-setting_option width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">옵션</span>
+                </div>
+                <div class="breadcrumb">
+                    <a class="bc-item">Home</a>
+                    <a class="bc-item">설정</a>
+                    <a class="bc-item">차량 설정</a>
+                    <a class="bc-item">옵션</a>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">옵션</span>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">옵션</div>
+                        <div class="modal-item_content border-box">
+                            <input id="in_car_option" class="mi_input" type="text">
+                            <div id="btnCreateOption" class="modal-item-button btn-enroll_model hover03">등록</div>
+                        </div>
+                    </div>
+
+                    <div id="car_option" class="tag-list">
+                        <div class="tag">블루</div>
+                        <div class="tag">블랙</div>
+                        <div class="tag">화이트</div>
+                        <div class="tag">그린</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <!--
+                <button class="mf_button btn-save hover01">저장</button>
+                -->
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+
+        <div class="modal-wrapper main-modal modal-detail width-600">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <input type="hidden" id="car_class_id"/>
+                    <span id="modal_detail_id" class="mt-text">모델번호()</span>
+                </div>
+                <div class="breadcrumb">
+                    <a th:href="@{/}" class="bc-item">Home</a>
+                    <a class="bc-item">설정</a>
+                    <a th:href="@{/admin/config/car}" class="bc-item">차량 설정</a>
+                    <a class="bc-item">상세</a>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">차량</span>
+                </div>
+
+                <div class="content-item flex-row-2 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">브랜드</div>
+                        <div class="modal-item_content">
+                            <input id="detail_car_manufacturer" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">모델</div>
+                        <div class="modal-item_content">
+                            <input id="detail_car_model_name" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">세부모델</span>
+                </div>
+
+                <div class="content-item mt-15">
+                    <div class="modal-item width-50p">
+                        <div class="modal-item_title">세부모델</div>
+                        <div class="modal-item_content border-box">
+                            <input id="detail_car_model_detail" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">등급</span>
+                </div>
+
+                <div class="content-item flex-row-2 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">등급</div>
+                        <div class="modal-item_content">
+                            <input id="detail_car_class_name" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">배기량</div>
+                        <div class="modal-item_content">
+                            <input id="detail_car_class_displacement" class="mi_input" type="text" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item mt-15 flex-wrap">
+                    <div class="modal-item width-50p mr-30 mobile-margin-0">
+                        <div class="modal-item_title">인기여부</div>
+                        <div class="modal-item_content">
+                            <select class="mi_select" name="detail_car_class_popular_type" id="detail_car_class_popular_type">
+                                <option value="POPULAR">인기</option>
+                                <option value="UN_POPULAR">비인기</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">트림</span>
+                </div>
+
+                <div class="content-item flex-row-2 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">트림</div>
+                        <div class="modal-item_content">
+                            <input id="detail_car_trim_name"class="mi_input" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <!--
+                <button id="btnDeleteCarTrim" class="mf_button btn-save hover01">삭제</button>
+                -->
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+        <div class="modal-wrapper main-modal modal-registry_model modal-tab_wrapper width-600">
+            <!-- 2021-08-04 신규 추가 -->
+            <!-- Modal - STEP 1 -->
+            <div class="modal-tab_container mtc01 active"> <!-- 활성화 modal-tab_container에게 class "active" -->
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <span class="mt-text">STEP 1 차량 브랜드</span>
+                    </div>
+                    <div class="breadcrumb">
+                        <a class="bc-item">Home</a>
+                        <a class="bc-item">설정</a>
+                        <a class="bc-item">차량 설정</a>
+                        <a class="bc-item">상세</a>
+                    </div>
+                </div>
+
+                <div class="modal-content">
+                    <div class="car-breadcrumb">
+                    </div>
+
+                    <div class="content-item flex mt-15">
+                        <div class="modal-item width-100p">
+                            <div class="modal-item_title">차량 브랜드 검색</div>
+                            <div class="modal-item_content border-box">
+                                <input id="car_manufacturer_search" class="mi_input" type="text">
+                                <div id="btn_car_manufacturer_search" class="modal-item-button btn-enroll_model hover03">조회</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-table">
+                        <div class="table-wrapper">
+                            <div class="table">
+                                <div class="table-body without-number-column">
+                                    <div class="item-list ti-header">
+                                        <div class="t-item">
+                                            <div class="td center-align toggle-target">브랜드명</div>
+                                            <div class="td center-align toggle-target">영문명</div>
+                                        </div>
+                                    </div>
+                                    <div id="car_manufacturer_table_body" class="item-list ti-standard">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="car_manufacturer_table_pagination"  class="table-pagination">
+
+                            </div>
+                        </div>
+
+                        <div class="content-table-buttons flex-align-center">
+                            <button class="mf_button btn-enroll hover04" id="btn-step1_registry">신규등록</button>
+                            <button class="mf_button btn-modify hover04" id="btn-step1_update">수정</button>
+                            <button class="mf_button btn-delete hover04" id="btn-step1_delete">삭제</button>
+                            <button class="mf_button btn-close_modal hover04">닫기</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer flex-between">
+                    <button class="mf_button btn-tab_prev hover01 hidden">이전</button>
+                    <button id="btn_step1_next" class="mf_button btn-tab_next hover01">다음</button>
+                </div>
+            </div>
+
+            <!-- Modal - STEP 2 -->
+            <div class="modal-tab_container mtc02">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <span class="mt-text">STEP 2 차량 모델</span>
+                    </div>
+                    <div class="breadcrumb">
+                        <a class="bc-item">Home</a>
+                        <a class="bc-item">설정</a>
+                        <a class="bc-item">차량 설정</a>
+                        <a class="bc-item">상세</a>
+                    </div>
+                </div>
+
+                <div class="modal-content">
+                    <div class="car-breadcrumb">
+                        <span class="cb-title">브랜드 : <span class="result_brand">현대</span></span>
+                    </div>
+
+                    <div class="content-item flex mt-15">
+                        <div class="modal-item width-100p">
+                            <div class="modal-item_title">모델 검색</div>
+                            <div class="modal-item_content border-box">
+                                <input id="car_model_search" class="mi_input" type="text">
+                                <div id="btn_car_model_search" class="modal-item-button btn-enroll_model hover03">조회</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-table">
+                        <div class="table-wrapper">
+                            <div class="table">
+                                <div class="table-body without-number-column">
+                                    <div class="item-list ti-header">
+                                        <div class="t-item">
+
+                                            <div class="td center-align toggle-target">모델명</div>
+                                            <div class="td center-align toggle-target">세부모델명</div>
+                                        </div>
+                                    </div>
+                                    <div id="car_model_table_body" class="item-list ti-standard">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="car_model_table_pagination" class="table-pagination">
+
+                            </div>
+                        </div>
+
+                        <div class="content-table-buttons flex-align-center">
+                            <button class="mf_button btn-enroll hover04" id="btn-step2_registry">신규등록</button>
+                            <button class="mf_button btn-modify hover04" id="btn-step2_update">수정</button>
+                            <button class="mf_button btn-delete hover04" id="btn-step2_delete">삭제</button>
+                            <button class="mf_button btn-close_modal hover04">닫기</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer flex-between">
+                    <button class="mf_button btn-tab_prev hover01 ">이전</button>
+                    <button id="btn_step2_next" class="mf_button btn-tab_next hover01">다음</button>
+                </div>
+            </div>
+
+            <!-- Modal - STEP 3 -->
+            <div class="modal-tab_container mtc03">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <span class="mt-text">STEP 3 차량 등급</span>
+                    </div>
+                    <div class="breadcrumb">
+                        <a class="bc-item">Home</a>
+                        <a class="bc-item">설정</a>
+                        <a class="bc-item">차량 설정</a>
+                        <a class="bc-item">상세</a>
+                    </div>
+                </div>
+
+                <div class="modal-content">
+                    <div class="car-breadcrumb">
+                        <span class="cb-title">브랜드 : <span class="result_brand">현대</span></span>
+                        <span class="cb-title">모델 : <span class="result_model">아반떼</span></span>
+                    </div>
+
+                    <div class="content-item flex mt-15">
+                        <div class="modal-item width-100p">
+                            <div class="modal-item_title">차량 등급 검색</div>
+                            <div class="modal-item_content border-box">
+                                <input id="car_class_search" class="mi_input" type="text">
+                                <div id="btn_car_class_search" class="modal-item-button btn-enroll_model hover03">조회</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-table">
+                        <div class="table-wrapper">
+                            <div class="table">
+                                <div class="table-body without-number-column">
+                                    <div class="item-list ti-header">
+                                        <div class="t-item">
+
+                                            <div class="td center-align toggle-target">등급</div>
+                                            <div class="td center-align toggle-target">배기량</div>
+                                            <div class="td center-align toggle-target">인기여부</div>
+                                        </div>
+                                    </div>
+                                    <div id="car_class_table_body" class="item-list ti-standard">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="car_class_table_pagination" class="table-pagination">
+
+                            </div>
+                        </div>
+
+                        <div class="content-table-buttons flex-align-center">
+                            <button class="mf_button btn-enroll hover04" id="btn-step3_registry">신규등록</button>
+                            <button class="mf_button btn-modify hover04" id="btn-step3_update">수정</button>
+                            <button class="mf_button btn-delete hover04" id="btn-step3_delete">삭제</button>
+                            <button class="mf_button btn-close_modal hover04">닫기</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer flex-between">
+                    <button class="mf_button btn-tab_prev hover01">이전</button>
+                    <button id="btn_step3_next" class="mf_button btn-tab_next hover01">다음</button>
+                </div>
+            </div>
+
+            <!-- Modal - STEP 4 -->
+            <div class="modal-tab_container mtc04">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <span class="mt-text">STEP 4 차량 트림</span>
+                    </div>
+                    <div class="breadcrumb">
+                        <a class="bc-item">Home</a>
+                        <a class="bc-item">설정</a>
+                        <a class="bc-item">차량 설정</a>
+                        <a class="bc-item">상세</a>
+                    </div>
+                </div>
+
+                <div class="modal-content">
+                    <div class="car-breadcrumb">
+                        <span class="cb-title">브랜드 : <span class="result_brand">현대</span></span>
+                        <span class="cb-title">모델 : <span class="result_model">아반떼</span></span>
+                        <span class="cb-title">등급 : <span class="result_class">1.6 1600cc 비인기</span></span>
+                    </div>
+
+                    <div class="content-item flex mt-15">
+                        <div class="modal-item width-100p">
+                            <div class="modal-item_title">차량 트림 검색</div>
+                            <div class="modal-item_content border-box">
+                                <input id="car_trim_search" class="mi_input" type="text">
+                                <div id="btn_car_trim_search" class="modal-item-button btn-enroll_model hover03">조회</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-table">
+                        <div class="table-wrapper">
+                            <div class="table">
+                                <div class="table-body without-number-column">
+                                    <div class="item-list ti-header">
+                                        <div class="t-item">
+                                            <div class="td center-align toggle-target">트림</div>
+                                        </div>
+                                    </div>
+                                    <div id="car_trim_table_body" class="item-list ti-standard">
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="car_trim_table_pagination" class="table-pagination">
+
+                            </div>
+                        </div>
+
+                        <div class="content-table-buttons flex-align-center">
+                            <button class="mf_button btn-enroll hover04" id="btn-step4_registry">신규등록</button>
+                            <button class="mf_button btn-modify hover04" id="btn-step4_update">수정</button>
+                            <button class="mf_button btn-delete hover04" id="btn-step4_delete">삭제</button>
+                            <button name="close_modal" class="mf_button btn-close_modal hover04">닫기</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer flex-between">
+                    <button class="mf_button btn-tab_prev hover01">이전</button>
+                    <!--
+                    <button class="mf_button btn-save hover01">저장</button>
+                    -->
+                </div>
+            </div>
+
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+
+        <!-- 모달 STEP1 신규등록 -->
+        <div id="step1" class="modal-wrapper sub-modal modal-step1_enroll width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">차량 브랜드 등록</span>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">차량 브랜드</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">브랜드명(한글)</div>
+                        <div class="modal-item_content border-box">
+                            <input id="regi_car_manufacturer_name" class="mi_input" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">브랜드명(영문)</div>
+                        <div class="modal-item_content border-box">
+                            <input id="regi_car_manufacturer_name_eng" class="mi_input" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">국산차여부</div>
+                        <div class="mi_check mt-10">
+                            <div class="mi_check-item">
+                                <input type="radio" id="check-03" name="radio1" value="DOMESTIC" checked>
+                                <label for="check-03">국산</label>
+                            </div>
+                            <div class="mi_check-item">
+                                <input type="radio" id="check-04" name="radio1" value="INTERNATIONAL">
+                                <label for="check-04">수입</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn_regi_car_manufacturer"class="mf_button btn-save_modal hover02">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+        </div>
+
+        <!-- 모달 STEP2 신규등록 -->
+        <div id="step2" class="modal-wrapper sub-modal modal-step2_enroll width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">차량 모델 등록</span>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">차량 모델</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">모델명</div>
+                        <div class="modal-item_content border-box">
+                            <input id="regi_car_model_name" class="mi_input" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">세부모델명</div>
+                        <div class="modal-item_content border-box">
+                            <input id="regi_car_model_name_detail" class="mi_input" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn_regi_car_model" class="mf_button btn-save_modal hover02">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+        </div>
+
+        <!-- 모달 STEP3 신규등록 -->
+        <div id="step3" class="modal-wrapper sub-modal modal-step3_enroll width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">차량 등급 등록</span>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">차량 등급</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">등급</div>
+                        <div class="modal-item_content border-box">
+                            <input id="regi_car_class_name" class="mi_input" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">배기량</div>
+                        <div class="modal-item_content border-box">
+                            <input id="regi_car_class_displacement" class="mi_input" type="number">
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">인기여부</div>
+                        <div class="mi_check mt-10">
+                            <div class="mi_check-item">
+                                <input type="radio" id="check-01" name="radio2" value="POPULAR" checked>
+                                <label for="check-01">인기</label>
+                            </div>
+                            <div class="mi_check-item">
+                                <input type="radio" id="check-02" name="radio2" value="UN_POPULAR">
+                                <label for="check-02">비인기</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn_regi_car_class" class="mf_button btn-save_modal hover02">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+        </div>
+
+        <!-- 모달 STEP4 신규등록 -->
+        <div id="step4" class="modal-wrapper sub-modal modal-step4_enroll width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">차량 트림 등록</span>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">차량 트림</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">트림명</div>
+                        <div class="modal-item_content border-box">
+                            <input id="regi_car_trim_name"class="mi_input" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn_regi_car_trim"class="mf_button btn-save_modal hover02">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+        </div>
+        <!-- 2021-08-04 신규 추가 끝 -->
+
+
+
+    </div>
+</div>
+
+<script>
+
+    let tab_count = 1;
+    let search = "";
+
+    let modal_page = 0;
+    let modal_size = 10;
+
+    let action = "CREATE";
+
+    let carManufacturerSearch = "";
+    let carManufacturer = {};
+
+
+    let carModelSearch = "";
+    let carModel = {};
+
+    let carClassSearch = "";
+    let carClass = {};
+
+    let carTrimSearch = "";
+    let carTrim = {};
+        
+    
+    function goSearch() {
+        if(!$('#searchText').val()) {
+            Common.goPage('/admin/config/car');
+        } else {
+            Common.goPage('/admin/config/car?search=' + $('#searchText').val());
+        }
+    }
+    $(function(){
+        $('.btn-regi_model').on('click', activeModal_RegistryModel);
+        //$('.btn-setting_brand').on('click', activeModal_SettingBrand);
+        $('.btn-setting_color').on('click', activeModal_SettingColor);
+        $('.btn-setting_option').on('click', activeModal_SettingOption);
+        $('.table-body .main-table-item').on('click', activeModal_Detail);
+
+        // 2021-08-04 신규 추가
+        // 신규등록/수정 버튼 클릭 서브 팝업 띄우기
+        $('.mf_button').on('click', activeModal_StepSub);
+        // 탭 이동 관련 함수
+        $('.btn-tab_prev').on('click', prevTabMenu);
+        //$('.btn-tab_next').on('click', nextTabMenu);
+        // 2021-08-04 신규 추가 끝
+
+
+        search = $('#searchText').val();
+        $('#btnSearch').click(function () {
+            goSearch();
+        });
+
+        $('#searchText').keyup(function (e) {
+            if(e.keyCode == 13) {
+                goSearch();
+            }
+        });
+
+        $('#btnCreateColor').click(function (){
+            if(!$.notnull($('#in_car_color') , '색상'))
+                return false;
+            Service.createCarColor($('#in_car_color').val());
+        });
+
+        $('#btnCreateOption').click(function (){
+            if(!$.notnull($('#in_car_option') , '옵션'))
+                return false;
+            Service.createCarOption($('#in_car_option').val());
+        });
+
+        $(document).on('click', 'div[name=carColor]', function() {
+            Service.deleteCarColor($(this).attr('color-id'), false);
+            //console.log($(this).attr('id'));
+        });
+
+        $(document).on('click', 'div[name=carOption]', function() {
+            Service.deleteCarOption($(this).attr('option-id'), false);
+            //console.log($(this).attr('id'));
+        });
+
+        $(document).on('click', 'button[name=close_modal]', function() {
+            Common.reloadPage();
+        });
+
+        $(document).on('click', 'div[name=car_manufacturer]', function() {
+            //console.log($(this).attr('item-id'));
+            var parent = $(this).parent();
+            parent.children().removeClass('active');
+            $(this).toggleClass('active');
+            if($(this).hasClass('active')) {
+                carManufacturer.id = $(this).attr('item-id');
+                carManufacturer.name = $(this).attr('item-name');
+                carManufacturer.nameEng = $(this).attr('item-nameEng');
+                carManufacturer.countryType = $(this).attr('item-countryType');
+            } else {
+                carManufacturer = {};
+            }
+        });
+
+        $(document).on('click', 'div[name=car_model]', function() {
+            //console.log($(this).attr('item-id'));
+            var parent = $(this).parent();
+            parent.children().removeClass('active');
+            $(this).toggleClass('active');
+            if($(this).hasClass('active')) {
+                carModel.id = $(this).attr('item-id');
+                carModel.name = $(this).attr('item-name');
+                carModel.nameDetail = $(this).attr('item-nameDetail');
+            } else {
+                carModel = {};
+            }
+        });
+
+        $(document).on('click', 'div[name=car_class]', function() {
+            //console.log($(this).attr('item-id'));
+            var parent = $(this).parent();
+            parent.children().removeClass('active');
+            $(this).toggleClass('active');
+            if($(this).hasClass('active')) {
+                carClass.id = $(this).attr('item-id');
+                carClass.name = $(this).attr('item-name');
+                carClass.carDisplacement = $(this).attr('item-carDisplacement');
+                carClass.popularType = $(this).attr('item-popularType');
+            } else {
+                carClass = {};
+            }
+        });
+
+        $(document).on('click', 'div[name=car_trim]', function() {
+            //console.log($(this).attr('item-id'));
+            var parent = $(this).parent();
+            parent.children().removeClass('active');
+            $(this).toggleClass('active');
+            if($(this).hasClass('active')) {
+                carTrim.id = $(this).attr('item-id');
+                carTrim.name = $(this).attr('item-name');
+            } else {
+                carTrim = {};
+            }
+        });
+
+        $('#btn_regi_car_manufacturer').click(function () {
+            let name = $('#regi_car_manufacturer_name').val();
+            let nameEng = $('#regi_car_manufacturer_name_eng').val();
+            let countryType = $('input:radio[name=radio1]:checked').val();
+            if(!name || !nameEng || !countryType) {
+                alert('입력데이터를 모두 입력해주세요');
+                return;
+            }
+            Service.upsertCarManufacturer(name, nameEng, countryType, function () {
+                modal_page = 0;
+                modal_size = 10;
+                getCarManufacturer(modal_page, modal_size);
+                alert('완료되었습니다.');
+                closeLayer();
+            });
+        });
+
+        $('#btn_regi_car_model').click(function () {
+            let name = $('#regi_car_model_name').val();
+            let nameDetail = $('#regi_car_model_name_detail').val();
+            if(!name || !nameDetail) {
+                alert('입력데이터를 모두 입력해주세요');
+                return;
+            }
+            Service.upsertCarModel(carManufacturer.id, name, nameDetail, function () {
+                modal_page = 0;
+                modal_size = 10;
+                getCarModels(carManufacturer.id, modal_page, modal_size);
+                alert('완료되었습니다.');
+                closeLayer();
+            });
+        });
+
+        $('#btn_regi_car_class').click(function () {
+            let name = $('#regi_car_class_name').val();
+            let carDisplacement = $('#regi_car_class_displacement').val();
+            let popularType = $('input:radio[name=radio2]:checked').val();
+            if(!name || !carDisplacement || !popularType) {
+                alert('입력데이터를 모두 입력해주세요');
+                return;
+            }
+            Service.upsertCarClass(carModel.id, name, carDisplacement, popularType, function () {
+                modal_page = 0;
+                modal_size = 10;
+                getCarClasses(carModel.id, modal_page, modal_size);
+                alert('완료되었습니다.');
+                closeLayer();
+            });
+        });
+
+        $('#btn_regi_car_trim').click(function () {
+            let name = $('#regi_car_trim_name').val();
+            if(!name) {
+                alert('입력데이터를 모두 입력해주세요');
+                return;
+            }
+            Service.upsertCarTrim(carClass.id, name, function () {
+                modal_page = 0;
+                modal_size = 10;
+                getCarTrims(carClass.id, modal_page, modal_size);
+                alert('완료되었습니다.');
+                closeLayer();
+            });
+        });
+
+        $('#btn-step1_delete').click(function () {
+           if(!carManufacturer.id) {
+               alert('삭제하실 브랜드를 선택해 주세요.');
+               return;
+           }
+           let result = confirm('브랜드를 삭제하면 해당 브랜드의 모든 차량 데이터가 삭제됩니다. 삭제하시겠습니까?');
+           if(result) {
+               Service.deleteCarManufacturer(carManufacturer.id, function () {
+                   alert('완료되었습니다.');
+                   modal_page = 0;
+                   modal_size = 10;
+                   carManufacturer = {};
+                   getCarManufacturer(modal_page, modal_size);
+               });
+           }
+        });
+
+        $('#btn-step2_delete').click(function () {
+            if(!carModel.id) {
+                alert('삭제하실 모델을 선택해 주세요.');
+                return;
+            }
+            let result = confirm('모델을 삭제하면 해당 모델의 모든 차량 데이터가 삭제됩니다. 삭제하시겠습니까?');
+            if(result) {
+                Service.deleteCarModel(carModel.id, function () {
+                    alert('완료되었습니다.');
+                    modal_page = 0;
+                    modal_size = 10;
+                    carModel = {};
+                    getCarModels(carManufacturer.id, modal_page, modal_size);
+                });
+            }
+        });
+
+        $('#btn-step3_delete').click(function () {
+            if(!carClass.id) {
+                alert('삭제하실 등급을 선택해 주세요.');
+                return;
+            }
+            let result = confirm('등급을 삭제하면 해당 등급의 하위 트림 데이터가 모두 삭제됩니다. 삭제하시겠습니까?');
+            if(result) {
+                Service.deleteCarClass(carClass.id, function () {
+                    alert('완료되었습니다.');
+                    modal_page = 0;
+                    modal_size = 10;
+                    carClass = {};
+                    getCarClasses(carModel.id, modal_page, modal_size);
+                });
+            }
+        });
+
+        $('#btn-step4_delete').click(function () {
+            if(!carClass.id) {
+                alert('삭제하실 트림을 선택해 주세요.');
+                return;
+            }
+            let result = confirm('트림을 삭제하시겠습니까?');
+            if(result) {
+                Service.deleteCarTrim(carTrim.id, function () {
+                    alert('완료되었습니다.');
+                    modal_page = 0;
+                    modal_size = 10;
+                    carTrim = {};
+                    getCarTrims(carClass.id, modal_page, modal_size);
+                });
+            }
+        });
+
+        $('#btn_car_manufacturer_search').click(function () {
+           carManufacturerSearch = $('#car_manufacturer_search').val();
+           carManufacturer = {};
+           getCarManufacturer(0, 10);
+        });
+
+        $('#car_manufacturer_search').keyup(function (e) {
+            if(e.keyCode == 13) {
+                carManufacturerSearch = $('#car_manufacturer_search').val();
+                carManufacturer = {};
+                getCarManufacturer(0, 10);
+            }
+        });
+
+
+        $('#btn_car_model_search').click(function () {
+            carModelSearch = $('#car_model_search').val();
+            carModel = {};
+            getCarModels(carManufacturer.id, 0, 10);
+        });
+
+        $('#car_model_search').keyup(function (e) {
+            if(e.keyCode == 13) {
+                carModelSearch = $('#car_model_search').val();
+                carModel = {};
+                getCarModels(carManufacturer.id, 0, 10);
+            }
+        });
+
+        $('#btn_car_class_search').click(function () {
+            carClassSearch = $('#car_class_search').val();
+            carClass = {};
+            getCarClasses(carModel.id, 0, 10);
+        });
+
+        $('#car_class_search').keyup(function (e) {
+            if(e.keyCode == 13) {
+                carClassSearch = $('#car_class_search').val();
+                carClass = {};
+                getCarClasses(carModel.id, 0, 10);
+            }
+        });
+
+        $('#btn_car_trim_search').click(function () {
+            carTrimSearch = $('#car_trim_search').val();
+            carTrim = {};
+            getCarTrims(carClass.id, 0, 10);
+        });
+
+        $('#car_trim_search').keyup(function (e) {
+            if(e.keyCode == 13) {
+                carTrimSearch = $('#car_trim_search').val();
+                carTrim = {};
+                getCarTrims(carClass.id, 0, 10);
+            }
+        });
+
+        $('#btn_step1_next').click(function () {
+            if(!carManufacturer.id) {
+                alert('브랜드를 선택해주세요');
+                return;
+            } else {
+                modal_page = 0;
+                modal_size = 0;
+                getCarModels(carManufacturer.id, modal_page, modal_size);
+                $('.result_brand').text(carManufacturer.name);
+                nextTabMenu($(this));
+            }
+        });
+
+        $('#btn_step2_next').click(function () {
+            if(!carModel.id) {
+                alert('모델을 선택해주세요');
+                return;
+            } else {
+                modal_page = 0;
+                modal_size = 0;
+                getCarClasses(carModel.id, modal_page, modal_size);
+                $('.result_model').text(carModel.name);
+                nextTabMenu($(this));
+            }
+        });
+
+        $('#btn_step3_next').click(function () {
+            if(!carClass.id) {
+                alert('등급을 선택해주세요');
+                return;
+            } else {
+                modal_page = 0;
+                modal_size = 0;
+                getCarTrims(carClass.id, modal_page, modal_size);
+                $('.result_class').text(carClass.name);
+                nextTabMenu($(this));
+            }
+        });
+
+    });
+
+    $('div[name=carManufacturer]').on('click', function(){
+        console.log($(this).attr(id));
+    });
+
+    function activeModal_SettingColor(){
+        Service.getCarColors();
+    }
+
+    function activeModal_SettingOption(){
+        Service.getCarOptions();
+    }
+
+    function activeModal_Detail() {
+        Service.getCarTrimDetail($(this).attr('id'));
+    }
+
+    function activeModal_RegistryModel(){
+        $('.modal-registry_model').children().removeClass('active');
+        $('.mtc01').addClass('active');
+        tab_count = 1;
+        carManufacturer = {};
+        carModel = {};
+        carClass = {};
+        carTrim = {};
+        getCarManufacturer(modal_page , modal_size);
+    }
+
+    function getCarManufacturer(page, size) {
+        carManufacturer = {};
+        modal_page = page;
+        modal_size = size;
+        Service.getCarManufacturer(function (content, pagination) {
+            createCarmanufacturerTable(content);
+            createCarmanufacturerPagination(pagination);
+            openLayer();
+            $('.modal-registry_model').addClass('active');
+        });
+    }
+
+    function getCarModels(carManufacturerId, page, size) {
+        carModel = {};
+        modal_page = page;
+        modal_size = size;
+        Service.getCarModels(carManufacturerId, function (content, pagination) {
+            createCarModelTable(content);
+            createCarModelPagination(pagination);
+        });
+    }
+
+    function getCarClasses(carModelId, page, size) {
+        carClass = {};
+        modal_page = page;
+        modal_size = size;
+        Service.getCarClasses(carModelId, function (content, pagination) {
+            createCarClassTable(content);
+            createCarClassPagination(pagination);
+        });
+    }
+
+    function getCarTrims(carClassId, page, size) {
+        carTrim = {};
+        modal_page = page;
+        modal_size = size;
+        Service.getCarTrims(carClassId, function (content, pagination) {
+            createCarTrimTable(content);
+            createCarTrimPagination(pagination);
+        });
+    }
+    function createCarTrimTable(content) {
+        $('#car_trim_table_body').empty();
+        for (let i = 0; i < content.length; i++) {
+            let inner = content[i];
+            let innerHtml = ``;
+            innerHtml += `<div class="t-item toggle-select" name="car_trim" item-id="${inner.id}" item-name="${inner.name}" >`;
+            //innerHtml += `<div class="td center-align">${inner.id}</div>`;
+            innerHtml += `<div class="td center-align">${inner.name}</div>`;
+            innerHtml += `</div>`;
+            $('#car_trim_table_body').append(innerHtml);
+        }
+    }
+
+    function createCarClassTable(content) {
+        $('#car_class_table_body').empty();
+        for (let i = 0; i < content.length; i++) {
+            let inner = content[i];
+            let innerHtml = ``;
+            innerHtml += `<div class="t-item toggle-select" name="car_class" item-id="${inner.id}" item-name="${inner.name}"
+            item-carDisplacement="${inner.carDisplacement}" item-popularType="${inner.popularType}" >`;
+            //innerHtml += `<div class="td center-align">${inner.id}</div>`;
+            innerHtml += `<div class="td center-align">${inner.name}</div>`;
+            innerHtml += `<div class="td center-align">${inner.carDisplacement}</div>`;
+            if(inner.popularType == 'POPULAR') {
+                innerHtml += `<div class="td center-align">인기</div>`;
+            } else {
+                innerHtml += `<div class="td center-align">비인기</div>`;
+            }
+            innerHtml += `</div>`;
+            $('#car_class_table_body').append(innerHtml);
+        }
+    }
+
+    function createCarModelTable(content) {
+        $('#car_model_table_body').empty();
+        for (let i = 0; i < content.length; i++) {
+            let inner = content[i];
+            let innerHtml = ``;
+            innerHtml += `<div class="t-item toggle-select" name="car_model" item-id="${inner.id}" item-name="${inner.name}"
+            item-nameDetail="${inner.nameDetail}" >`;
+            //innerHtml += `<div class="td center-align">${inner.id}</div>`;
+            innerHtml += `<div class="td center-align">${inner.name}</div>`;
+            innerHtml += `<div class="td center-align">${inner.nameDetail}</div>`;
+            innerHtml += `</div>`;
+            $('#car_model_table_body').append(innerHtml);
+        }
+    }
+
+    function createCarmanufacturerTable(content) {
+        $('#car_manufacturer_table_body').empty();
+        for (let i = 0; i < content.length; i++) {
+            let inner = content[i];
+            let innerHtml = ``;
+            innerHtml += `<div class="t-item toggle-select" name="car_manufacturer" item-id="${inner.id}" item-name="${inner.name}"
+            item-nameEng="${inner.nameEng}" item-countryType="${inner.countryType}">`;
+            //innerHtml += `<div class="td center-align">${inner.id}</div>`;
+            innerHtml += `<div class="td center-align">${inner.name}</div>`;
+            innerHtml += `<div class="td center-align">${inner.nameEng}</div>`;
+            innerHtml += `</div>`;
+            $('#car_manufacturer_table_body').append(innerHtml);
+        }
+    }
+
+
+
+    function createCarTrimPagination(pagination) {
+        $('#car_trim_table_pagination').empty();
+        if(pagination.totalElements > 0) {
+            let innerHtml = ``;
+            if(pagination.page > 0) {
+                innerHtml += `<a onclick="javascript:getCarTrims(carClass.id, ${pagination.prevPage}, ${modal_size}); return false;" class="tp-prev"><img src="/assets/img/icon-arrow_left.png"></i></a>`;
+            }
+            innerHtml += `<div class="tp-nav">`;
+            for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+                if(pagination.page + 1  == i) {
+                    innerHtml += `<a onclick="javascript:getCarTrims(carClass.id, ${i-1}, ${modal_size}); return false;" class="pg_num active">${i}</a>`;
+                } else {
+                    innerHtml += `<a onclick="javascript:getCarTrims(carClass.id, ${i-1}, ${modal_size}); return false;" class="pg_num">${i}</a>`;
+                }
+            }
+            innerHtml += `</div>`;
+            if(pagination.totalPages > pagination.page + 1) {
+                innerHtml += `<a onclick="javascript:getCarTrims(carClass.id, ${pagination.nextPage}, ${modal_size}); return false;" class="tp-next"><img src="/assets/img/icon-arrow_right.png"></i></a>`;
+            }
+            $('#car_trim_table_pagination').append(innerHtml);
+        }
+    }
+    function createCarClassPagination(pagination) {
+        $('#car_class_table_pagination').empty();
+        if(pagination.totalElements > 0) {
+            let innerHtml = ``;
+            if(pagination.page > 0) {
+                innerHtml += `<a onclick="javascript:getCarClasses(carModel.id, ${pagination.prevPage}, ${modal_size}); return false;" class="tp-prev"><img src="/assets/img/icon-arrow_left.png"></i></a>`;
+            }
+            innerHtml += `<div class="tp-nav">`;
+            for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+                if(pagination.page + 1  == i) {
+                    innerHtml += `<a onclick="javascript:getCarClasses(carModel.id, ${i-1}, ${modal_size}); return false;" class="pg_num active">${i}</a>`;
+                } else {
+                    innerHtml += `<a onclick="javascript:getCarClasses(carModel.id, ${i-1}, ${modal_size}); return false;" class="pg_num">${i}</a>`;
+                }
+            }
+            innerHtml += `</div>`;
+            if(pagination.totalPages > pagination.page + 1) {
+                innerHtml += `<a onclick="javascript:getCarClasses(carModel.id, ${pagination.nextPage}, ${modal_size}); return false;" class="tp-next"><img src="/assets/img/icon-arrow_right.png"></i></a>`;
+            }
+            $('#car_class_table_pagination').append(innerHtml);
+        }
+    }
+
+    function createCarmanufacturerPagination(pagination) {
+        $('#car_manufacturer_table_pagination').empty();
+        if(pagination.totalElements > 0) {
+            let innerHtml = ``;
+            if(pagination.page > 0) {
+                innerHtml += `<a onclick="javascript:getCarManufacturer(${pagination.prevPage}, ${modal_size}); return false;" class="tp-prev"><img src="/assets/img/icon-arrow_left.png"></i></a>`;
+            }
+            innerHtml += `<div class="tp-nav">`;
+            for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+                if(pagination.page + 1  == i) {
+                    innerHtml += `<a onclick="javascript:getCarManufacturer(${i-1}, ${modal_size}); return false;" class="pg_num active">${i}</a>`;
+                } else {
+                    innerHtml += `<a onclick="javascript:getCarManufacturer(${i-1}, ${modal_size}); return false;" class="pg_num">${i}</a>`;
+                }
+            }
+            innerHtml += `</div>`;
+            if(pagination.totalPages > pagination.page + 1) {
+                innerHtml += `<a onclick="javascript:getCarManufacturer(${pagination.nextPage}, ${modal_size}); return false;" class="tp-next"><img src="/assets/img/icon-arrow_right.png"></i></a>`;
+            }
+            $('#car_manufacturer_table_pagination').append(innerHtml);
+        }
+    }
+
+
+    function createCarModelPagination(pagination) {
+        $('#car_model_table_pagination').empty();
+        if(pagination.totalElements > 0) {
+            let innerHtml = ``;
+            if(pagination.page > 0) {
+                innerHtml += `<a onclick="javascript:getCarModels(${carManufacturer.id}, ${pagination.prevPage}, ${modal_size}); return false;" class="tp-prev"><img src="/assets/img/icon-arrow_left.png"></i></a>`;
+            }
+            innerHtml += `<div class="tp-nav">`;
+            for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+                if(pagination.page + 1  == i) {
+                    innerHtml += `<a onclick="javascript:getCarModels(${carManufacturer.id}, ${i-1}, ${modal_size}); return false;" class="pg_num active">${i}</a>`;
+                } else {
+                    innerHtml += `<a onclick="javascript:getCarModels(${carManufacturer.id}, ${i-1}, ${modal_size}); return false;" class="pg_num">${i}</a>`;
+                }
+            }
+            innerHtml += `</div>`;
+            if(pagination.totalPages > pagination.page + 1) {
+                innerHtml += `<a onclick="javascript:getCarModels(${carManufacturer.id}, ${pagination.nextPage}, ${modal_size}); return false;" class="tp-next"><img src="/assets/img/icon-arrow_right.png"></i></a>`;
+            }
+            $('#car_model_table_pagination').append(innerHtml);
+        }
+    }
+
+    function searchValue(size) {
+        let url = `/admin/config/car?page=0&size=`+ size;
+        if($('#search').val()) {
+            url += '&search=' + $('#search').val();
+        }
+        Common.goPage(url);
+    }
+
+    function excelDownload() {
+        let url = `/admin/config/car/excel/download?page=` + $('#page').val() + `&size=`+ $('#size').val();
+        if($('#search').val()) {
+            url += '&search=' + $('#search').val();
+        }
+        Common.goPage(url);
+    }
+
+    let Service = {
+        getCarManufacturer: function (_func) {
+            let obj = {};
+            let url = "/api/admin/v1/car_manufacturer?name=" + carManufacturerSearch;
+            url += `&page=${modal_page}&size=${modal_size}`;
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //console.log(data.data);
+                    //console.log(data.pagination);
+                    _func(data.data, data.pagination);
+                }
+                return;
+            });
+        },
+        getCarModels: function (carManufacturerId, _func) {
+            let obj = {};
+            let url = "/api/admin/v1/car_model/car_manufacturer/" + carManufacturerId;
+            url += `?page=${modal_page}&size=${modal_size}`;
+            url += `&name=${carModelSearch}`;
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data, data.pagination);
+                    return;
+                }
+                return;
+            });
+        },
+
+        getCarClasses: function (carModelId, _func) {
+            let obj = {};
+            let url = "/api/admin/v1/car_class/car_model/" + carModelId;
+            url += `?page=${modal_page}&size=${modal_size}`;
+            url += `&name=${carClassSearch}`;
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data, data.pagination);
+                    return;
+                }
+                return;
+            });
+        },
+
+        getCarTrims: function (carClassId, _func) {
+            let obj = {};
+            let url = "/api/admin/v1/car_trim/car_class/" + carClassId;
+            url += `?page=${modal_page}&size=${modal_size}`;
+            url += `&name=${carTrimSearch}`;
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data, data.pagination);
+                    return;
+                }
+                return;
+            });
+        },
+
+        deleteCarManufacturer: function (carManufacturerId, _func) {
+            let obj = {};
+            let url = "/api/admin/v1/car_manufacturer/" + carManufacturerId;
+            var ajaxParam = {
+                "url": url,
+                "type": "DELETE",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func();
+                    return;
+                }
+                return;
+            });
+        },
+
+        deleteCarModel: function (carModelId, _func) {
+            let obj = {};
+            let url = "/api/admin/v1/car_model/" + carModelId;
+            var ajaxParam = {
+                "url": url,
+                "type": "DELETE",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func();
+                    return;
+                }
+                return;
+            });
+        },
+
+        deleteCarClass: function (carClassId, _func) {
+            let obj = {};
+            let url = "/api/admin/v1/car_class/" + carClassId;
+            var ajaxParam = {
+                "url": url,
+                "type": "DELETE",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func();
+                    return;
+                }
+                return;
+            });
+        },
+
+        deleteCarTrim: function (carTrimId, _func) {
+            let obj = {};
+            let url = "/api/admin/v1/car_trim/" + carTrimId;
+            var ajaxParam = {
+                "url": url,
+                "type": "DELETE",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func();
+                    return;
+                }
+                return;
+            });
+        },
+
+        upsertCarManufacturer: function (name, nameEng, countryType, _func) {
+            let obj = {};
+            obj.name = name;
+            obj.nameEng = nameEng;
+            obj.countryType = countryType;
+            if(countryType == 'DOMESTIC') {
+                obj.country = 'KOREA';
+            } else {
+                obj.country = 'GERMANY';
+            }
+            let url = "/api/admin/v1/car_manufacturer";
+
+            let method = "POST";
+            if(action == "MODIFY") {
+                url += "/" + carManufacturer.id;
+                method = "PUT";
+            }
+            var ajaxParam = {
+                "url": url,
+                "type": method,
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data);
+                    return;
+                }
+                return;
+            });
+        },
+
+        upsertCarModel: function (carManufacturerId, name, nameDetail, _func) {
+            let obj = {};
+            obj.carManufacturerId = carManufacturerId;
+            obj.carModelName = name;
+            obj.carModelNameDetail = nameDetail;
+            let url = "/api/admin/v1/car_model";
+            let method = "POST";
+            if(action == "MODIFY") {
+                url += "/" + carModel.id;
+                method = "PUT";
+            }
+            var ajaxParam = {
+                "url": url,
+                "type": method,
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data);
+                    return;
+                }
+                return;
+            });
+        },
+
+        upsertCarClass: function (carModelId, name, carDisplacement, popularType, _func) {
+            let obj = {};
+            obj.carModelId = carModelId;
+            obj.carClassName = name;
+            obj.carClassDisplacement = carDisplacement;
+            obj.popularType = popularType;
+            let url = "/api/admin/v1/car_class";
+            let method = "POST";
+            if(action == "MODIFY") {
+                url += "/" + carClass.id;
+                method = "PUT";
+            }
+            var ajaxParam = {
+                "url": url,
+                "type": method,
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data);
+                    return;
+                }
+                return;
+            });
+        },
+
+        upsertCarTrim: function (carClassId, name,  _func) {
+            let obj = {};
+            obj.carClassId = carClassId;
+            obj.carTrimName = name;
+            let url = "/api/admin/v1/car_trim";
+            let method = "POST";
+            if(action == "MODIFY") {
+                url += "/" + carTrim.id;
+                method = "PUT";
+            }
+            var ajaxParam = {
+                "url": url,
+                "type": method,
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    _func(data.data);
+                    return;
+                }
+                return;
+            });
+        },
+
+        getAllCarManufacturer: function () {
+            let obj = {};
+            var url = "/api/admin/v1/car_manufacturer";
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+
+                    $('#modal_carManufacturer').empty();
+                    for (let i = 0; i < data.data.length; i++) {
+                        let inner = data.data[i];
+                        let optionHtml = `<option value="${inner.id}" manufacturer-id="${inner.id}">${inner.name}</option>`;
+                        $('#modal_carManufacturer').append(optionHtml);
+                    }
+                    openLayer();
+                    $('.modal-registry_model').addClass('active');
+                }
+                return;
+            });
+        },
+        deleteCarOption: function (id){
+            let obj = {};
+            var url = "/api/admin/v1/car_option/" + id;
+            var ajaxParam = {
+                "url": url,
+                "type": "DELETE",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    let innerHtml = "";
+                    $('div[option-id=' + id + ']').remove();
+                }
+                return;
+            });
+        },
+        deleteCarColor: function (id){
+            let obj = {};
+            var url = "/api/admin/v1/car_color/" + id;
+            var ajaxParam = {
+                "url": url,
+                "type": "DELETE",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    let innerHtml = "";
+                    $('div[color-id=' + id + ']').remove();
+                }
+                return;
+            });
+        },
+
+        createCarOption: function (option) {
+            let obj = {};
+            var url = "/api/admin/v1/car_option";
+            obj.option = option;
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    let innerHtml = "";
+                    innerHtml += `<div class="tag" name="carOption" option-id="${data.data.id}">${data.data.option}</div>`;
+                    $('#car_option').append(innerHtml);
+                    $('#in_car_option').val('');
+                }
+                return;
+            });
+        },
+        createCarColor: function (color) {
+            let obj = {};
+            var url = "/api/admin/v1/car_color";
+            obj.color = color;
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    let innerHtml = "";
+                    innerHtml += `<div class="tag" name="carColor" color-id="${data.data.id}">${data.data.color}</div>`;
+                    $('#car_color').append(innerHtml);
+                    $('#in_car_color').val('');
+                }
+                return;
+            });
+        },
+        getCarColors: function () {
+            let obj = {};
+            var url = "/api/admin/v1/car_color";
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+
+                    $('#car_color').empty();
+                    for (let i = 0; i < data.data.length; i++) {
+                        let inner = data.data[i];
+                        let innerHtml = "";
+                        innerHtml += `<div class="tag" name="carColor" color-id="${inner.id}">${inner.color}</div>`;
+                        $('#car_color').append(innerHtml);
+                    }
+                    openLayer();
+                    $('.modal-setting_color').addClass('active');
+                }
+                return;
+            });
+        },
+        getCarOptions: function () {
+            let obj = {};
+            var url = "/api/admin/v1/car_option";
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+
+                    $('#car_option').empty();
+                    for (let i = 0; i < data.data.length; i++) {
+                        let inner = data.data[i];
+                        let innerHtml = "";
+                        innerHtml += `<div class="tag" name="carOption" option-id="${inner.id}">${inner.option}</div>`;
+                        $('#car_option').append(innerHtml);
+                    }
+                    openLayer();
+                    $('.modal-setting_option').addClass('active');
+                }
+                return;
+            });
+        },
+
+        getCarTrimDetail: function (carTrimId) {
+            let obj = {};
+            var url = "/api/admin/v1/car_trim/" + carTrimId;
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+
+                    $('#car_class_id').val(data.data.id);
+                    $('#modal_detail_id').text('모델번호 ' + data.data.id);
+                    $('#detail_car_manufacturer').val(data.data.carManufacturer);
+                    $('#detail_car_model_name').val(data.data.carModel);
+                    $('#detail_car_model_detail').val(data.data.carModelDetail);
+
+                    $('#detail_car_class_name').val(data.data.carClass);
+                    $('#detail_car_class_displacement').val(data.data.carDisplacement);
+
+                    $('#detail_car_trim_name').val(data.data.name);
+                    let popularType = '비인기';
+                    if(data.data.popularType == 'POPULAR') {
+                        popularType = '인기';
+                    }
+                    $('#detail_car_class_popular_type').val(data.data.popularType);
+                    openLayer();
+                    $('.modal-detail').addClass('active');
+                }
+                return;
+            });
+        },
+
+
+    }
+
+    // 2021-08-04 신규 추가
+    function activeModal_StepSub(){
+        var id = this.id;
+
+        switch(id)
+        {
+            case "btn-step1_registry" : {
+                $('.main-modal').css('z-index', '100'); $('.modal-step1_enroll').addClass('active');
+                $('#regi_car_manufacturer_name').val('');
+                $('#regi_car_manufacturer_name_eng').val('');
+                $('#check-03').prop('checked', true);
+                $('#check-04').prop('checked', false);
+                action = "CREATE";
+                break;
+            }
+            case "btn-step1_update" : {
+                $('.main-modal').css('z-index', '100'); $('.modal-step1_enroll').addClass('active');
+                $('#regi_car_manufacturer_name').val(carManufacturer.name);
+                $('#regi_car_manufacturer_name_eng').val(carManufacturer.nameEng);
+                if(carManufacturer.countryType == 'DOMESTIC') {
+                    $('#check-03').prop('checked', true);
+                    $('#check-04').prop('checked', false);
+                } else {
+                    $('#check-03').prop('checked', false);
+                    $('#check-04').prop('checked', true);
+                }
+                action = "MODIFY";
+                break;
+            }
+            case "btn-step2_registry" : {
+                $('.main-modal').css('z-index', '100'); $('.modal-step2_enroll').addClass('active');
+                $('#regi_car_model_name').val('');
+                $('#regi_car_model_name_detail').val('');
+                action = "CREATE";
+                break;
+            }
+            case "btn-step2_update" : {
+                $('.main-modal').css('z-index', '100'); $('.modal-step2_enroll').addClass('active');
+                $('#regi_car_model_name').val(carModel.name);
+                $('#regi_car_model_name_detail').val(carModel.nameDetail);
+                action = "MODIFY";
+                break;
+            }
+            case "btn-step3_registry" : {
+                $('.main-modal').css('z-index', '100'); $('.modal-step3_enroll').addClass('active');
+                $('#regi_car_class_name').val('');
+                $('#regi_car_class_displacement').val('');
+                action = "CREATE";
+                break;
+            }
+            case "btn-step3_update" : {
+                $('.main-modal').css('z-index', '100'); $('.modal-step3_enroll').addClass('active');
+                $('#regi_car_class_name').val(carClass.name);
+                $('#regi_car_class_displacement').val(carClass.carDisplacement);
+                if(carClass.popularType == 'POPULAR') {
+                    $('#check-01').prop('checked', true);
+                    $('#check-02').prop('checked', false);
+                } else {
+                    $('#check-01').prop('checked', false);
+                    $('#check-02').prop('checked', true);
+                }
+                action = "MODIFY";
+                break;
+            }
+            case "btn-step4_registry" : {
+                $('.main-modal').css('z-index', '100'); $('.modal-step4_enroll').addClass('active');
+                $('#regi_car_trim_name').val('');
+                action = "CREATE";
+                break;
+            }
+            case "btn-step4_update" : {
+                $('.main-modal').css('z-index', '100'); $('.modal-step4_enroll').addClass('active');
+                $('#regi_car_trim_name').val(carTrim.name);
+                action = "MODIFY";
+                break;
+            }
+        }
+    }
+
+    // 모달 STEP별 탭 이동 관련
+    function prevTabMenu(e){
+
+        modal_page = 0;
+        modal_size = 10;
+
+        var page = $(e.currentTarget).closest('.cont').prop('id'); // 페이지
+        var container = $('#' + page).find('.cont-tab_content .tab');
+
+        for($i = 0; $i < container.length; $i++){
+            if($(container[$i]).hasClass('active')){
+                tab_count = $(container[$i]).data("count");
+            }
+        }
+        if(tab_count == 1) {
+            return;
+        }
+        tab_count -= 1;
+
+        switchingTab(tab_count);
+    }
+    function nextTabMenu(e){
+        modal_page = 0;
+        modal_size = 10;
+
+        var page = $(e.currentTarget).closest('.cont').prop('id'); // 페이지
+        var container = $('#' + page).find('.cont-tab_content .tab');
+
+        for($i = 0; $i < container.length; $i++){
+            if($(container[$i]).hasClass('active')){
+                tab_count = $(container[$i]).data("count");
+            }
+        }
+
+        if(tab_count == 4) {
+            return;
+        }
+        tab_count += 1;
+        switchingTab(tab_count);
+    }
+    function switchingTab(count){
+        $('.modal-tab_container').removeClass('active');
+        $('.mtc0' + count).addClass('active');
+    }
+    // 2021-08-04 신규 추가 끝
+
+
+    function toggleSelect(e){
+        var parent = $(e.currentTarget).parent();
+        parent.children().removeClass('active');
+        $(e.currentTarget).toggleClass('active');
+        // 탭 메뉴인 경우 화면 전환
+        if($(parent).attr('class') == 'tab-header'){
+            var tab_container = parent.siblings('.tab-cont');
+            var target_id = e.currentTarget.id;
+
+            $(tab_container).find('.tab').removeClass('active');
+            $(tab_container).find('.' + target_id).addClass('active');
+        }
+    }
+
+
+</script>

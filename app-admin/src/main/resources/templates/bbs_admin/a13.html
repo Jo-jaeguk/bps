@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Xeicon -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+        <!-- Library : Slick/Swiper -->
+        <link rel="stylesheet" href="assets/css/slick.css">
+        <link rel="stylesheet" href="assets/css/slick-theme.css">
+        <link rel="stylesheet" href="assets/css/swiper.css">
+        <script src="assets/js/slick.js"></script>
+        <script src="assets/js/swiper.js"></script>
+        <!-- Library : WOW -->
+        <link rel="stylesheet" href="assets/css/animate.css"/>
+        <link rel="stylesheet" href="assets/css/animate.min.css"/>
+        <script src="assets/js/wow.min.js"></script>
+        <!-- Library : nice-select -->
+        <link rel="stylesheet" href="assets/css/nice-select.css"/>
+        <script src="assets/js/jquery.nice-select.js"></script>
+        <!-- Library : C3 chart -->
+        <link rel="stylesheet" href="assets/css/c3.css">
+        <script src="assets/js/c3.min.js"></script>
+        <script src="assets/js/d3-5.8.2.min.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a13">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <div id="navbar"></div>
+    
+        <!-- 메인 -->
+        <div id="main">
+            <!-- 헤더 -->
+            <div id="header"></div>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                            <span class="ct-text">내용 <span class="search-count">999,999,999</span>건이 검색되었습니다.</span>
+                        </div>
+                        <div class="breadcrumb">
+                            <a class="bc-item">Home</a>
+                            <a class="bc-item">설정</a>
+                            <a class="bc-item">차량점검표 설정</a>
+                        </div>
+                    </div>
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1920">
+                        <!-- 테이블 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header">
+                                <div class="header-option">
+                                    <div class="search-option">
+                                        <span class="option-title">검색어</span>
+                                        <input class="so_input" type="text" placeholder="회원번호, 이름, 연락처를 입력하세요.">
+                                    </div>
+                                    <button class="ho_button btn-search hover01 ml-10">검색</button>
+                                </div>
+                                <div class="button-list">
+                                    <button class="ho_button btn-notice hover01">관리자 공지 등록</button>
+                                </div>
+                                <div class="etc-option toggle-target">
+                                    <div class="eo-icon hover01"><i class="xi-ellipsis-h"></i></div>
+                                    <div class="eo-menus">
+                                        <div class="btn-download_excel">엑셀 다운로드</div>
+                                        <div class="view-option">
+                                            <div class="vo-item toggle-select">15개씩 보기</div>
+                                            <div class="vo-item toggle-select">30개씩 보기</div>
+                                            <div class="vo-item toggle-select">60개씩 보기</div>
+                                            <div class="vo-item toggle-select">120개씩 보기</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-item-body">
+                                <div class="table-wrapper">
+                                    <div class="table overflow-scroll" style="margin-top: 10px;">
+                                        <div class="table-body">
+                                            <div class="item-list ti-header">
+                                                <div class="t-item">
+                                                    <div class="td center-align toggle-target" data-width="5">번호</div>
+                                                    <div class="td center-align toggle-target" data-width="40">공지 내용</div>
+                                                    <div class="td center-align toggle-target" data-width="25">작성자(아이디)</div>
+                                                    <div class="td center-align toggle-target" data-width="10">브랜드</div>
+                                                    <div class="td center-align toggle-target" data-width="10">모델(상세모델)</div>
+                                                    <div class="td center-align toggle-target" data-width="10">등급(트림)</div>
+                                                </div>
+                                            </div>
+                                            <div class="item-list ti-standard">
+                                                <div class="t-item">
+                                                    <div class="td center-align">1</div>
+                                                    <div class="td center-align">공지 내용</div>
+                                                    <div class="td center-align">홍길동(email@email@com)</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">전체</div>
+                                                    <div class="td center-align">전체</div>
+                                                </div>
+                                                <div class="t-item">
+                                                    <div class="td center-align">1</div>
+                                                    <div class="td center-align">공지 내용</div>
+                                                    <div class="td center-align">홍길동(email@email@com)</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">전체</div>
+                                                    <div class="td center-align">전체</div>
+                                                </div>
+                                                <div class="t-item">
+                                                    <div class="td center-align">1</div>
+                                                    <div class="td center-align">공지 내용</div>
+                                                    <div class="td center-align">홍길동(email@email@com)</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">전체</div>
+                                                    <div class="td center-align">전체</div>
+                                                </div>
+                                                <div class="t-item">
+                                                    <div class="td center-align">1</div>
+                                                    <div class="td center-align">공지 내용</div>
+                                                    <div class="td center-align">홍길동(email@email@com)</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">전체</div>
+                                                    <div class="td center-align">전체</div>
+                                                </div>
+                                                <div class="t-item">
+                                                    <div class="td center-align">1</div>
+                                                    <div class="td center-align">공지 내용</div>
+                                                    <div class="td center-align">홍길동(email@email@com)</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">전체</div>
+                                                    <div class="td center-align">전체</div>
+                                                </div>
+                                                <div class="t-item">
+                                                    <div class="td center-align">1</div>
+                                                    <div class="td center-align">공지 내용</div>
+                                                    <div class="td center-align">홍길동(email@email@com)</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">전체</div>
+                                                    <div class="td center-align">전체</div>
+                                                </div>
+                                                <div class="t-item">
+                                                    <div class="td center-align">1</div>
+                                                    <div class="td center-align">공지 내용</div>
+                                                    <div class="td center-align">홍길동(email@email@com)</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">전체</div>
+                                                    <div class="td center-align">전체</div>
+                                                </div>
+                                                <div class="t-item">
+                                                    <div class="td center-align">1</div>
+                                                    <div class="td center-align">공지 내용</div>
+                                                    <div class="td center-align">홍길동(email@email@com)</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">전체</div>
+                                                    <div class="td center-align">전체</div>
+                                                </div>
+                                                <div class="t-item">
+                                                    <div class="td center-align">1</div>
+                                                    <div class="td center-align">공지 내용</div>
+                                                    <div class="td center-align">홍길동(email@email@com)</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">전체</div>
+                                                    <div class="td center-align">전체</div>
+                                                </div>
+                                                <div class="t-item">
+                                                    <div class="td center-align">1</div>
+                                                    <div class="td center-align">공지 내용</div>
+                                                    <div class="td center-align">홍길동(email@email@com)</div>
+                                                    <div class="td center-align">현대</div>
+                                                    <div class="td center-align">전체</div>
+                                                    <div class="td center-align">전체</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="table-pagination">
+                                        <a class="tp-first"><img src="/bbs_admin/assets/img/icon-arrow_left2.png" alt=""></a>
+                                        <a class="tp-prev"><img src="/bbs_admin/assets/img/icon-arrow_left.png" alt=""></i></a>
+                                        <div class="tp-nav">
+                                            <a class="pg_num">1</a>
+                                            <a class="pg_num active">2</a> <!-- 활성화 class "active" -->
+                                            <a class="pg_num">3</a>
+                                            <a class="pg_num">4</a>
+                                            <a class="pg_num">5</a>
+                                        </div>
+                                        <a class="tp-next"><img src="/bbs_admin/assets/img/icon-arrow_right.png" alt=""></i></a>
+                                        <a class="tp-last"><img src="/bbs_admin/assets/img/icon-arrow_right2.png" alt=""></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <div id="footer"></div>
+        </div>
+    </div>
+
+    <!-- 모달 -->
+    <div class="modal">
+        <!-- 신규 관리자 공지 등록 모달 -->
+        <div class="modal-wrapper main-modal modal-enroll_notice width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">신규 관리자 공지 등록</span>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-item flex-row-3 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">브랜드</div>
+                        <div class="modal-item_content border-box">
+                            <select class="mi_select" name="" id="">
+                                <option value="">전체</option>
+                                <option value="">옵션1</option>
+                                <option value="">옵션2</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">모델</div>
+                        <div class="modal-item_content border-box">
+                            <select class="mi_select" name="" id="">
+                                <option value="">전체</option>
+                                <option value="">옵션1</option>
+                                <option value="">옵션2</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">상세모델</div>
+                        <div class="modal-item_content border-box">
+                            <select class="mi_select" name="" id="">
+                                <option value="">전체</option>
+                                <option value="">옵션1</option>
+                                <option value="">옵션2</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">등급</div>
+                        <div class="modal-item_content border-box">
+                            <select class="mi_select" name="" id="">
+                                <option value="">전체</option>
+                                <option value="">옵션1</option>
+                                <option value="">옵션2</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">트림</div>
+                        <div class="modal-item_content border-box">
+                            <select class="mi_select" name="" id="">
+                                <option value="">전체</option>
+                                <option value="">옵션1</option>
+                                <option value="">옵션2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item mt-5">
+                    <div class="modal-item">
+                        <div class="modal-item_title">공지사항</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text" placeholder="공지 내용">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+            
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+        <!-- 관리자 공지 모달 -->
+        <div class="modal-wrapper main-modal modal-notice width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">관리자 공지 8</span>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-item flex-row-3 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">브랜드</div>
+                        <div class="modal-item_content border-box">
+                            <select class="mi_select" name="" id="">
+                                <option value="">전체</option>
+                                <option value="">옵션1</option>
+                                <option value="">옵션2</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">모델</div>
+                        <div class="modal-item_content border-box">
+                            <select class="mi_select" name="" id="">
+                                <option value="">전체</option>
+                                <option value="">옵션1</option>
+                                <option value="">옵션2</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">상세모델</div>
+                        <div class="modal-item_content border-box">
+                            <select class="mi_select" name="" id="">
+                                <option value="">전체</option>
+                                <option value="">옵션1</option>
+                                <option value="">옵션2</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">등급</div>
+                        <div class="modal-item_content border-box">
+                            <select class="mi_select" name="" id="">
+                                <option value="">전체</option>
+                                <option value="">옵션1</option>
+                                <option value="">옵션2</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">트림</div>
+                        <div class="modal-item_content border-box">
+                            <select class="mi_select" name="" id="">
+                                <option value="">전체</option>
+                                <option value="">옵션1</option>
+                                <option value="">옵션2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-item mt-5">
+                    <div class="modal-item">
+                        <div class="modal-item_title">공지사항</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text" placeholder="공지 내용">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-delete hover01">삭제</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+            
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var tab_count = 1;
+
+    $(function(){
+        // 초기화
+        $('#header').load("layout/header.html");
+        $('#navbar').load("layout/navbar.html");
+        $('#footer').load("layout/footer.html");
+
+        $('#a13 .ti-standard .t-item').on('click', activeModal_Notice);
+        $('#a13 .btn-notice').on('click', activeModal_EnrollNotice);
+    });
+
+    function activeModal_Notice(){
+        openLayer();
+        $('.modal-notice').addClass('active');
+    }
+    function activeModal_EnrollNotice(){
+        openLayer();
+        $('.modal-enroll_notice').addClass('active');
+    }
+</script>

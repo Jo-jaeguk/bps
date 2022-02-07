@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+    <th:block th:insert="~{layout/common :: script}"></th:block>
+    <div class="wrap" id="p02">
+        <!-- 오버레이 처리 -->
+        <div id="overlay"></div>
+
+        <!-- 메인 -->
+        <div id="main">
+            <div id="header" class="">
+                <div class="header-button">
+                    <a onclick="javascript:goToLoginMain(); return false;" class="button-back"><img th:src="@{/assets/img/icon-arrow_left.svg}" src="" alt=""></a>
+                </div>
+            </div>
+
+            <input type="hidden" id="error" th:value="${error}"></input>
+            <input type="hidden" id="success" th:value="${success}"></input>
+
+            <!-- 바디 -->
+            <div id="body" class="onboarding">
+                <div class="inner">
+                    <!-- 앱 타이틀 -->
+                    <div class="app-title mt-20">
+                        <div class="fz24 fw600 color-black">Log in</div>
+                    </div>
+
+                    <!-- 앱 내용 -->
+                    <div class="app-content">
+                        <div class="form-insert">
+                            <div class="item-input">
+                                <div class="input-text">이메일</div>
+                                <input id="input_memberId" name="id" class="" type="text" placeholder="이메일 주소를 입력해주세요.">
+                                <div id="check_email" class="text-notice error">맞는 형식의 아이디가 아닙니다.</div>
+                            </div>
+                            <div class="item-input">
+                                <div class="input-text">비밀번호</div>
+                                <input id="input_memberPwd" name="pw" class="" type="password" placeholder="비밀번호를 입력해주세요.">
+                                <div class="text-notice error">맞는 형식의 아이디가 아닙니다.</div>
+                            </div>
+                        </div>
+                        <div class="form-submit">
+                            <div class="item-checkbox mt-15">
+                                <input type="checkbox" id="rememberMe" name="remember-me">
+                                <label for="rememberMe"><span>자동로그인</span></label>
+                            </div>
+                            <div id="check_invalid"class="text-notice error  mt-30">이메일 또는 비밀번호가 다릅니다.</div>
+                            <div class="login-button mt-15">
+                                <a href="javascript:login();" class="button bg-color-primary"><span class="color-white">로그인</span></a>
+                            </div>
+                            <div class="find-account-row mt-15">
+                                <a href="javascript:searchId();" class="button-find_account fz14 color-blue_700">아이디 찾기</a>
+                                <a href="javascript:searchPw();" class="button-find_account fz14 color-blue_700">비밀번호 찾기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="modal_error" class="popup popup-my_info "> <!-- 팝업 활성화 class "active" -->
+            <div class="popup-inner">
+                <div class="popup-header">
+                    <div id="modal_title" class="popup-title"></div>
+                    <!--
+                    <div class="btn-close_popup"><img th:src="@{/assets/img/icon-close.svg}" src="" alt=""></div>
+                    -->
+                </div>
+                <div class="popup-body">
+                    <div class="form-insert">
+                        <div class="item-input">
+                            <div id="modal_mid_title" class="input-text">회원가입 실패</div>
+                        </div>
+                        <div class="item-input">
+                            <div id="modal_error_message"class="input-text">이미 가입되어 있습니다. 로그인을 해주세요.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-footer">
+                    <a onclick="javascript:closeModal();" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+
+    function validateEmail(sEmail) {
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (filter.test(sEmail)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    function closeModal() {
+        $('#overlay').removeClass('active');
+        $('#modal_error').removeClass('active');
+    }
+    function searchId() {
+        Common.goPage("/login/search/id");
+    }
+
+    function searchPw() {
+        Common.goPage("/login/search/password");
+    }
+
+    function login() {
+        var paramId = $('#input_memberId').val().replace(' ' , '');
+        if(!validateEmail(paramId)) {
+            $('#check_email').addClass('active');
+            return;
+        }
+        var paramPwd = $('#input_memberPwd').val().replace(' ', '');
+
+        var newForm = document.createElement('form');
+        newForm.name = 'newForm';
+        newForm.method = 'post';
+        newForm.action = '/loginProcess';
+
+        var id = document.createElement('input');
+        var pw = document.createElement('input');
+        var rememberMe = document.createElement('input');
+
+        id.setAttribute('type' , 'hidden');
+        id.setAttribute('name' , 'id');
+        id.setAttribute('value' , paramId);
+
+        pw.setAttribute('type' , 'hidden');
+        pw.setAttribute('name' , 'pw');
+        pw.setAttribute('value' , paramPwd);
+
+        var check = '';
+        if($('#rememberMe').is(":checked") == true) {
+            check = 'on';
+        } else {
+            check = 'off';
+        }
+        console.log('check : ' + check);
+        rememberMe.setAttribute('type' , 'hidden');
+        rememberMe.setAttribute('name' , 'remember-me');
+        rememberMe.setAttribute('value' , check);
+
+        newForm.appendChild(id);
+        newForm.appendChild(pw);
+        newForm.appendChild(rememberMe);
+
+        document.body.appendChild(newForm);
+
+        newForm.submit();
+    }
+    function join() {
+
+    }
+    function goToLoginMain() {
+        Common.goPage("/login");
+    }
+    $(function(){
+        var loginResult = $('#error').val();
+        var success = $('#success').val();
+
+        if(loginResult) {
+            if(loginResult.startsWith('not found user')) {
+                $('#modal_title').text('실패');
+                $('#modal_mid_title').text('계정 찾기 실패');
+                $('#modal_error_message').text('찾으시는 아이디가 존재하지 않습니다.');
+                $('#overlay').addClass('active');
+                $('#modal_error').addClass('active');
+            } else {
+                $('#check_invalid').addClass('active');
+            }
+        } else if(success) {
+            $('#modal_title').text('아이디찾기');
+            $('#modal_mid_title').text('아이디찾기 성공');
+            $('#modal_error_message').text('찾으시는 ID 가 카카오 알림톡으로 전송되었습니다.');
+            $('#overlay').addClass('active');
+            $('#modal_error').addClass('active');
+        }
+    });
+
+    let Service = {
+        createNotice : function () {
+            let obj = {};
+            obj.title = $('#title').val();
+            obj.body = $('#summernote').val();
+            var url = "/api/admin/v1/notice";
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    alert(data.message);
+                    closeLayer();
+                    $('.modal-registry_post').removeClass('active');
+                    Common.reloadPage();
+                }
+                return;
+            });
+        }
+
+    }
+
+
+</script>

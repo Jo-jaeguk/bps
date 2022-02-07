@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="p06">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+        <div id="header" class="none-fixed">
+            <div class="header-button">
+                <!-- <a class="button-back"><img src="assets/img/icon-arrow_left.svg" alt=""></a> -->
+            </div>
+        </div>
+
+        <!-- 바디 -->
+        <div id="body" class="my">
+            <div class="inner">
+                <!-- 앱 타이틀 -->
+                <div class="app-title">
+                    <div class="fz30 fw600 color-black">
+                        <span class="em"><span class="em-text">반갑습니다!</span><span class="em-underline"></span></span> <br><span class="user-name">홍길동</span> 회원님
+                    </div>
+                </div>
+
+                <!-- 앱 내용 -->
+                <div class="app-content">
+                    <div class="my-info">
+                        <div class="info_item-list">
+                            <div class="item">
+                                <div class="if-header">
+                                    <div class="ih-tit">ID정보</div>
+                                    <a class="ih-button">비밀번호 변경<img src="assets/img/icon-arrow_right_s.svg" alt=""></a>
+                                </div>
+                                <div class="if-body">
+                                    <div class="ib-row">
+                                        <div class="irl">
+                                            <div class="irl-tit">ID</div>
+                                            <div class="irl-desc ">  <!-- SNS 로그인 버튼 활성화 class "active-kakao", "active-naver"-->
+                                                <span class="my-login-email">email@email.com</span>
+                                                <a class="button-sns-login my-login-kakao"><img src="assets/img/icon-brand_kakao.svg" alt="">카카오 로그인</a>
+                                                <a class="button-sns-login my-login-naver"><img src="assets/img/icon-brand_naver.svg" alt="">네이버 로그인</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ib-row">
+                                        <div class="irl">
+                                            <div class="irl-tit">연락처</div>
+                                            <div class="irl-desc">010-1234-5678</div>
+                                        </div>
+                                        <div class="irr">
+                                            <a class="button-update">변경</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="item">
+                                <div class="if-header">
+                                    <div class="ih-tit">내정보</div>
+                                </div>
+                                <div class="if-body">
+                                    <div class="ib-row">
+                                        <div class="irl">
+                                            <div class="irl-tit">이름(직위)</div>
+                                            <div class="irl-desc">홍길동 이사</div>
+                                        </div>
+                                        <div class="irr">
+                                            <a class="button-update">변경</a>
+                                        </div>
+                                    </div>
+                                    <div class="ib-row">
+                                        <div class="irl">
+                                            <div class="irl-tit">연락처</div>
+                                            <div class="irl-desc">010-1234-5678</div>
+                                        </div>
+                                    </div>
+                                    <div class="ib-row">
+                                        <div class="irl">
+                                            <div class="irl-tit">소속</div>
+                                            <div class="irl-desc">모빌리티케어 금천지점</div>
+                                        </div>
+                                        <div class="irr">
+                                            <a class="button-update">변경</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="item">
+                                <div class="if-header">
+                                    <div class="ih-tit">가이드내역</div>
+                                    <a class="ih-button">상세보기<img src="assets/img/icon-arrow_right_s.svg" alt=""></a>
+                                </div>
+                                <div class="if-body">
+                                    <div class="ib-row">
+                                        <div class="irl">
+                                            <div class="irl-tit">총 가이드</div>
+                                        </div>
+                                        <div class="irr">
+                                            <div class="irr-desc">31건</div>
+                                        </div>
+                                    </div>
+                                    <div class="ib-row">
+                                        <div class="irl">
+                                            <div class="irl-tit">진행중 가이드</div>
+                                        </div>
+                                        <div class="irr">
+                                            <div class="irr-desc">3건</div>
+                                        </div>
+                                    </div>
+                                    <div class="ib-row">
+                                        <div class="irl">
+                                            <div class="irl-tit">완료된 가이드</div>
+                                        </div>
+                                        <div class="irr">
+                                            <div class="irr-desc">28건</div>
+                                        </div>
+                                    </div>
+                                    <div class="ib-row">
+                                        <div class="irl">
+                                            <div class="irl-tit">매각 성사</div>
+                                        </div>
+                                        <div class="irr">
+                                            <div class="irr-desc">10건</div>
+                                        </div>
+                                    </div>
+                                    <div class="ib-row point">
+                                        <div class="irl">
+                                            <div class="irl-tit">누적 포인트</div>
+                                        </div>
+                                        <div class="irr">
+                                            <div class="irr-desc">10,000P</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 회사 정보 -->
+            <div class="corp-info">
+                <div class="ci-header">
+                    <span class="ci-logo"><img src="assets/img/logo-footer.svg" alt=""></span><span class="ci-name">(주)바잉카</span>
+                </div>
+                <div class="ci-address">
+                    <div class="ci-add">주소1</div>
+                    <div class="ci-add">주소2</div>
+                </div>
+                <div class="ci-tel">
+                    문의전화 <span class="tel-num">1588-8978</span>
+                </div>
+                <div class="ci-service">
+                    <div class="cis-tit">고객센터 운영시간</div>
+                    <div class="cis-desc">평일 09:00 ~ 18:00</div>
+                    <div class="cis-desc">점심시간 12:00 ~ 13:00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 푸터 -->
+        <div id="footer">
+            <a class="menu">
+                <div class="menu-icon">
+                    <img src="assets/img/icon-home.svg" alt="">
+                    <img src="assets/img/icon-home_active.svg" alt="">
+                </div>
+                <div class="menu-text">홈</div>
+            </a>
+            <a class="menu">
+                <div class="menu-icon">
+                    <img src="assets/img/icon-file.svg" alt="">
+                    <img src="assets/img/icon-file_active.svg" alt="">
+                </div>
+                <div class="menu-text">요청리스트</div>
+            </a>
+            <a class="menu active">
+                <div class="menu-icon">
+                    <img src="assets/img/icon-person.svg" alt="">
+                    <img src="assets/img/icon-person_active.svg" alt="">
+                </div>
+                <div class="menu-text">마이</div>
+            </a>
+            <a class="menu">
+                <div class="menu-icon">
+                    <img src="assets/img/icon-bell.svg" alt="">
+                    <img src="assets/img/icon-bell_active.svg" alt="">
+                </div>
+                <div class="menu-text">알림</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- 팝업 -->
+    <div class="popup popup-my_info"> <!-- 팝업 활성화 class "active" -->
+        <div class="popup-inner">
+            <div class="popup-header">
+                <div class="popup-title">소속과 직위를 작성해주세요.</div>
+                <div class="btn-close_popup"><img src="assets/img/icon-close.svg" alt=""></div>
+            </div>
+            <div class="popup-body">
+                <div class="form-insert">
+                    <div class="item-input">
+                        <div class="input-text">이름</div>
+                        <input class="" type="text" placeholder="이름을 입력해주세요.">
+                    </div>
+                    <div class="item-input">
+                        <div class="input-text">소속</div>
+                        <input class="" type="text" placeholder="소속을 입력해주세요.">
+                    </div>
+                    <div class="item-input">
+                        <div class="input-text">직위</div>
+                        <input class="" type="text" placeholder="직위를 입력해주세요.">
+                    </div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <a class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+    });
+</script>

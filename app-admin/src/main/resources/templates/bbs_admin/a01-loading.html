@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Xeicon -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+        <!-- Library : Slick/Swiper -->
+        <link rel="stylesheet" href="assets/css/slick.css">
+        <link rel="stylesheet" href="assets/css/slick-theme.css">
+        <link rel="stylesheet" href="assets/css/swiper.css">
+        <script src="assets/js/slick.js"></script>
+        <script src="assets/js/swiper.js"></script>
+        <!-- Library : WOW -->
+        <link rel="stylesheet" href="assets/css/animate.css"/>
+        <link rel="stylesheet" href="assets/css/animate.min.css"/>
+        <script src="assets/js/wow.min.js"></script>
+        <!-- Library : nice-select -->
+        <link rel="stylesheet" href="assets/css/nice-select.css"/>
+        <script src="assets/js/jquery.nice-select.js"></script>
+        <!-- Library : C3 chart -->
+        <link rel="stylesheet" href="assets/css/c3.css">
+        <script src="assets/js/c3.min.js"></script>
+        <script src="assets/js/d3-5.8.2.min.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a01">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <div id="navbar"></div>
+    
+        <!-- 메인 -->
+        <div id="main">
+            <!-- 2021-06-16 로딩 애니메이션 -->
+            <div id="loading"><div class="round spinner"></div></div>
+            <!-- 2021-06-16 로딩 애니메이션 끝 -->
+            
+            <!-- 헤더 -->
+            <div id="header"></div>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                            <span class="ct-text">공지사항 <span class="search-count">999,999,999</span>건이 검색되었습니다.</span>
+                        </div>
+                        <div class="breadcrumb">
+                            <a class="bc-item">Home</a>
+                            <a class="bc-item">공지사항</a>
+                            <a class="bc-item">공지사항 상세</a>
+                        </div>
+                    </div>
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1200">
+                        <!-- 메인 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header">
+                                <span class="cih-title">Today <span class="current-date">2021년 6월 3일</span></span>
+                            </div>
+                            <div class="content-item-body inner flex-row-3">
+                                <div class="main-data-item flex-between">
+                                    <div class="mdi-tit">가이드 요청</div>
+                                    <div class="mdi-desc">
+                                        <div class="md-item"><span class="mdid-num">99,999</span>건</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="main-data-item flex-between">
+                                    <div class="mdi-tit">가이드 완료</div>
+                                    <div class="mdi-desc">
+                                        <div class="md-item"><span class="mdid-num">99,999</span>건</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="main-data-item flex-between">
+                                    <div class="mdi-tit">가이드 진행중</div>
+                                    <div class="mdi-desc">
+                                        <div class="md-item"><span class="mdid-num">99,999</span>건</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="main-data-item flex-between">
+                                    <div class="mdi-tit">매입</div>
+                                    <div class="mdi-desc">
+                                        <div class="md-item"><span class="mdid-num">99,999</span>건</div>
+                                        <div class="md-item"><span class="mdid-num">99,999</span>만원</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="main-data-item flex-between">
+                                    <div class="mdi-tit">판매중</div>
+                                    <div class="mdi-desc">
+                                        <div class="md-item"><span class="mdid-num">99,999</span>건</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="main-data-item flex-between">
+                                    <div class="mdi-tit">매각</div>
+                                    <div class="mdi-desc">
+                                        <div class="md-item"><span class="mdid-num">99,999</span>건</div>
+                                        <div class="md-item"><span class="mdid-num">99,999</span>만원</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 메인 아이템 02 -->
+                        <div class="content-item">
+                            <div class="content-item-header">
+                                <span class="cih-title">Week <span class="current-date">2021년 6월</span></span>
+                            </div>
+                            <div class="content-item-body inner flex-row-2">
+                                <div class="main-data-item">
+                                    <div class="mdi-tit">가이드</div>
+                                    <div class="chart ct01">
+                                        <div class="graph" id="item-graph01"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="main-data-item">
+                                    <div class="mdi-tit">판매</div>
+                                    <div class="chart ct02">
+                                        <div class="graph" id="item-graph02"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <div id="footer"></div>
+        </div>
+    </div>
+
+    <!-- 팝업 -->
+    <div class="popup"></div>
+</div>
+
+<script>
+    $(function(){
+        // 초기화
+        $('#header').load("layout/header.html");
+        $('#navbar').load("layout/navbar.html");
+        $('#footer').load("layout/footer.html");
+
+        // 2021-06-16 로딩 애니메이션
+        $('#body').addClass('loading-bg');
+        $('#loading').addClass('active');
+        // 2021-06-16 로딩 애니메이션 끝
+
+        // 차트 01
+        var chart1 = c3.generate({
+            bindto: "#item-graph01",
+            size: {
+                height: 250
+            },
+            data: {
+                columns: [
+                    ["요청", 0, 0, 0, 0, 0],
+                    ["매입", 0, 0, 0, 0, 0],
+                ],
+                types: {
+                    매입: "bar",
+                    요청: "bar",
+                },
+                colors: {
+                    매입: "#ffe082",
+                    요청: "#ffc000",
+                },
+                labels: {
+                    format: {
+                        // 매입: function (v, id, i, j) { return v + "건"; },
+                        // 요청: function (v, id, i, j) { return v + "건"; },
+                    }
+                },
+                groups: [
+                    ['매입', '요청']
+                ]
+            },
+            tooltip: {
+                contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+                    var $$ = this, config = $$.config,
+                        titleFormat = config.tooltip_format_title || defaultTitleFormat,
+                        nameFormat = config.tooltip_format_name || function (name) { return name; },
+                        valueFormat = config.tooltip_format_value || defaultValueFormat,
+                        text, i, title, value, name, bgcolor;
+                    for (i = 0; i < d.length; i++) {
+                        if (! (d[i] && (d[i].value || d[i].value === 0))) { continue; }
+
+                        if (! text) {
+                            title = titleFormat ? titleFormat(d[i].x) : d[i].x;
+                            text = "<table class='" + $$.CLASS.tooltip + "'>" + (title || title === 0 ? "<tr><th colspan='2'>" + title + "</th></tr>" : "");
+                        }
+
+                        name = nameFormat(d[i].name);
+                        value = valueFormat(d[i].value, d[i].ratio, d[i].id, d[i].index);
+                        bgcolor = $$.levelColor ? $$.levelColor(d[i].value) : color(d[i].id);
+
+                        text += "<tr class='" + $$.CLASS.tooltipName + "-" + d[i].id + "'>";
+                        text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>" + name + "</td>";
+                        text += "<td class='value'>" + value + "건 </td>";
+                        text += "</tr>";
+                    }
+                    text += "<tr class='total'>";
+                    text += "<td class='name'>" + '매입' + "</td>";
+                    text += "<td class='value'>" + '9,990' + "원 </td>";
+                    text += "</tr>";
+                    return text + "</table>";
+                }
+            },
+            bar: {
+                width: {
+                    ratio: 0.4,
+                },
+            },
+            transition: {
+                duration: 1000
+            },
+            padding: {
+                bottom: 0
+            },
+            axis: {
+                x: {
+                    show: true,
+                    type: "category",
+                    categories: ['1st', '2nd', '3rd', '4th', '5th']
+                },
+                y: {
+                    show: false,
+                    max: 100,
+                    min: 0,
+                    padding: {
+                        bottom: 0
+                    }
+                }
+            },
+            legend: {
+                show: false
+            }
+            
+        });
+
+        // 차트 02
+        var chart2 = c3.generate({
+            bindto: "#item-graph02",
+            size: {
+                height: 250
+            },
+            data: {
+                columns: [
+                    ["요청", 0, 0, 0, 0, 0],
+                    ["매입", 0, 0, 0, 0, 0],
+                ],
+                types: {
+                    매입: "bar",
+                    요청: "bar",
+                },
+                colors: {
+                    매입: "#82d8a9",
+                    요청: "#00b050",
+                },
+                labels: {
+                    format: {
+                        // 매입: function (v, id, i, j) { return v + "건"; },
+                        // 요청: function (v, id, i, j) { return v + "건"; },
+                    }
+                },
+                groups: [
+                    ['매입', '요청']
+                ]
+            },
+            tooltip: {
+                format: {
+                    title: function (d) { return 'data ' + d; },
+                    value: function (value, ratio, id) {
+                        var format = id === '매입' ? '건' : '건';
+                        return value + format;
+                    },
+                }
+            },
+            bar: {
+                width: {
+                    ratio: 0.4,
+                },
+            },
+            axis: {
+                x: {
+                    show: true,
+                    type: "category",
+                    categories: ['1st', '2nd', '3rd', '4th', '5th']
+                },
+                y: {
+                    show: false,
+                    max: 100,
+                    min: 0,
+                    padding: {
+                        bottom: 0
+                    }
+                }
+            },
+            legend: {
+                show: false
+            },
+            transition: {
+                duration: 1000
+            },
+        });
+
+        setTimeout(function () {
+            chart1.load({
+                columns: [
+                    ["요청", 20, 30, 50, 60, 70],
+                    ["매입", 30, 35, 65, 80, 85],
+                ],
+            });
+            chart2.load({
+                columns: [
+                    ["요청", 20, 30, 50, 60, 70],
+                    ["매입", 30, 35, 65, 80, 85],
+                ],
+            });
+        }, 300);
+    });
+</script>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+
+    <div class="wrap" id="error">
+        <!-- 오버레이 처리 -->
+        <div id="overlay"></div>
+
+        <!-- 메인 -->
+        <div id="main">
+            <div id="header" class="none-fixed">
+                <div class="header-button">
+                    <!-- <a class="button-back"><img src="assets/img/icon-arrow_left.svg" alt=""></a> -->
+                </div>
+            </div>
+
+            <!-- 바디 -->
+            <div id="body" class="home">
+                <div class="inner">
+                    <!-- 앱 타이틀 -->
+                    <div class="app-title">
+                        <div class="fz30 fw600 color-black">
+                            <span class="em"><span class="em-text">404 Not Found</span><span class="em-underline"></span></span> <br>Page
+                        </div>
+                    </div>
+
+                    <!-- 앱 내용 -->
+                    <div class="app-content">
+                        <div class="error-section text-align-center pt-50">
+                            <p class="fz28 fw600">헐.. 에러 발생..</p>
+                            <p class="fz24 fw500">찾을 수 없는 페이지 입니다. ㅠㅠ</p>
+                            <!--
+                            <p class="fz20 fw400">에러가 발생했습니다.</p>
+                            -->
+                        </div>
+                    </div>
+                    <div class="app-content">
+                        <div class="choice-brand">
+                            <button id="btnGoToMain" style="width: 100%; height: 100px;" class="button-brand toggle-select active">메인으로 이동</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-illust"><img th:src="@{/assets/img/img-home_illust@3x.png}" src="" alt=""></div>
+            <!-- 푸터 -->
+            <th:block th:insert="~{layout/common :: footer}"></th:block>
+
+        </div>
+
+        <!-- 팝업 -->
+        <div class="popup"></div>
+    </div>
+
+    <script>
+        $(function(){
+            $('#btnGoToMain').click(function () {
+               Common.goPage("/");
+            });
+        });
+    </script>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="p07">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+        <div id="header" class="">
+            <div class="header-button">
+                <a class="button-back"><img src="assets/img/icon-arrow_left.svg" alt=""></a>
+            </div>
+        </div>
+
+        <!-- 바디 -->
+        <div id="body" class="home">
+            <div class="inner-20">
+                <!-- 탭 아이템 -->
+                <div class="tab-wrapper">
+                    <!-- 탭 컨테이너 -->
+                    <div class="tab-container">
+                        <!-- 추가_1 -->
+                        <div class="tab"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    확인된 옵션을<br>
+                                    선택해주세요.
+                                </div>
+                                <div class="fz14 fw400 color-primary mt-10">차량 옵션 체크</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select active">
+                                        <div class="item-desc">옵션1</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">옵션2</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">옵션3</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">옵션4</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">옵션5</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">옵션6</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 추가_2 -->
+                        <div class="tab"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    기타 사항을<br>
+                                    입력해주세요.
+                                </div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="form-insert">
+                                    <div class="item-input mb-20 flex-align-left">
+                                        <span class="input-before">1.</span>
+                                        <input class="" type="text" placeholder="기타 사항">
+                                    </div>
+                                    <div class="item-input mb-20 flex-align-left">
+                                        <span class="input-before">2.</span>
+                                        <input class="" type="text" placeholder="기타 사항">
+                                    </div>
+                                    <div class="item-input mb-20 flex-align-left">
+                                        <span class="input-before">3.</span>
+                                        <input class="" type="text" placeholder="기타 사항">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 추가_3 -->
+                        <div class="tab"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량 사진을 <br>등록해주세요.</div>
+                                <div class="fz14 fw400 color-primary mt-10">사진등록은 선택사항 입니다.</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-25">
+                                <div class="required-field">
+                                    <div class="image-container mt-10">
+                                        <div class="image-item">
+                                            <div class="item-img">
+                                                <img src="./assets/img/img-sample1.png" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">계기판</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add"> <!-- 이미지 추가 버튼 노출시 class "btn-file_add" -->
+                                            <div class="item-img"> <!-- image append 위치 -->
+                                                <input class="input-file" type="file"><!-- 상위 엘리먼트에 특정 class가 추가되어야 노출됨 -->
+                                            </div>
+                                            <p class="fz14 mt-5">전면</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add">
+                                            <div class="item-img">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">후면</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add">
+                                            <div class="item-img">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">옆(운전석)</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add">
+                                            <div class="item-img">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">옆(보조석)</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 추가_10 -->
+                        <div class="tab active"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    차량 종류를<br>
+                                    선택해주세요!
+                                </div>
+                                <div class="fz14 fw400 color-primary mt-10">차량 옵션 체크</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select active">
+                                        <div class="item-desc">소형</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">중형</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">대형</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">RV</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">수입</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 추가_11 -->
+                        <div class="tab"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="guide_item-container" style="padding-bottom: 30px;">
+                                    <div class="guide_item-list">
+                                        <div class="item has-sub">
+                                            <div class="item-header">
+                                                <div class="num-code">
+                                                    <div class="qn">Quote No(QN#)</div>
+                                                    <div class="sn">BC20210500002</div>
+                                                </div>
+                                                <div class="status"></div>
+                                            </div>
+                                            <div class="item-body"> <!-- 하위 항목 펼칠 경우 class "opened" -->
+                                                <div class="ib-main toggle-parent">
+                                                    <div class="car-number">123가 1234</div>
+                                                    <div class="car-model">2020 제네시스 EQ 리무진</div>
+                                                </div>
+                                                <div class="ib-sub">
+                                                    <div class="is-item">
+                                                        <div class="isi-tit">브랜드 / 세부모델 / 등급</div>
+                                                        <div class="isi-data">
+                                                            <span class="id-data">기아</span><span class="id-data">더 뉴 그랜져(19년~현재)</span><span class="id-data">프레스티지</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="is-item">
+                                                        <div class="isi-tit">연식 / 색상 / 연료 / 배기량 / 미션</div>
+                                                        <div class="isi-data">
+                                                            <span class="id-data">2020.5</span><span class="id-data">검정</span><span class="id-data">가솔린</span><span class="id-data">2400cc</span><span class="id-data">오토</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="is-item">
+                                                        <div class="isi-tit">주행거리 / 사고유무</div>
+                                                        <div class="isi-data">
+                                                            <span class="id-data">60500 Km</span><span class="id-data">단순교환</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="is-item">
+                                                        <div class="isi-tit">주요 옵션</div>
+                                                        <div class="isi-data">
+                                                            <span class="id-data">HUD</span><span class="id-data">선루프</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="is-item">
+                                                        <div class="isi-tit">고객명 / 고객 연락처</div>
+                                                        <div class="isi-data">
+                                                            <span class="id-data">카옥션</span><span class="id-data">010-0000-0000</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="guide_item-management">
+                                        <div class="gim-title">고객 담당자 / 연락처</div>
+                                        <div class="gim-manager">
+                                            <span class="gm-name">홍길동 상무</span><span class="gm-tel">010-0000-0000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 실주행거리/차량 옵션 체크 -->
+                                <div class="form-insert">
+                                    <div class="item-input mb-0">
+                                        <div class="input-bold">실주행거리</div>
+                                    </div>
+                                    <div class="item-input">
+                                        <input class="border-none fz28 fw600" type="text" placeholder="입력해주세요.">
+                                        <span class="input-unit">KM</span>
+                                    </div>
+                                    <div class="item-input mt-30">
+                                        <div class="input-bold">차량 옵션 체크</div>
+                                        <div class="select_item-list">
+                                            <div class="item toggle-select active">
+                                                <div class="item-desc">옵션1</div>
+                                            </div>
+                                            <div class="item toggle-select">
+                                                <div class="item-desc">옵션2</div>
+                                            </div>
+                                            <div class="item toggle-select">
+                                                <div class="item-desc">옵션3</div>
+                                            </div>
+                                            <div class="item toggle-select">
+                                                <div class="item-desc">옵션4</div>
+                                            </div>
+                                            <div class="item toggle-select">
+                                                <div class="item-desc">옵션5</div>
+                                            </div>
+                                            <div class="item toggle-select">
+                                                <div class="item-desc">옵션6</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 추가_21 -->
+                        <div class="tab"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    차량 체크리스트를<br>
+                                    작성해주세요!
+                                </div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select active">
+                                        <div class="item-desc">차량 내부 크리닝 필요</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">차량 내장재 스크래치</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">진단기 경고 유/무</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">실린더 헤드가스킷 누유</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">프론트 케이스 누유</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">로커암 개스킷 누유</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">변속기 충격</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">차량버튼 정상작동 불가</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 추가_22 -->
+                        <div class="tab"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    타이어 마모 개수를<br>
+                                    선택해주세요.
+                                </div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="select_item-list">
+                                    <div class="item toggle-select active">
+                                        <div class="item-desc">0 EA</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">1 EA</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">2 EA</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">3 EA</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">4 EA</div>
+                                    </div>
+                                    <div class="item toggle-select">
+                                        <div class="item-desc">기타</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 추가_23 -->
+                        <div class="tab"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    타이어 기타 사유를<br>
+                                    입력해주세요.
+                                </div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="form-insert">
+                                    <div class="item-input mb-0">
+                                        <div class="input-bold">타이어 기타 금액</div>
+                                    </div>
+                                    <div class="item-input">
+                                        <input class="border-none fz28 fw600" type="text" placeholder="입력해주세요.">
+                                        <span class="input-unit">원</span>
+                                    </div>
+                                    <div class="item-input mt-45">
+                                        <div class="input-bold">기타 사유</div>
+                                        <input class="" type="text" placeholder="기타 사유를 입력해주세요.">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 추가_24 -->
+                        <div class="tab"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">차량 사진을 <br>등록해주세요.</div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-25">
+                                <div class="required-field">
+                                    <div class="field-title fz14 color-primary">필수사진</div>
+                                    <div class="image-container mt-10">
+                                        <div class="image-item">
+                                            <div class="item-img">
+                                                <img src="./assets/img/img-sample1.png" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">계기판</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add"> <!-- 이미지 추가 버튼 노출시 class "btn-file_add" -->
+                                            <div class="item-img"> <!-- image append 위치 -->
+                                                <input class="input-file" type="file"><!-- 상위 엘리먼트에 특정 class가 추가되어야 노출됨 -->
+                                            </div>
+                                            <p class="fz14 mt-5">전면</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add">
+                                            <div class="item-img">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">후면</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add">
+                                            <div class="item-img">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">옆(운전석)</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add">
+                                            <div class="item-img">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <p class="fz14 mt-5">옆(보조석)</p>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="additional-field mt-40"> <!-- 숨김 처리 class "hidden" -->
+                                    <div class="field-title fz14 color-primary">추가사진</div>
+                                    <div class="image-container mt-10">
+                                        <div class="image-item">
+                                            <div class="item-img"> 
+                                                <img src="./assets/img/img-sample2.png" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item">
+                                            <div class="item-img">
+                                                <img src="./assets/img/img-sample2.png" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item">
+                                            <div class="item-img">
+                                                <img src="./assets/img/img-sample2.png" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item">
+                                            <div class="item-img">
+                                                <img src="./assets/img/img-sample2.png" alt="">
+                                                <input class="input-file" type="file">
+                                            </div>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                        <div class="image-item btn-file_add"> 
+                                            <div class="item-img"> 
+                                                <input class="input-file" type="file"> 
+                                            </div>
+                                            <button class="delete-img"><img src="./assets/img/icon-delete.svg" alt=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 추가_25 -->
+                        <div class="tab"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    평가사님의 감가금액을<br>
+                                    입력해 주세요!
+                                </div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="pc-info">
+                                    <div class="info-header">
+                                        <div class="pih-desc">BuyingCar 매입가<br> Guideline</div>
+                                        <div class="pih-price"><span>15,000,000</span> 원</div>
+                                    </div>
+                                </div>
+
+                                <div class="cd-info mt-10">
+                                    <div class="info-header">
+                                        <div class="cih-desc">점검 감가액</div>
+                                        <div class="cih-price"><input type="text" class="disabled" value="16,000,000"> 원</div> <!-- 입력 불가 class "disabled" -->
+                                    </div>
+                                    <div class="info-list">
+                                        <div class="list-header">
+                                            <div class="lhd">
+                                                <div class="td">구분</div>
+                                                <div class="td">판수(개)</div>
+                                                <div class="td">금액합계(원)</div>
+                                            </div>
+                                        </div>
+                                        <div class="list-body">
+                                            <div class="lhd">
+                                                <div class="td">체크리스트</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div> <!-- 입력 불가 class "disabled" -->
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div> <!-- 입력 불가 class "disabled" -->
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">기교환</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">기판금</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">기도색</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">교환요망</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">판금요망</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">도색요망</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                            <div class="lhd">
+                                                <div class="td">기타</div>
+                                                <div class="td"><input type="text" class="disabled" value="3"></div>
+                                                <div class="td"><input type="text" class="disabled" value="1,000,000"> 원</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="form-insert mt-20">
+                                    <div class="item-input mb-0">
+                                        <div class="input-bold">평가사 감가 금액</div>
+                                    </div>
+                                    <div class="item-input">
+                                        <input class="border-none fz28 fw600" type="text" placeholder="입력해주세요.">
+                                        <span class="input-unit">원</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 추가_26 -->
+                        <div class="tab"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">
+                                    평가사 평가사유를<br>
+                                    입력해주세요.
+                                </div>
+                            </div>
+            
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="form-insert">
+                                    <div class="item-input mt-45">
+                                        <input class="border-none" type="text" placeholder="평가 사유를 직접 입력해 주세요.">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 프로그레스 -->
+        <div id="progress-bar" class="p4"> <!-- 프로그레스 진행률에 따라 class "p0 ~ p10" 부여 -->
+            <img class="progress-0" src="assets/img/progress-0.svg" alt="">
+            <img class="progress-1" src="assets/img/progress-1.svg" alt="">
+            <img class="progress-2" src="assets/img/progress-2.svg" alt="">
+            <img class="progress-3" src="assets/img/progress-3.svg" alt="">
+            <img class="progress-4" src="assets/img/progress-4.svg" alt="">
+            <img class="progress-5" src="assets/img/progress-5.svg" alt="">
+            <img class="progress-6" src="assets/img/progress-6.svg" alt="">
+            <img class="progress-7" src="assets/img/progress-7.svg" alt="">
+            <img class="progress-8" src="assets/img/progress-8.svg" alt="">
+            <img class="progress-9" src="assets/img/progress-9.svg" alt="">
+            <img class="progress-10" src="assets/img/progress-10.svg" alt="">
+        </div>
+        <!-- 탭 버튼 -->
+        <div class="button-tab-next"><img src="assets/img/button_next.svg" alt=""></div>
+    </div>
+</div>
+
+<script>
+</script>

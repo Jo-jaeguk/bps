@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:insert="~{layout/common :: head}"></th:block>
+</head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+<th:block th:insert="~{layout/common :: script}"></th:block>
+
+<div class="wrap" id="p07">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 메인 -->
+    <div id="main">
+        <div id="header" class="">
+            <div class="header-button">
+                <a onclick="javascript:back(); return false;" class="button-back"><img th:src="@{/assets/img/icon-arrow_left.svg}" src="" alt=""></a>
+            </div>
+        </div>
+
+        <input id="guideTempId" type="hidden" th:value="${guideTempId}">
+
+        <!-- 바디 -->
+        <div id="body" class="home">
+
+            <div class="inner-20">
+                <!-- 탭 아이템 -->
+                <div class="tab-wrapper">
+                    <!-- 탭 컨테이너 -->
+                    <div class="tab-container">
+
+                        <div class="tab tab11 active"> <!-- 탭 아이템 활성화 class "active" -->
+                            <!-- 탭 타이틀 -->
+                            <div class="tab-title">
+                                <div class="fz24 fw600 color-primary">출고연식을 <br>입력해주세요.</div>
+                            </div>
+
+                            <!-- 탭 내용 -->
+                            <div class="tab-content mt-35">
+                                <div class="form-insert">
+                                    <div class="item-input">
+                                        <input id="year" class="border-none fz28 fw600" type="number" placeholder="입력해주세요.">
+                                        <span class="input-unit">년</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-content mt-35">
+                                <div class="form-insert">
+                                    <div class="item-input">
+                                        <input id="month" class="border-none fz28 fw600" type="number" placeholder="입력해주세요.">
+                                        <span class="input-unit">월</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 탭 프로그레스 -->
+        <div id="progress-bar" class="p4"> <!-- 프로그레스 진행률에 따라 class "p0 ~ p10" 부여 -->
+            <img class="progress-0" th:src="@{/assets/img/progress-0.svg}" src="assets/img/progress-0.svg" alt="">
+            <img class="progress-1" th:src="@{/assets/img/progress-1.svg}" src="assets/img/progress-1.svg" alt="">
+            <img class="progress-2" th:src="@{/assets/img/progress-2.svg}"src="assets/img/progress-2.svg" alt="">
+            <img class="progress-3" th:src="@{/assets/img/progress-3.svg}"src="assets/img/progress-3.svg" alt="">
+            <img class="progress-4" th:src="@{/assets/img/progress-4.svg}"src="assets/img/progress-4.svg" alt="">
+            <img class="progress-5" th:src="@{/assets/img/progress-5.svg}"src="assets/img/progress-5.svg" alt="">
+            <img class="progress-6" th:src="@{/assets/img/progress-6.svg}"src="assets/img/progress-6.svg" alt="">
+            <img class="progress-7" th:src="@{/assets/img/progress-7.svg}"src="assets/img/progress-7.svg" alt="">
+            <img class="progress-8" th:src="@{/assets/img/progress-8.svg}"src="assets/img/progress-8.svg" alt="">
+            <img class="progress-9" th:src="@{/assets/img/progress-9.svg}"src="assets/img/progress-9.svg" alt="">
+            <img class="progress-10" th:src="@{/assets/img/progress-10.svg}"src="assets/img/progress-10.svg" alt="">
+        </div>
+        <!-- 탭 버튼 -->
+
+        <div onclick="javascript:goToNext(); return false;" class="button-tab-next"><img th:src="@{/assets/img/button_next.svg}" src="" alt=""></div>
+
+    </div>
+
+
+    <div id="modal_noti" class="popup popup-join-success "> <!-- 팝업 활성화 class "active" -->
+        <div class="popup-inner">
+            <div class="popup-header">
+                <div class="popup-title">가이드</div>
+                <!--
+                <div class="btn-close_popup"><img th:src="@{/assets/img/icon-close.svg}" src="" alt=""></div>
+                -->
+            </div>
+            <div class="popup-body">
+                <div class="form-insert">
+                    <div class="item-input">
+                        <div class="input-text">가이드 신청</div>
+                    </div>
+                    <div class="item-input">
+                        <div id="modal_body" class="input-text"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-footer">
+                <a onclick="javascript:closeModal();" class="btn-ok_popup button bg-color-primary"><span class="color-white">확인</span></a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    let guideTempId = "";
+
+    function showModal() {
+        $('#overlay').addClass('active');
+        $('#modal_noti').addClass('active');
+    }
+    function closeModal() {
+        $('#overlay').removeClass('active');
+        $('#modal_noti').removeClass('active');
+    }
+
+    function goToNext() {
+        guideTempId = $('#guideTempId').val();
+
+        let year = $('#year').val();
+        let month = $('#month').val();
+
+        if(!year) {
+            $('#modal_body').text('출고연식을 입력해 주세요');
+            showModal();
+            return false;
+        }
+        if(!month) {
+            $('#modal_body').text('출고연식을 입력해 주세요');
+            showModal();
+            return false;
+        }
+
+        if(year.length != 4) {
+            $('#modal_body').text('출고연식을 올바르게 입력해주세요.');
+            showModal();
+            return false;
+        }
+
+        if(month < 1 || month > 12) {
+            $('#modal_body').text('출고연식을 올바르게 입력해주세요.');
+            showModal();
+            return false;
+        }
+
+        let url = `/user/guide/car_accident?guideTempId=${guideTempId}`;
+        url += `&year=${year}`;
+        url += `&month=${month}`;
+        Common.goPage(url);
+    }
+
+
+    $(function(){
+
+    });
+
+    let Service = {
+        createNotice : function () {
+            let obj = {};
+            obj.title = $('#title').val();
+            obj.body = $('#summernote').val();
+            var url = "/api/admin/v1/notice";
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    //alert(data.message);
+                    alert(data.message);
+                    closeLayer();
+                    $('.modal-registry_post').removeClass('active');
+                    Common.reloadPage();
+                }
+                return;
+            });
+        }
+
+    }
+
+
+</script>

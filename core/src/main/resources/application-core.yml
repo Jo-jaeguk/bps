@@ -1,0 +1,252 @@
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: off
+  config: classpath:logback-spring.xml
+
+remote:
+  readTimeout: 3000
+  connectTimeout: 3000
+  maxConnectPerRoute: 200
+  maxTotalConnect: 10
+
+fcm:
+  base-url: https://fcm.googleapis.com/v1/projects
+  project-id: buyingcar-376f3
+  key: AAAAbuCd814:APA91bFCofrP6AK1mmb6gSEZXo42Ycy3ovCVlPjh4_xC45ppEpqxyD3vSilT1FCKKgI8h6EADobzmvel6bI5-s6VRtCYITPp7UODTAmnegNSgiNii5aFipBfCka23ZJUUeqf0Q_dJfZk
+
+
+nice:
+  change-password:
+    fail-url: http://localhost:8080/nice/change/password/fail
+    success-url: http://localhost:8080/nice/change/password/success
+  change-phone:
+    fail-url: http://localhost:8080/nice/change/phone/fail
+    success-url: http://localhost:8080/nice/change/phone/success
+  search:
+    password:
+      success-url: http://localhost:8080/nice/search/password/success
+      fail-url: http://localhost:8080/nice/search/password/fail
+    id:
+      success-url: http://localhost:8080/nice/search/id/success
+      fail-url: http://localhost:8080/nice/search/id/fail
+  join:
+    success-url: http://localhost:8080/nice/join/success
+    fail-url: http://localhost:8080/nice/join/fail
+  site-password: a88IQzNqs9Uy
+  site-code: BU825
+
+s3:
+  url: https://kwpmmvsraait7016527.gcdn.ntruss.com
+  endpoint: https://kr.object.ncloudstorage.com
+  region-name: kr-standard
+  secret-key: n4uomSb0Obwa7N8YJgHTioxwPXTtqlu9QeY2Vt6W
+  access-key: s81xuIlGAONVlGtzBK3Y
+  window-path: C:\image\
+  linux-path: /andyoudev/image/
+  mac-path: /Users/yunjisang/Desktop/DEV/kakaoss/image/
+  bucket:
+    name: bps
+
+naver:
+  admin:
+    redirect-url: http://localhost:8090/naver/oauth/user/login
+  api:
+    request-url: https://openapi.naver.com/v1/nid/me
+  auth:
+    request-url: https://nid.naver.com/oauth2.0/token
+  login:
+    redirect-url: http://localhost:8080/naver/oauth/user/login
+  join:
+    redirect-url: http://localhost:8080/naver/oauth/user/join
+  client-id: RzE3MfgYjhRXMrJVj0NI
+  client-secret: mVIA8J2YX1
+
+kakao:
+  admin:
+    redirect-url: http://localhost:8090/kakao/oauth/user/login
+  talk:
+    callback-number: 01022344573
+    api-version: 2
+    request-url: http://api.apistore.co.kr/kko
+    client-id: buyingcardev
+    key: MTQ4MTUtMTYyNDI1OTU3MDY4NC05ODEyOGU2ZS1lNjY5LTRkZWYtOTI4ZS02ZWU2Njk5ZGVmYjU=
+  api:
+    request-url: https://kapi.kakao.com/v2/user/me
+  auth:
+    request-url: https://kauth.kakao.com/oauth/token
+  secret-key: mYiydbELWjrkq9D2s8MaHcC0h2E1WRCt
+  join:
+    redirect-url: http://localhost:8080/kakao/oauth/user/join
+  login:
+    redirect-url: http://localhost:8080/kakao/oauth/user/login
+  java-script:
+    key: 628e3644dfe4c9c9baea57b0c79a4d58
+  rest-api:
+    key: ef40b56c0af84f41c7e978d37fc0e7b0
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+    open-in-view: false
+  output:
+    ansi:
+      enabled: never
+  h2:
+    console:
+      enabled: false
+      path: /h2console
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    hikari:
+      #jdbc-url: jdbc:mariadb://localhost:3306/bps
+      jdbc-url: jdbc:mariadb://andyoudev.cafe24.com:3306/bps
+    #url: jdbc:mariadb://localhost:3306/kakaoss
+    url: jdbc:log4jdbc:mariadb://andyoudev.cafe24.com:3306/bps
+    #url: jdbc:log4jdbc:mariadb://localhost:3306/bps
+    username: bpsuser
+    password: P@ssw0rd
+    driver-class-name: org.mariadb.jdbc.Driver
+  config:
+    activate:
+      on-profile: dev
+
+
+---
+
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: off
+  config: classpath:logback-spring.xml
+
+
+remote:
+  readTimeout: 3000
+  connectTimeout: 3000
+  maxConnectPerRoute: 200
+  maxTotalConnect: 10
+
+fcm:
+  base-url: https://fcm.googleapis.com/v1/projects
+  project-id: buyingcar-376f3
+  key: AAAAbuCd814:APA91bFCofrP6AK1mmb6gSEZXo42Ycy3ovCVlPjh4_xC45ppEpqxyD3vSilT1FCKKgI8h6EADobzmvel6bI5-s6VRtCYITPp7UODTAmnegNSgiNii5aFipBfCka23ZJUUeqf0Q_dJfZk
+
+nice:
+  change-password:
+    fail-url: https://buyingcarps.com/nice/change/password/fail
+    success-url: https://buyingcarps.com/nice/change/password/success
+  change-phone:
+    fail-url: https://buyingcarps.com/nice/change/phone/fail
+    success-url: https://buyingcarps.com/nice/change/phone/success
+  search:
+    password:
+      success-url: https://buyingcarps.com/nice/search/password/success
+      fail-url: https://buyingcarps.com/nice/search/password/fail
+    id:
+      success-url: https://buyingcarps.com/nice/search/id/success
+      fail-url: https://buyingcarps.com/nice/search/id/fail
+  join:
+    success-url: https://buyingcarps.com/nice/join/success
+    fail-url: https://buyingcarps.com/nice/join/fail
+  site-password: a88IQzNqs9Uy
+  site-code: BU825
+
+s3:
+  url: https://kwpmmvsraait7016527.gcdn.ntruss.com
+  endpoint: https://kr.object.ncloudstorage.com
+  region-name: kr-standard
+  secret-key: n4uomSb0Obwa7N8YJgHTioxwPXTtqlu9QeY2Vt6W
+  access-key: s81xuIlGAONVlGtzBK3Y
+  window-path: C:\image\
+  linux-path: /andyoudev/image/
+  mac-path: /Users/yunjisang/Desktop/DEV/kakaoss/image/
+  bucket:
+    name: bps
+
+naver:
+  admin:
+    redirect-url: https://admin.buyingcarps.com/naver/oauth/user/login
+  api:
+    request-url: https://openapi.naver.com/v1/nid/me
+  auth:
+      request-url: https://nid.naver.com/oauth2.0/token
+  client-id: RzE3MfgYjhRXMrJVj0NI
+  client-secret: mVIA8J2YX1
+  login:
+    redirect-url: https://buyingcarps.com/naver/oauth/user/login
+  join:
+    redirect-url: https://buyingcarps.com/naver/oauth/user/join
+
+
+kakao:
+  admin:
+    redirect-url: https://admin.buyingcarps.com/kakao/oauth/user/login
+  talk:
+    callback-number: 01022344573
+    api-version: 2
+    request-url: http://api.apistore.co.kr/kko
+    client-id: buyingcardev
+    key: MTQ4MTUtMTYyNDI1OTU3MDY4NC05ODEyOGU2ZS1lNjY5LTRkZWYtOTI4ZS02ZWU2Njk5ZGVmYjU=
+  api:
+    request-url: https://kapi.kakao.com/v2/user/me
+  auth:
+    request-url: https://kauth.kakao.com/oauth/token
+  secret-key: mYiydbELWjrkq9D2s8MaHcC0h2E1WRCt
+  join:
+    redirect-url: https://buyingcarps.com/kakao/oauth/user/join
+  login:
+    redirect-url: https://buyingcarps.com/kakao/oauth/user/login
+  java-script:
+    key: 628e3644dfe4c9c9baea57b0c79a4d58
+  rest-api:
+    key: ef40b56c0af84f41c7e978d37fc0e7b0
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+  output:
+    ansi:
+      enabled: never
+  h2:
+    console:
+      enabled: false
+      path: /h2console
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mariadb://localhost:3306/bps
+      #jdbc-url: jdbc:mariadb://1.226.83.25:3306/bps
+    url: jdbc:log4jdbc:mariadb://localhost:3306/bps
+    #url: jdbc:log4jdbc:mariadb://1.226.83.25:3306/bps
+    username: bpsuser
+    password: P@ssw0rd
+    driver-class-name: org.mariadb.jdbc.Driver
+  config:
+    activate:
+      on-profile: prod
+
+
+

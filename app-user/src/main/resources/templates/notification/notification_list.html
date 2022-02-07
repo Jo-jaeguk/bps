@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+    <th:block th:insert="~{layout/common :: script}"></th:block>
+
+
+    <div class="wrap" id="alert">
+        <!-- 오버레이 처리 -->
+        <div id="overlay"></div>
+
+        <!-- 메인 -->
+        <div id="main">
+            <div id="header" class="none-fixed">
+                <div class="header-button">
+                    <!-- <a class="button-back"><img src="assets/img/icon-arrow_left.svg" alt=""></a> -->
+                </div>
+            </div>
+
+            <!-- 바디 -->
+            <div id="body" class="home">
+                <div class="inner">
+                    <!-- 앱 타이틀 -->
+                    <div class="app-title">
+                        <div class="fz30 fw600 color-black">
+                            새로운 <span class="em"><span class="em-text">알림</span><span class="em-underline"></span></span>을 <br>확인해 주세요!
+                        </div>
+                    </div>
+
+                    <!-- 앱 내용 -->
+                    <div class="app-content">
+                        <div class="alert_item-list">
+                            <a  th:each="item, stat: ${content}"
+                                th:id="${item.id}"
+                                th:classappend="${item.readYn == false ? 'new' : ''}"
+                                th:href="@{/user/notification/{id}(id=${item.id})}"
+                                    class="item">
+                                <div class="description">
+                                    <div th:text="${item.title}" class="title">123가1234 가이드가 도착했습니다.</div>
+                                    <div th:text="${#temporals.format(item.createdAt, 'yyyy.MM.dd')}" class="date">2020.04.23</div>
+                                </div>
+                                <div class="more"><img th:src="@{/assets/img/icon-arrow_right_s.svg}" src="" alt=""></div>
+                            </a>
+
+                            <input type="hidden" id="page" th:value="${page.page}">
+                            <input type="hidden" id="size" th:value="${page.size}">
+                            <input type="hidden" id="sort" th:value="${page.sort}">
+                            <input type="hidden" id="direction" th:value="${page.direction}">
+                            <input type="hidden" id="search" th:value="${search}">
+                            <!-- 더보기 버튼 -->
+                            <div th:if="${page.isLast == false}" class="more-button mt-40">
+                                <a th:href="@{/user/notification(page=${page.page +1}, size=${page.size})}"
+                                   class="button bg-color-primary"><span class="color-white">더보기</span></a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 푸터 -->
+            <th:block th:insert="~{layout/common :: footer}"></th:block>
+
+        </div>
+
+        <!-- 팝업 -->
+        <div class="popup"></div>
+    </div>
+
+
+
+
+<script>
+    function closeModal() {
+        $('#overlay').removeClass('active');
+        $('.popup-change_password').removeClass('active');
+        $('.popup-my_info').removeClass('active');
+    }
+    function showMyInfoModal() {
+        Service.getMemberDetail();
+    }
+    function updateMyInfo() {
+        if(!$.notnull($('#modal_member_name') , '이름'))
+            return false;
+        if(!$.notnull($('#modal_member_group_name') , '소속'))
+            return false;
+        if(!$.notnull($('#modal_member_position') , '직위'))
+            return false;
+        Service.updateMyInfo();
+    }
+    function changePassword() {
+        Common.goPage('/user/mypage/change/password');
+    }
+
+    $(function(){
+
+    });
+    let Service = {
+        updateMyInfo: function () {
+            var url = "/api/user/v1/member";
+            let updateObj = {};
+            updateObj.name = $('#modal_member_name').val();
+            updateObj.groupName = $('#modal_member_group_name').val();
+            updateObj.position = $('#modal_member_position').val();
+            var ajaxParam = {
+                "url": url,
+                "type": "PUT",
+                "data": JSON.stringify(updateObj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    alert(data.message);
+                    return;
+                } else {
+                    $('#member_name').text(data.data.name + ' ' + data.data.position);
+                    $('#member_name_one').text(data.data.name);
+
+                    $('#member_phone').text(data.data.phone);
+                    $('#member_phone_one').text(data.data.phone);
+                    $('#member_group').text(data.data.groupName + ' ' + data.data.branch);
+                    $('#overlay').removeClass('active');
+                    $('.popup-my_info').removeClass('active');
+                    return;
+                }
+                return;
+            });
+        },
+
+    }
+</script>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <th:block th:insert="~{layout/common :: head}"></th:block>
+    </head>
+<style>
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a11">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <th:block th:insert="~{layout/common :: navbar}"></th:block>
+    
+        <!-- 메인 -->
+        <div id="main">
+
+            <div id="loading"><div class="round spinner"></div></div>
+
+            <!-- 헤더 -->
+            <th:block th:insert="~{layout/common :: header}"></th:block>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                            <!--
+                            <span class="ct-text">내용 <span class="search-count">999,999,999</span>건이 검색되었습니다.</span>
+                            -->
+                        </div>
+                        <div class="breadcrumb">
+                            <a class="bc-item">Home</a>
+                            <a class="bc-item">설정</a>
+                            <a class="bc-item">차량점검표 설정</a>
+                        </div>
+                    </div>
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1920">
+                        <!-- 테이블 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header">
+                                <div class="header-option">
+                                    <div class="search-option">
+                                        <span class="option-title">검색어</span>
+                                        <input id="searchText"class="so_input" type="text" placeholder="명칭을 입력하세요">
+                                        <input th:value="${page.page}" id="page" class="so_input" type="hidden" >
+                                        <input th:value="${page.size}" id="size" class="so_input" type="hidden" >
+                                        <input th:value="${car_type.name()}" id="car_type" class="so_input" type="hidden" >
+                                    </div>
+                                    <button id="btnSearch"class="ho_button btn-search hover01 ml-10">검색</button>
+                                </div>
+                                <div class="button-list">
+                                    <button id="btnCarTypeBase" class="ho_button btn-ratio hover01">종별비율 설정</button>
+                                    <button id="btnCarTypeBasePrice" class="ho_button btn-price hover01">기준가 설정</button>
+                                </div>
+                                <div class="etc-option toggle-target">
+                                    <div class="eo-icon hover01"><i class="xi-ellipsis-h"></i></div>
+                                    <div class="eo-menus">
+                                        <div class="btn-download_excel">엑셀 다운로드</div>
+                                        <div class="view-option">
+                                            <div class="vo-item toggle-select">15개씩 보기</div>
+                                            <div class="vo-item toggle-select">30개씩 보기</div>
+                                            <div class="vo-item toggle-select">60개씩 보기</div>
+                                            <div class="vo-item toggle-select">120개씩 보기</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-item-body">
+                                <div class="table-wrapper custom-table-01">
+                                    <div class="table-header">
+                                        <button id="btnSmall" th:classappend="${car_type.name() == 'SMALL' ? 'hover01' : 'hover04'}" class="table-type-button ">소형</button>
+                                        <button id="btnMid" th:classappend="${car_type.name() == 'MID' ? 'hover01' : 'hover04'}" class="table-type-button ">중형</button>
+                                        <button id="btnBig"th:classappend="${car_type.name() == 'BIG' ? 'hover01' : 'hover04'}" class="table-type-button ">대형</button>
+                                        <button id="btnRV" th:classappend="${car_type.name() == 'RV' ? 'hover01' : 'hover04'}" class="table-type-button ">RV</button>
+                                        <button id="btnForeign" th:classappend="${car_type.name() == 'FOREIGN' ? 'hover01' : 'hover04'}" class="table-type-button ">수입</button>
+                                    </div>
+                                    <div class="table overflow-scroll" style="margin-top: 10px;">
+                                        <div class="table-body">
+                                            <div class="item-list ti-header">
+                                                <div class="t-item">
+                                                    <div class="td center-align toggle-target" data-width="5">번호</div>
+                                                    <div class="td center-align toggle-target" data-width="23">명칭</div>
+                                                    <div class="td center-align toggle-target" data-width="12">기교환(원)</div>
+                                                    <div class="td center-align toggle-target" data-width="12">기판금(원)</div>
+                                                    <div class="td center-align toggle-target" data-width="12">기도색(원)</div>
+                                                    <div class="td center-align toggle-target" data-width="12">교환요망(원)</div>
+                                                    <div class="td center-align toggle-target" data-width="12">판금요망(원)</div>
+                                                    <div class="td center-align toggle-target" data-width="12">도색요망(원)</div>
+                                                    <div class="td center-align toggle-target" data-width="12">기타(원)</div>
+                                                </div>
+                                            </div>
+                                            <div class="item-list ti-standard">
+                                                <div th:each="item, stat : ${content}" th:attr="name-location=${item.damageLocation.name()}" class="t-item t-body">
+                                                    <div th:text="${item.id}" class="td center-align">1</div>
+                                                    <div th:text="${item.damageLocationStr}" class="td center-align"></div>
+                                                    <div class="td center-align price"><input name="giGyoHwanPrice" th:value="${item.giGyoHwanPrice}" class="td-input" type="text"></div>
+                                                    <div class="td center-align price"><input name="giPangumPrice" th:value="${item.giPangumPrice}" class="td-input" type="text"></div>
+                                                    <div class="td center-align price"><input name="giDosaekPrice" th:value="${item.giDosaekPrice}" class="td-input" type="text"></div>
+                                                    <div class="td center-align price"><input name="needGyoHwanPrice" th:value="${item.needGyoHwanPrice}" class="td-input" type="text"></div>
+                                                    <div class="td center-align price"><input name="needPangumPrice" th:value="${item.needPangumPrice}" class="td-input" type="text"></div>
+                                                    <div class="td center-align price"><input name="needDosaekPrice" th:value="${item.needDosaekPrice}" class="td-input" type="text"></div>
+                                                    <div class="td center-align price"><input name="otherPrice" th:value="${item.otherPrice}" class="td-input" type="text"></div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="cont-btn right-align">
+                                    <a onclick="saveDamagePrice();" class="ho_button btn-save hover01">저장</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <th:block th:insert="~{layout/common :: footer}"></th:block>
+        </div>
+    </div>
+
+    <!-- 팝업 -->
+    <div class="modal">
+        <!-- 차량 기준가 모달 -->
+        <div class="modal-wrapper main-modal modal-ratio width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">종별 비율 설정</span>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-item flex-row-3 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">소형</div>
+                        <div class="modal-item_content border-box">
+                            <input id="small_base"class="mi_input" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">대형</div>
+                        <div class="modal-item_content border-box">
+                            <input id="big_base"class="mi_input" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">수입</div>
+                        <div class="modal-item_content border-box">
+                            <input id="foreign_base"class="mi_input" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">RV</div>
+                        <div class="modal-item_content border-box">
+                            <input id="rv_base"class="mi_input" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="btnSaveCarTypeBase"class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+
+
+        <div class="modal-wrapper main-modal modal-price width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text"> 차량기준가 설정</span>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-item flex-row-3 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">소형</div>
+                        <div class="modal-item_content border-box">
+                            <input id="small_base_price"class="mi_input" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">중형</div>
+                        <div class="modal-item_content border-box">
+                            <input id="mid_base_price"class="mi_input" type="text">
+                        </div>
+                    </div>
+
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">대형</div>
+                        <div class="modal-item_content border-box">
+                            <input id="big_base_price"class="mi_input" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">수입</div>
+                        <div class="modal-item_content border-box">
+                            <input id="foreign_base_price"class="mi_input" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-item">
+                        <div class="modal-item_title">RV</div>
+                        <div class="modal-item_content border-box">
+                            <input id="rv_base_price"class="mi_input" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="btnSaveCarTypeBasePrice"class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script>
+    let search = "";
+    let carType = "SMALL";
+    let page = "";
+    let size = "";
+    let servletPath = `/admin/config/damage`;
+
+    $(function(){
+        $('#a12 .btn-ratio').on('click', activeModal_Ratio);
+        $('#a12 .btn-ratio').on('click', activeModal_Ratio);
+        activeModal_Price
+        $('#btnSearch').click(function () {
+            search = $('#searchText').val();
+            searchValue();
+        });
+
+        $('.btn-close_modal').click(function () {
+            Common.reloadPage();
+        });
+
+        $('#btnCarTypeBase').click(function () {
+            Service.getCarTypeBase(function (data) {
+                $('#small_base').val(data.smallBase);
+                $('#big_base').val(data.bigBase);
+                $('#foreign_base').val(data.foreignBase);
+                $('#rv_base').val(data.rvBase);
+                activeModal_Ratio();
+            });
+        });
+
+        $('#btnCarTypeBasePrice').click(function () {
+            Service.getCarTypeBasePrice(function (data) {
+                $('#small_base_price').val(data.smallBasePrice);
+                $('#big_base_price').val(data.bigBasePrice);
+                $('#mid_base_price').val(data.midBasePrice);
+                $('#foreign_base_price').val(data.foreignBasePrice);
+                $('#rv_base_price').val(data.rvBasePrice);
+                activeModal_Price();
+            });
+        });
+
+        $('#btnSaveCarTypeBase').click(function () {
+            let smallBase = $('#small_base').val();
+            let bigBase = $('#big_base').val();
+            let foreignBase = $('#foreign_base').val();
+            let rvBase = $('#rv_base').val();
+            if(!smallBase || !bigBase || !foreignBase || !rvBase) {
+                alert('비율을 입력해주세요');
+                return;
+            }
+            let obj = {};
+            obj.smallBase = smallBase;
+            obj.bigBase = bigBase;
+            obj.foreignBase = foreignBase;
+            obj.rvBase = rvBase;
+            Service.saveCarTypeBase(obj, function (data) {
+                alert('완료되었습니다.');
+                cloaseModal_Ratio();
+            });
+        });
+
+
+        $('#btnSaveCarTypeBasePrice').click(function () {
+            let smallBasePrice = $('#small_base_price').val();
+            let midBasePrice = $('#mid_base_price').val();
+            let bigBasePrice = $('#big_base_price').val();
+            let foreignBasePrice = $('#foreign_base_price').val();
+            let rvBasePrice = $('#rv_base_price').val();
+            if(!smallBasePrice || !midBasePrice || !bigBasePrice || !foreignBasePrice || !rvBasePrice) {
+                alert('금액을 입력해주세요');
+                return;
+            }
+            let obj = {};
+            obj.smallBasePrice = smallBasePrice;
+            obj.midBasePrice = midBasePrice;
+            obj.bigBasePrice = bigBasePrice;
+            obj.foreignBasePrice = foreignBasePrice;
+            obj.rvBasePrice = rvBasePrice;
+            Service.saveCarTypeBasePrice(obj, function (data) {
+                alert('완료되었습니다.');
+                cloaseModal_Price();
+            });
+        });
+
+        $('#btnSmall').click(function () {
+            carType = "SMALL";
+            searchCarType();
+        });
+        $('#btnMid').click(function () {
+            carType = "MID";
+            searchCarType();
+        });
+        $('#btnBig').click(function () {
+            carType = "BIG";
+            searchCarType();
+        });
+        $('#btnRV').click(function () {
+            carType = "RV";
+            searchCarType();
+        });
+        $('#btnForeign').click(function () {
+            carType = "FOREIGN";
+            searchCarType();
+        });
+
+    });
+    function saveDamagePrice() {
+
+        let requestObj = {};
+        let carType = $('#car_type').val();
+
+        if(carType != 'MID') {
+            alert('중형차 기준 설정이 가능합니다. 중형을 선택 후 저장해 주세요');
+            return;
+        }
+
+        requestObj.carType = carType;
+
+        let price_list = [];
+        $('.item-list .t-body').each(function () {
+            let obj = {};
+
+           let damageLocation = $(this).attr('name-location');
+           //console.log(damageLocation);
+
+           let giGyoHwanPrice = $(this).children().eq(2).children().eq(0).val();
+            let giPangumPrice = $(this).children().eq(3).children().eq(0).val();
+            let giDosaekPrice = $(this).children().eq(4).children().eq(0).val();
+            let needGyoHwanPrice = $(this).children().eq(5).children().eq(0).val();
+            let needPangumPrice = $(this).children().eq(6).children().eq(0).val();
+            let needDosaekPrice = $(this).children().eq(7).children().eq(0).val();
+            let otherPrice = $(this).children().eq(8).children().eq(0).val();
+            obj.damageLocation = damageLocation;
+            obj.giGyoHwanPrice = giGyoHwanPrice;
+            obj.giPangumPrice = giPangumPrice;
+            obj.giDosaekPrice = giDosaekPrice;
+            obj.needGyoHwanPrice = needGyoHwanPrice;
+            obj.needPangumPrice = needPangumPrice;
+            obj.needDosaekPrice = needDosaekPrice;
+            obj.otherPrice = otherPrice;
+            price_list.push(obj);
+        });
+        requestObj.priceList = price_list;
+
+        Service.saveDamagePrice(requestObj, function (data) {
+            alert('완료되었습니다.');
+            Common.reloadPage();
+        });
+    }
+    function activeModal_Ratio(){
+        openLayer();
+        $('.modal-ratio').addClass('active');
+    }
+
+    function cloaseModal_Ratio(){
+        closeLayer();
+        $('.modal-ratio').removeClass('active');
+    }
+
+    function activeModal_Price(){
+        openLayer();
+        $('.modal-price').addClass('active');
+    }
+
+    function cloaseModal_Price(){
+        closeLayer();
+        $('.modal-price').removeClass('active');
+    }
+
+    function searchCarType() {
+        page = $('#page').val();
+        size = $('#size').val();
+        searchPage();
+    }
+    function searchValue() {
+        page = $('#page').val();
+        size = $('#size').val();
+        searchPage();
+    }
+    function searchPage() {
+        let url = `/admin/config/damage?page=${page}&size=${size}&search=${search}&carType=${carType}`;
+        Common.goPage(url);
+    }
+
+    function excelDownload() {
+        let url = `/admin/config/car/excel/download?page=` + $('#page').val() + `&size=`+ $('#size').val();
+        if($('#search').val()) {
+            url += '&search=' + $('#search').val();
+        }
+        Common.goPage(url);
+    }
+
+    let Service = {
+        saveDamagePrice: function (obj, _func) {
+            var url = `/api/admin/v1/config/damage/price`;
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    _func(undefined);
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        saveCarTypeBase: function (obj, _func) {
+            var url = `/api/admin/v1/config/damage/base_ratio`;
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    _func(undefined);
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        saveCarTypeBasePrice: function (obj, _func) {
+            var url = `/api/admin/v1/config/damage/base_price`;
+            var ajaxParam = {
+                "url": url,
+                "type": "POST",
+                "data": JSON.stringify(obj)
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    _func(undefined);
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        getCarTypeBasePrice: function (_func) {
+            var url = `/api/admin/v1/config/damage/base_price`;
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    _func(undefined);
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        getCarTypeBase: function (_func) {
+            var url = `/api/admin/v1/config/damage/base_ratio`;
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    _func(undefined);
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+        getBasePrice: function (_func) {
+            var url = `/api/admin/v1/config/check_list/base_price`;
+            let obj = {};
+            var ajaxParam = {
+                "url": url,
+                "type": "GET",
+                "data": ""
+            }
+            Common.ajaxJSONV2(ajaxParam, function (data) {
+                if (!data) {
+                    alert('return data error');
+                    return false;
+                }
+                if (data.result != 0) {
+                    _func(undefined);
+                } else {
+                    _func(data.data);
+                }
+                return;
+            });
+        },
+
+
+    }
+
+
+</script>

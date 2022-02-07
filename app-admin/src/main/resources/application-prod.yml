@@ -1,0 +1,6 @@
+
+spring:
+  include:
+    - core
+server:
+  port: 8090

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="author" content="">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="format-detection" content="telephone=no">
+        <title>Document</title>
+
+        <!-- JQuery -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Xeicon -->
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+        <!-- Library : Slick/Swiper -->
+        <link rel="stylesheet" href="assets/css/slick.css">
+        <link rel="stylesheet" href="assets/css/slick-theme.css">
+        <link rel="stylesheet" href="assets/css/swiper.css">
+        <script src="assets/js/slick.js"></script>
+        <script src="assets/js/swiper.js"></script>
+        <!-- Library : WOW -->
+        <link rel="stylesheet" href="assets/css/animate.css"/>
+        <link rel="stylesheet" href="assets/css/animate.min.css"/>
+        <script src="assets/js/wow.min.js"></script>
+        <!-- Library : nice-select -->
+        <link rel="stylesheet" href="assets/css/nice-select.css"/>
+        <script src="assets/js/jquery.nice-select.js"></script>
+        <!-- Library : C3 chart -->
+        <link rel="stylesheet" href="assets/css/c3.css">
+        <script src="assets/js/c3.min.js"></script>
+        <script src="assets/js/d3-5.8.2.min.js"></script>
+        <!-- Library : jQuery UI(datepicker) -->
+        <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css"/>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>    
+        <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>  -->
+        <!-- Reference -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/custom.css">
+        <script src="assets/js/custom.js"></script>
+    </head>
+
+<style>
+    
+    @media screen and (max-width: 680px) {
+    }
+</style>
+
+<div class="wrap" id="a02">
+    <!-- 오버레이 처리 -->
+    <div id="overlay"></div>
+
+    <!-- 컨테이너 -->
+    <div id="container">
+        <!-- 내비게이션 바 -->
+        <div id="navbar"></div>
+    
+        <!-- 메인 -->
+        <div id="main">
+            <!-- 헤더 -->
+            <div id="header"></div>
+    
+            <!-- 바디 -->
+            <div id="body">
+                <!-- 콘텐트 -->
+                <div class="content-wrapper">
+                    <!-- 콘텐트 헤더 -->
+                    <div class="content-header">
+                        <div class="content-title">
+                            <span class="ct-text">회원 <span class="search-count">999,999,999</span>명이 검색되었습니다.</span>
+                        </div>
+                        <div class="breadcrumb">
+                            <a class="bc-item">Home</a>
+                            <a class="bc-item">회원</a>
+                        </div>
+                    </div>
+                    <!-- 콘텐트 바디 -->
+                    <div class="content-body width-1920">
+                        <!-- 테이블 아이템 01 -->
+                        <div class="content-item">
+                            <div class="content-item-header flex-between">
+                                <div class="header-option">
+                                    <div class="search-option">
+                                        <span class="option-title">검색어</span>
+                                        <input class="so_input" type="text" placeholder="회원번호, 이름, 연락처를 입력하세요.">
+                                    </div>
+                                    <button class="ho_button btn-search hover01 ml-10">검색</button>
+                                </div>
+                                <div class="etc-option toggle-target">
+                                    <div class="eo-icon hover01"><i class="xi-ellipsis-h"></i></div>
+                                    <div class="eo-menus">
+                                        <div class="btn-download_excel">엑셀 다운로드</div>
+                                        <div class="view-option">
+                                            <div class="vo-item toggle-select">15개씩 보기</div>
+                                            <div class="vo-item toggle-select">30개씩 보기</div>
+                                            <div class="vo-item toggle-select">60개씩 보기</div>
+                                            <div class="vo-item toggle-select">120개씩 보기</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-item-body">
+                                <div class="table-wrapper">
+                                    <div class="table overflow-scroll">
+                                        <div class="table-body">
+                                            <div class="item-list ti-header">
+                                                <div class="t-item">
+                                                    <div class="td center-align toggle-target" data-width="13">회원번호</div>
+                                                    <div class="td center-align toggle-target" data-width="32">아이디</div>
+                                                    <div class="td center-align toggle-target" data-width="8">이름<button class="button-sort"></button></div>
+                                                    <div class="td center-align toggle-target" data-width="11">연락처<button class="button-sort"></button></span></div>
+                                                    <div class="td center-align toggle-target" data-width="9">요청건수<button class="button-sort"></button></span></div>
+                                                    <div class="td center-align toggle-target" data-width="10">권한</div>
+                                                    <div class="td center-align toggle-target" data-width="17">비고</div>
+                                                </div>
+                                            </div>
+                                            <div class="item-list ti-standard">
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                                
+                                                <div class="t-item">
+                                                    <div class="td center-align">999,999,999</div>
+                                                    <div class="td center-align">abcdefghijklmnopqr@naver.com</div>
+                                                    <div class="td center-align">홍길동</div>
+                                                    <div class="td center-align">010-1234-5678</div>
+                                                    <div class="td center-align">4</div>
+                                                    <div class="td center-align">마스터</div>
+                                                    <div class="td center-align">2021-06-10</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-pagination">
+                                        <a class="tp-first"><img src="/bbs_admin/assets/img/icon-arrow_left2.png" alt=""></a>
+                                        <a class="tp-prev"><img src="/bbs_admin/assets/img/icon-arrow_left.png" alt=""></i></a>
+                                        <div class="tp-nav">
+                                            <a class="pg_num">1</a>
+                                            <a class="pg_num active">2</a> <!-- 활성화 class "active" -->
+                                            <a class="pg_num">3</a>
+                                            <a class="pg_num">4</a>
+                                            <a class="pg_num">5</a>
+                                        </div>
+                                        <a class="tp-next"><img src="/bbs_admin/assets/img/icon-arrow_right.png" alt=""></i></a>
+                                        <a class="tp-last"><img src="/bbs_admin/assets/img/icon-arrow_right2.png" alt=""></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 푸터 -->
+            <div id="footer"></div>
+        </div>
+    </div>
+
+    <!-- 모달 -->
+    <div class="modal">
+        <div class="modal-wrapper main-modal modal-member_detail width-800">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">회원 상세정보</span>
+                </div>
+                <div class="breadcrumb">
+                    <a class="bc-item">Home</a>
+                    <a class="bc-item">회원</a>
+                    <a class="bc-item">상세</a>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-item flex-row-3">
+                    <div class="modal-item">
+                        <div class="modal-item_title">아이디</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">이름</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">계정타입</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">생년월일</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">연락처</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">가입일시</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">성별</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">가이드 (전체/완료/진행중)</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">권한</div>
+                        <div class="modal-item_content">
+                            <select class="mi_select" name="" id="">
+                                <option value="">마스터</option>
+                                <option value="">관리자</option>
+                                <option value="">기타</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">매입 (건/금액)</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">판매중 (건/금액)</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">매각 (건/금액)</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">포인트</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <div class="modal-item-button btn-setting_point hover03">포인트 수정</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-title mt-20">
+                    <span class="ct-title">소속정보</span>
+                </div>
+                
+                <div class="content-item flex-row-3 mt-15">
+                    <div class="modal-item">
+                        <div class="modal-item_title">소속</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">지점</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                    
+                    <div class="modal-item">
+                        <div class="modal-item_title">직위</div>
+                        <div class="modal-item_content">
+                            <input class="mi_input" type="text">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-item w100p pt-10 pb-10">
+                    <div class="modal-item flex left-align">
+                        <div class="modal-item_title">접속허용</div>
+                        <div class="toggle-button toggle-target ml-10"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">가이드 내역</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title"></div>
+                        <div class="modal-item_content flex">
+                            <input class="mi_input" type="text" placeholder="내용을 입력하세요.">
+                            <button class="mf_button btn-submit hover01 ml-10">댓글 등록</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="mf_button btn-save hover01">저장</button>
+                <button class="mf_button btn-resign hover01">회원탈퇴</button>
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+
+            <div class="top-close btn-close_modal"><i class="xi-close"></i></div>
+        </div>
+
+        <div class="modal-wrapper sub-modal modal-member_point width-400">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="mt-text">포인트 수정</span>
+                </div>
+                <div class="breadcrumb">
+                    <a class="bc-item">Home</a>
+                    <a class="bc-item">회원</a>
+                    <a class="bc-item">상세</a>
+                    <a class="bc-item">포인트</a>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="content-title">
+                    <span class="ct-title">포인트</span>
+                </div>
+
+                <div class="content-item w100p pb-20">
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">사용 가능 포인트</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <span class="bb-text">P</span>
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">사용 포인트</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <span class="bb-text">P</span>
+                        </div>
+                    </div>
+                    <div class="modal-item mt-15">
+                        <div class="modal-item_title">추가 포인트</div>
+                        <div class="modal-item_content border-box">
+                            <input class="mi_input" type="text">
+                            <span class="bb-text">P</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="mf_button btn-close_modal hover02">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        // 초기화
+        $('#header').load("layout/header.html");
+        $('#navbar').load("layout/navbar.html");
+        $('#footer').load("layout/footer.html");
+
+        $('#a02 .ti-standard .t-item').on('click', activeModal_MemberDetail);
+        $('.btn-setting_point').on('click', activeModal_MemberPoint);
+    });
+
+    function activeModal_MemberDetail(){
+        openLayer();
+        $('.modal-member_detail').addClass('active');
+    }
+    
+    function activeModal_MemberPoint(){
+        $('.main-modal').css('z-index', '100');
+        $('.modal-member_point').addClass('active');
+    }
+</script>

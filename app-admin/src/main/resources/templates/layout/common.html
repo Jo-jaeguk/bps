@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<th:block th:fragment="head">
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="author" content="">
+      <meta name="description" content="">
+      <meta name="keywords" content="">
+      <meta name="format-detection" content="telephone=no">
+      <title>BPS-Admin</title>
+
+      <!-- JQuery -->
+      <script th:src="@{/assets/js/jquery-3.3.1.min.js}"></script>
+      <!-- Xeicon -->
+      <!--
+      <link rel="stylesheet" th:href="@{/assets/css/xeicon.min.css}">
+      -->
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+      <!-- Library : Slick/Swiper -->
+      <link rel="stylesheet" th:href="@{/assets/css/slick.css}">
+      <link rel="stylesheet" th:href="@{/assets/css/slick-theme.css}">
+      <link rel="stylesheet" href="" th:href="@{/assets/css/swiper.css}">
+      <script th:src="@{/assets/js/slick.js}" src=""></script>
+      <script th:src="@{/assets/js/swiper.js}" src=""></script>
+      <!-- Library : WOW -->
+      <link rel="stylesheet" th:href="@{/assets/css/animate.css}" />
+      <link rel="stylesheet" th:href="@{/assets/css/animate.min.css}"/>
+      <script th:src="@{/assets/js/wow.min.js}" src=""></script>
+      <!-- Library : nice-select -->
+      <link rel="stylesheet" th:href="@{/assets/css/nice-select.css}" />
+      <script th:src="@{/assets/js/jquery.nice-select.js}"></script>
+      <!-- Library : C3 chart -->
+      <link rel="stylesheet" th:href="@{/assets/css/c3.css}" >
+      <script th:src="@{/assets/js/c3.min.js}" ></script>
+      <script th:src="@{/assets/js/d3-5.8.2.min.js}" ></script>
+
+      <link rel="stylesheet" th:href="@{/assets/datepicker/jquery-ui.min.css}" >
+      <script th:src="@{/assets/datepicker/jquery-ui.min.js}" ></script>
+      <script th:src="@{/assets/datepicker/datepicker-ko.js}" ></script>
+
+      <script th:src="@{/assets/summernote/summernote-lite.js}" src=""></script>
+      <script th:src="@{/assets/summernote/lang/summernote-ko-KR.js}" src=""></script>
+      <link rel="stylesheet" th:href="@{/assets/summernote/summernote-lite.css}" href="">
+
+      <!-- Reference -->
+      <link rel="stylesheet" th:href="@{/assets/css/reset.css}" >
+      <link rel="stylesheet" th:href="@{/assets/css/style.css}" >
+      <link rel="stylesheet" th:href="@{/assets/css/custom.css}" >
+      <script th:src="@{/assets/js/custom.js}" ></script>
+      <script th:src="@{/common/js/common.js}" ></script>
+
+      <script th:src="@{/kakao/js/kakao.js}" ></script>
+      <script src="https://developers.kakao.com/sdk/js/kakao.js" ></script>
+      <script src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
+      <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+
+      <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+      <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
+
+      <!-- Add Firebase products that you want to use -->
+      <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+
+</th:block>
+
+
+<th:block th:fragment="navbar">
+      <div id="navbar">
+            <div class="navbar">
+                  <div class="logo">
+                        <a th:href="@{/}" href="index.html">
+                              <img th:src="@{/assets/img/main_logo.png}"  alt="">
+                        </a>
+                        <div class="nav-toggle"></div>
+                  </div>
+                  <div class="home">
+                        <a class="menu-item dashboard gnb-item"
+                           th:href="@{/admin/dashboard}"
+                           th:classappend="${link == 'dashboard' ? 'active' : ''}">
+                              <span class="nav-icon"><i class="xi-home-o"></i></span>
+                              <span class="nav-text">대시보드</span>
+                        </a>
+                  </div>
+                  <div class="gnb">
+                        <div class="menu_cont">
+                              <a sec:authorize="hasAnyRole('MASTER')" th:href="@{/admin/member}"
+                                 th:classappend="${link == 'member' ? 'active' : ''}"
+                                 class="menu-item menu1 gnb-item"> <!-- 하위 a태그 삭제, 상위 div태그를 a태그로 수정 -->
+                                    <span class="nav-icon"><i class="xi-users-o"></i></span>
+                                    <span class="nav-text">회원</span>
+                              </a>
+                              <a th:href="@{/admin/guide}"
+                                 th:classappend="${link == 'guide' ? 'active' : ''}"
+                                      class="menu-item menu1 gnb-item"> <!-- 하위 a태그 삭제, 상위 div태그를 a태그로 수정 -->
+                                    <span class="nav-icon"><i class="xi-info-o"></i></span>
+                                    <span class="nav-text">가이드</span>
+                              </a>
+                              <a th:href="@{/admin/inspect}"
+                                 th:classappend="${link == 'inspect' ? 'active' : ''}"
+                                 class="menu-item menu1 gnb-item"> <!-- 하위 a태그 삭제, 상위 div태그를 a태그로 수정 -->
+                                    <span class="nav-icon"><i class="xi-car"></i></span>
+                                    <span class="nav-text">차량 점검표</span>
+                              </a>
+                              <a th:href="@{/admin/notice}"
+                                 th:classappend="${link == 'notice' ? 'active' : ''}"
+                                      class="menu-item menu1 gnb-item"> <!-- 하위 a태그 삭제, 상위 div태그를 a태그로 수정 -->
+                                    <span class="nav-icon"><i class="xi-new-o"></i></span>
+                                    <span class="nav-text">공지사항</span>
+                              </a>
+                              <div sec:authorize="hasAnyRole('MASTER')" th:classappend="${link_parent == 'config' ? 'active' : ''}"
+                                      class="menu-item menu2">
+                                    <div class="ml-tit">
+                                            <span class="mn_tit">
+                                                <span class="nav-icon"><i class="xi-cog"></i></span>
+                                                <span class="nav-text">설정</span>
+                                            </span>
+                                    </div>
+                                    <div class="ml-list">
+                                          <a th:href="@{/admin/config/car}"
+                                             th:classappend="${link == 'car_config' ? 'active' : ''}"
+                                                  class="m-item gnb-item">차량 설정</a> <!-- 하위 a태그 삭제, 상위 div태그를 a태그로 수정 -->
+                                          <a th:href="@{/admin/config/guide}"
+                                             th:classappend="${link == 'guide_config' ? 'active' : ''}"
+                                                  class="m-item gnb-item">가이드 설정</a>
+                                          <a th:href="@{/admin/config/checklist}"
+                                             th:classappend="${link == 'checklist_config' ? 'active' : ''}"
+                                             class="m-item gnb-item">체크리스트 설정</a>
+                                          <a th:href="@{/admin/config/damage}"
+                                             th:classappend="${link == 'damage_config' ? 'active' : ''}"
+                                             class="m-item gnb-item">데미지체크 설정</a>
+                                          <a th:href="@{/admin/config/guide_notification}"
+                                             th:classappend="${link == 'guide_notification_config' ? 'active' : ''}"
+                                             class="m-item gnb-item">한줄공지</a>
+                                    </div>
+                              </div>
+                              <a sec:authorize="hasAnyRole('MASTER')"
+                                 th:href="@{/admin/buyandsell}"
+                                 th:classappend="${link == 'buyandsell' ? 'active' : ''}"
+                                 class="menu-item menu1 gnb-item"> <!-- 하위 a태그 삭제, 상위 div태그를 a태그로 수정 -->
+                                    <span class="nav-icon"><i class="xi-new-o"></i></span>
+                                    <span class="nav-text">매입매출</span>
+                              </a>
+                              <div sec:authorize="hasAnyRole('MASTER')" th:classappend="${link_parent == 'log' ? 'active' : ''}"
+                                      class="menu-item menu2">
+                                    <div class="ml-tit">
+                                            <span class="mn_tit">
+                                                <span class="nav-icon"><i class="xi-log"></i></span>
+                                                <span class="nav-text">로그</span>
+                                            </span>
+                                    </div>
+                                    <div class="ml-list">
+                                          <a th:href="@{/admin/log/member}"
+                                             th:classappend="${link == 'member_log' ? 'active' : ''}"
+                                                  class="m-item gnb-item">회원 로그</a> <!-- 하위 a태그 삭제, 상위 div태그를 a태그로 수정 -->
+                                          <a th:href="@{/admin/log/guide}"
+                                             th:classappend="${link == 'guide_log' ? 'active' : ''}"
+                                                  class="m-item gnb-item">가이드 로그</a>
+                                          <a th:href="@{/admin/log/config}"
+                                             th:classappend="${link == 'config_log' ? 'active' : ''}"
+                                                  class="m-item gnb-item">가이드 설정 로그</a>
+                                    </div>
+                              </div>
+
+                        </div>
+                  </div>
+            </div>
+            <script>
+                  $(function(){
+                        $('#btn-close_sidebar').on('click', closeSidebar);
+
+                        // navbar cursor
+                        $('#navbar').hover(function(){
+                                      if($('#container').hasClass('minified')){
+                                            $('#container').removeClass('minified');
+                                            $('.menu2').removeClass('active');
+                                      }
+                                },
+                                function() {
+                                      if($('.nav-toggle').hasClass('active')){
+                                            $('#container').addClass('minified');
+                                            $('.ml-list').slideUp();
+                                      }
+                                });
+
+                        // nav-toggle 버튼 클릭
+                        $('.nav-toggle').on('click', function(e){
+                              var target = $(e.currentTarget);
+                              $(target).toggleClass('active')
+
+                              if($(target).hasClass('active')){
+                                    $('#container').addClass('minified');
+                                    $('.ml-list').slideUp();
+                                    $('.menu2').removeClass('active');
+                              }
+                              else{
+                                    $('#container').removeClass('minified');
+                              }
+                        });
+
+                        // gnb-item 버튼 클릭
+                        $('.gnb-item').on('click', function(e){
+                              $('#navbar').find('.gnb-item').removeClass('active');
+                              $(e.currentTarget).toggleClass('active');
+                        });
+
+                        // 메뉴 펼치기/닫기
+                        $('.ml-tit').on('click', function(e){
+                              var parent = $(e.currentTarget).closest('.menu2');
+
+                              $('.ml-list').slideUp();
+                              $('.menu2').removeClass('active');
+                              if(parent.find('.ml-list').is(':visible')){
+                                    parent.find('.ml-list').slideUp();
+                                    parent.removeClass('active');
+                                    return;
+                              }
+
+                              parent.find('.ml-list').slideDown();
+                              parent.addClass('active');
+                        });
+                  });
+
+                  // 사이드바 닫기
+                  function closeSidebar(){
+                        $('#overlay').removeClass('active');
+                        $('.sidebar').removeClass('active');
+                  }
+            </script>
+      </div>
+
+</th:block>
+
+<th:block th:fragment="header">
+      <!-- 헤더 -->
+      <div id="header">
+            <div class="header">
+                  <div id="btn-sidebar"><i class="xi-bars"></i></div>
+                  <div class="hr">
+                        <div class="acc">
+                              <th:block sec:authorize="isAuthenticated()">
+                                    <div class="user-name" th:text="${session.name}">홍길동</div>
+                              </th:block>
+                        </div>
+                        <a th:href="@{/logout}" class="logout"><i class="xi-log-out"></i>로그아웃</a>
+                  </div>
+                  <div class="mobile-logo"><a th:href="@{/}"><img th:src="@{/assets/img/main_logo.png}" src="/bbs_admin/assets/img/main_logo.png" alt=""></a></div>
+            </div>
+            <script>
+                  $(function(){
+                        // 사이드바 열기/닫기
+                        $('#btn-sidebar').on('click', openSidebar);
+                        $('#btn-close_sidebar').on('click', closeSidebar);
+
+                        $('html').click(function(e) {
+                              if($('.etc-option').hasClass('active')){
+                                    if($(e.target).parents('.etc-option').length < 1){
+                                          $('.etc-option').removeClass('active')
+                                    }
+                              }
+                        });
+
+                  });
+
+                  // 사이드바 열기
+                  function openSidebar(){
+                        openLayer();
+                        $('#navbar').addClass('active');
+                  }
+
+                  // 사이드바 닫기
+                  function closeSidebar(){
+                        $('#overlay').removeClass('active');
+                        $('#navbar').removeClass('active');
+                  }
+            </script>
+      </div>
+</th:block>
+
+<th:block th:fragment="footer">
+      <div id="footer">
+            <div class="footer">
+            </div>
+      </div>
+</th:block>
+
+</body>
+</html>
